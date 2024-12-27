@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Main-Class: Server.ServerUI
+Rsrc-Class-Path: ./ mysql-connector-java-8.0.13.jar javafx.base.jar javafx.controls.jar javafx.fxml.jar javafx.graphics.jar javafx.media.jar javafx.swing.jar javafx.web.jar javafx-swt.jar
+Class-Path: ./mysql-connector-java-8.0.13.jar 
+            ./javafx.base.jar 
+            ./javafx.controls.jar 
+            ./javafx.fxml.jar 
+            ./javafx.graphics.jar 
+            ./javafx.media.jar 
+            ./javafx.swing.jar 
+            ./javafx.web.jar
