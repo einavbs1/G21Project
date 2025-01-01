@@ -1,9 +1,7 @@
 package entity;
 
 import java.util.NoSuchElementException;
-
-//avishag
-//ok avishga new??
+//test - avi
 public class Subscriber {
 
 	private String id;
