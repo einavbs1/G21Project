@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 //einavvvv - test
 //new test?- einav 
 //new update -need to check pull request?
+//avishag - testtt
 public class Subscriber {
 
 	private String id;
