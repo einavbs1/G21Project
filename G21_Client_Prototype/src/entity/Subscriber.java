@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.NoSuchElementException;
+
 //avishag
 public class Subscriber {
 
