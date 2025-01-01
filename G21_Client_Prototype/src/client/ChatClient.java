@@ -2,7 +2,6 @@ package client;
 
 import ocsf.client.*;
 import common.ChatIF;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
