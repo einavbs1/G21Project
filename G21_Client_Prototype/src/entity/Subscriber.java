@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 
 //avishag
 //einavvvv - test
+//avishag - testtt
 public class Subscriber {
 
 	private String id;
