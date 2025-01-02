@@ -12,14 +12,25 @@ public class Subscriber {
 	private String password;
 	private String status;
 
+	
+	/**Constractor that load id from DB if exist. 
+	 * @param id
+	 */
 	public Subscriber(String id) {
 		String[] str = getStudentFromDB(id);
 		loadSubscriber(str);
 	}
 	
+	/**Constractor that creating new subscriber and adding it to DB.
+	 * @param id
+	 * @param name
+	 * @param phoneNumber
+	 * @param email
+	 * @param password
+	 */
 	public Subscriber(String id, String name, String phoneNumber, String email, String password) {
 		String newsub = id +", "+name+", 0,"+phoneNumber+", "+email+", "+password+", Active";
-		///addToDB
+		///addSוubscriberToDB
 		//now load to this subscriber
 		String[] str = getStudentFromDB(id);
 		loadSubscriber(str);
