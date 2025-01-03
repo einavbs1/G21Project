@@ -3,6 +3,9 @@ package entity;
 import java.sql.Date;
 import java.util.NoSuchElementException;
 
+/**
+ * Author: Einav
+ */
 public class BookCopy extends Book {
 
 	private int copyNo;
@@ -55,6 +58,8 @@ public class BookCopy extends Book {
 		location = str[8];
 	}
 
+	
+	
 	private String[] getBookCopyFromDB(int barcode) throws NoSuchElementException {
 		String str = new String();
 		/// send request to DB to get the string.
