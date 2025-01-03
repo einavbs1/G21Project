@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * This class is handling the messages from the client to the server and the other way.
+ * another test. - einav
  */
 public class ChatClient extends AbstractClient {
 
