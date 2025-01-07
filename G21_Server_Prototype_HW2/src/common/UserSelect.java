@@ -8,7 +8,15 @@ public enum UserSelect {
     UpdateEmailAddress("Update Email Address"),
 	LoadSubscriber("Load Subscriber"),
 	Connected("Connected"),
-	Disconnect("Disconnect");
+	Disconnect("Disconnect"),
+	//Author: Avishag.
+	UpdateSubscriber("Update Subscriber"),
+	AddNewSubscriber("Add New Subscriber"),
+	GetSubscriberDetails("Get Subscriber Details"),
+	//Author: Yuval.
+	UpdateLibrarian("Update Librarian"),
+	AddNewLibrarian("Add New Librarian"),
+	GetLibrarianDetails("Get Librarian Details");
 
     private final String displayName;
 

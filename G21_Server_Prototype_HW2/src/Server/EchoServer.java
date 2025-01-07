@@ -41,7 +41,7 @@ public class EchoServer extends AbstractServer {
 		
 		HashMap<String, String> infoFromUser = (HashMap<String, String>) msg;
 		String menuChoiceString = (infoFromUser.keySet().iterator().next());
-		
+
 		UserSelect x = UserSelect.getSelectionFromEnumName(menuChoiceString);
 		
 		switch (x) {
@@ -51,6 +51,7 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients(TheTable);
 			flag++;
 			break;
+			
 		//This case is getting the information to change from the user and saving in DB.
 		case UpdatePhoneNumber:
 			String idNphone[] = infoFromUser.get(menuChoiceString).split(" ");
@@ -63,6 +64,7 @@ public class EchoServer extends AbstractServer {
 
 			flag++;
 			break;
+			
 		//This case is getting the information to change from the user and saving in DB.
 		case UpdateEmailAddress:
 			String idNemail[] = infoFromUser.get(menuChoiceString).split(" ");
@@ -74,12 +76,82 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
+			
 		//This case is loading the requested ID from the DB and sending to the client.
 		case LoadSubscriber:
 			String RequestedID = mysqlConnection.Load(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(RequestedID);
 			flag++;
 			break;
+			
+		//Author: Avishag.
+		//This case is getting the information to change from the user and saving in DB.
+		case UpdateSubscriber:
+			String idNinfo[] = infoFromUser.get(menuChoiceString).split(", ");
+			boolean succ3 = mysqlConnection.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1], Integer.parseInt(idNinfo[2]), idNinfo[3], idNinfo[4], idNinfo[5], idNinfo[6]);
+			if (succ3) {
+				this.sendToAllClients("Updated");
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
+			
+			//Author: Avishag.
+			//This case is getting the information to add new user and saving in DB.
+		case AddNewSubscriber:
+			String idNinfoNew[] = infoFromUser.get(menuChoiceString).split(", ");
+			boolean succ4 = mysqlConnection.addNewSubscriber(Integer.parseInt(idNinfoNew[0]), idNinfoNew[1], Integer.parseInt(idNinfoNew[2]), idNinfoNew[3], idNinfoNew[4], idNinfoNew[5], idNinfoNew[6]);
+			if (succ4) {
+				this.sendToAllClients("Added");
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
+			
+			//Author: Avishag.
+			//This case is loading the requested ID from the DB and sending to the client.
+		case GetSubscriberDetails:
+			String RequestedIDToGet = mysqlConnection.getSubscriberDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			this.sendToAllClients(RequestedIDToGet);
+			flag++;
+			break;
+			
+			//Author: Yuval.
+			//This case is getting the information to change from the user and saving in DB.
+		case UpdateLibrarian:
+			String idNlibinfo[] = infoFromUser.get(menuChoiceString).split(", ");
+			boolean succ5 = mysqlConnection.updateLibrarianDetails(Integer.parseInt(idNlibinfo[0]), idNlibinfo[1], idNlibinfo[2]);
+			if (succ5) {
+				this.sendToAllClients("Updated");
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
+			
+			//Author: Yuval.
+			//This case is getting the information to add new Librarian and saving in DB.
+		case AddNewLibrarian:
+			String idNinfoNewlib[] = infoFromUser.get(menuChoiceString).split(", ");
+			boolean succ6 = mysqlConnection.addNewLibrarian(Integer.parseInt(idNinfoNewlib[0]), idNinfoNewlib[1], idNinfoNewlib[2]);
+			if (succ6) {
+				this.sendToAllClients("Added");
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
+				
+			//Author: Yuval.
+			//This case is loading the requested Librarian ID from the DB and sending to the client.
+		case GetLibrarianDetails:
+			String RequestedLibToGet = mysqlConnection.getLibrarianDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			this.sendToAllClients(RequestedLibToGet);
+			flag++;
+			break;
+					
 		//This case is Showing the client that connect to the server and showing it on the table GUI and shows a message.
 		case Connected:
 			String onlineStatuString = (clientIp + ", " + clientPCName + ", Connected");
