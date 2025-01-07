@@ -6,7 +6,18 @@ package common;
 public enum UserSelect {
     ShowAllSubscribers("Show All Subscribers"),
     UpdatePhoneNumber("Update Phone Number"),
-    UpdateEmailAddress("Update Email Address");
+    UpdateEmailAddress("Update Email Address"),
+    LoadSubscriber("Load Subscriber"),
+    Connected("Connected"),
+    Disconnect("Disconnect"),
+    
+    // Order operations-chen tsafir
+    ShowAllOrders("Show All Orders"),
+    CreateNewOrder("Create New Order"),
+    LoadOrder("Load Order"),
+    CancelOrder("Cancel Order"),
+    UpdateOrderStatus("Update Order Status"),
+    UpdateOrder("Update Order");
 
     private final String displayName;
 

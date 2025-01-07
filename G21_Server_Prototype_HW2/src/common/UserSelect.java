@@ -8,7 +8,15 @@ public enum UserSelect {
     UpdateEmailAddress("Update Email Address"),
 	LoadSubscriber("Load Subscriber"),
 	Connected("Connected"),
-	Disconnect("Disconnect");
+	Disconnect("Disconnect"),
+	
+	// Order operations
+    ShowAllOrders("Show All Orders"),
+    CreateNewOrder("Create New Order"),
+    LoadOrder("Load Order"),
+    CancelOrder("Cancel Order"),
+    UpdateOrderStatus("Update Order Status"),
+    UpdateOrder("Update Order");
 
     private final String displayName;
 

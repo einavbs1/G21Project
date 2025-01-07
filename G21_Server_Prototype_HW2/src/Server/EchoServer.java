@@ -1,5 +1,6 @@
 package Server;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import common.UserSelect;
@@ -104,6 +105,92 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients("Disconnected");
 			flag++;
 			break;
+		//This case Sending all existing orders from the orders table to client. (chen tsafir)
+		case ShowAllOrders:
+		    List<String> ordersTable = mysqlConnection.GetOrdersTable();
+		    this.sendToAllClients(ordersTable);
+		    flag++;
+		    break;
+		//This case Retrieves details of a specific order by order number and sends the information to the client. (chen tsafir)
+		case LoadOrder:
+		    String requestedOrder = mysqlConnection.LoadOrder(
+		        Integer.parseInt(infoFromUser.get(menuChoiceString))
+		    );
+		    this.sendToAllClients(requestedOrder);  // send the string or "empty"
+		    flag++;
+		    break;
+		//This case Creates a new order with the details provided by the user and sends the order number to client. (chen tsafir)
+		case CreateNewOrder:
+		    String[] orderDetails = infoFromUser.get(menuChoiceString).split(" ");
+		    int newOrderNum = mysqlConnection.createOrder(
+		        Integer.parseInt(orderDetails[0]), orderDetails[1]);
+		    if (newOrderNum != -1) {
+		        this.sendToAllClients("OrderCreated:" + newOrderNum);
+		    } else {
+		        this.sendToAllClients("Error");
+		    }
+		    flag++;
+		    break;
+		//This case Updating the status of an existing order and sending a message to the client about success or failure (chen tsafir)
+		case UpdateOrderStatus:
+		    String[] statusUpdate = infoFromUser.get(menuChoiceString).split(" ");
+		    boolean updateSuccess = mysqlConnection.updateOrderStatus(
+		        Integer.parseInt(statusUpdate[0]),  // order number
+		        Integer.parseInt(statusUpdate[1])   // new status
+		    );
+		    if (updateSuccess) {
+		        this.sendToAllClients("Updated");
+		    } else {
+		        this.sendToAllClients("Error");
+		    }
+		    flag++;
+		    break;
+		  //This case Updating the order details (chen tsafir)
+		case UpdateOrder:
+		    try {
+		        String[] orderData = infoFromUser.get(menuChoiceString).split(", ");
+		        if (orderData.length < 7) {
+		            this.sendToAllClients("Error: Missing data");
+		            break;
+		        }
+		        
+		        boolean success = mysqlConnection.updateOrder(
+		            Integer.parseInt(orderData[0]),    
+		            Integer.parseInt(orderData[1]),    
+		            orderData[2],                      
+		            Integer.parseInt(orderData[3]),    
+		            Date.valueOf(orderData[4]),        
+		            Integer.parseInt(orderData[5]),    
+		            orderData[6].equals("null") ? null : Date.valueOf(orderData[6])
+		        );
+		        
+		        if (success) {
+		            this.sendToAllClients("Updated");
+		        } else {
+		            this.sendToAllClients("Error");
+		        }
+		    } catch (NumberFormatException e) {
+		        this.sendToAllClients("Error: Invalid number format");
+		    } catch (IllegalArgumentException e) {
+		        this.sendToAllClients("Error: Invalid date format");
+		    }
+		    flag++;
+		    break;
+		//This case Set the order as canceled (chen tsafir)
+		case CancelOrder:
+		    String orderToCancel = infoFromUser.get(menuChoiceString);
+		    boolean cancelSuccess = mysqlConnection.updateOrderStatus(
+		        Integer.parseInt(orderToCancel), 
+		        -1  //represent canceled status
+		    );
+		    
+		    if (cancelSuccess) {
+		        this.sendToAllClients("Cancelled");
+		    } else {
+		        this.sendToAllClients("Error");
+		    }
+		    flag++;
+		    break;
 		//error with the userselect action.
 		default:
 			System.out.println("Error with the choise? = " + menuChoiceString);
