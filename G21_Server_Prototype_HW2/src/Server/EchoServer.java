@@ -1,5 +1,6 @@
 package Server;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import common.UserSelect;
@@ -105,6 +106,40 @@ public class EchoServer extends AbstractServer {
 			flag++;
 			break;
 		//error with the userselect action.
+			
+			
+			
+			/* ADDED BY AMIR*/
+		case LoadActivityById:
+		    List<String> activities = mysqlConnection.LoadLogActivitybyid(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+		    this.sendToAllClients(activities);
+		    flag++;
+		    break;
+		    /* ADDED BY AMIR*/
+		case LoadActivityBySerial:
+		    String activity = mysqlConnection.LoadLogActivityBySerialId(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+		    this.sendToAllClients(activity);
+		    flag++;
+		    break;
+		    /* ADDED BY AMIR*/
+		case SaveLogActivity:
+		    String[] activityData = infoFromUser.get(menuChoiceString).split(", ");
+		    boolean success = mysqlConnection.saveLogActivity(
+		        Integer.parseInt(activityData[0]),     // subscriberId
+		        activityData[1],                       // activityAction
+		        activityData[2],                       // bookBarcode
+		        activityData[3],                       // bookTitle
+		        activityData[4].equals("null") ? null : Integer.parseInt(activityData[4]),  // bookcopyCopyNo
+		        Date.valueOf(activityData[5])          // activityDate
+		    );
+		    
+		    if (success) {
+		        this.sendToAllClients("Updated");
+		    } else {
+		        this.sendToAllClients("Error");
+		    }
+		    flag++;
+		    break;
 		default:
 			System.out.println("Error with the choise? = " + menuChoiceString);
 			break;
@@ -113,6 +148,7 @@ public class EchoServer extends AbstractServer {
 		if (flag != 1) {
 			this.sendToAllClients("Error");
 		}
+		
 	}
 
 

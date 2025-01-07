@@ -8,7 +8,13 @@ public enum UserSelect {
     UpdateEmailAddress("Update Email Address"),
 	LoadSubscriber("Load Subscriber"),
 	Connected("Connected"),
-	Disconnect("Disconnect");
+	Disconnect("Disconnect"),
+	/* ADDED BY AMIR*/
+	LoadActivityById("Load Activities By ID"), 
+	/* ADDED BY AMIR*/
+    LoadActivityBySerial("Load Activity By Serial"),
+    /* ADDED BY AMIR*/
+	SaveLogActivity("Save Log Activity");
 
     private final String displayName;
 
