@@ -13,7 +13,7 @@ import java.util.List;
 public class ChatClient extends AbstractClient {
 
 	ChatIF clientUI;
-	public static List<String> subscribersTable = new ArrayList<String>();
+	public static List<String> listFromServer = new ArrayList<String>();
 	public static String fromserverString = new String();
 	public static boolean awaitResponse = false;
 
@@ -32,8 +32,8 @@ public class ChatClient extends AbstractClient {
 	 */
 	public void handleMessageFromServer(Object msg) {
 		//extracting the msg from the server upon the class.
-		if (msg.getClass().equals(subscribersTable.getClass())) {
-			subscribersTable = (List<String>) msg;
+		if (msg.getClass().equals(listFromServer.getClass())) {
+			listFromServer = (List<String>) msg;
 		}
 		else if (msg.getClass().equals(fromserverString.getClass())) {
 			this.fromserverString = (String) msg;

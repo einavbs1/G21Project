@@ -7,6 +7,9 @@ public enum UserSelect {
     UpdatePhoneNumber("Update Phone Number"),
     UpdateEmailAddress("Update Email Address"),
 	LoadSubscriber("Load Subscriber"),
+	GetBorrowedRecord("Get Borrowed Record"),
+	UpdateBorrowedReturnTime("Update Borrowed Return Time"),
+	AddBorrowedRedocrd("Add Borrowed Redocrd"),
 	Connected("Connected"),
 	Disconnect("Disconnect");
 

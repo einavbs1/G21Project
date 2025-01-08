@@ -80,6 +80,43 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients(RequestedID);
 			flag++;
 			break;
+		//This case is loading the requested borrowing records(by id) from the DB and sending to the client.
+		case GetBorrowedRecord:
+			String getBorrowedRecord[] = infoFromUser.get(menuChoiceString).split(", ");
+			String borrowedRecordTableByid = mysqlConnection.getBorrowedRecordFromDB(Integer.parseInt(getBorrowedRecord[0]));
+			this.sendToAllClients(borrowedRecordTableByid);
+			flag++;
+			break;
+		//This case is updating the expected borrowing time in the record from the client and sending to the DB.
+		case UpdateBorrowedReturnTime:
+			String updateBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
+			boolean borrowRecordUpdateSuccess = mysqlConnection.UpdateBorrowedRecordReturnTime(Integer.parseInt(updateBorrowRecordsdetails[0]),
+					 java.sql.Date.valueOf(updateBorrowRecordsdetails[6]), java.sql.Date.valueOf(updateBorrowRecordsdetails[7]),
+							 Integer.parseInt(updateBorrowRecordsdetails[10]));
+			
+			
+			if (borrowRecordUpdateSuccess) {
+				this.sendToAllClients("Borrow record has been updated");
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
+		//This case is getting new borrowing record from the client and saving in DB.
+		case AddBorrowedRedocrd:
+			String newBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
+			boolean borrowRecordCreateSuccess = mysqlConnection.createNewBorrowedRecord(Integer.parseInt(newBorrowRecordsdetails[0]), Integer.parseInt(newBorrowRecordsdetails[1]),
+					newBorrowRecordsdetails[2], newBorrowRecordsdetails[3], Integer.parseInt(newBorrowRecordsdetails[4]), java.sql.Date.valueOf(newBorrowRecordsdetails[5]),
+					java.sql.Date.valueOf(newBorrowRecordsdetails[6]), java.sql.Date.valueOf(newBorrowRecordsdetails[7]), Integer.parseInt(newBorrowRecordsdetails[8]),
+					newBorrowRecordsdetails[9],Integer.parseInt(newBorrowRecordsdetails[10]));
+			
+			if (borrowRecordCreateSuccess) {
+				this.sendToAllClients("Borrow record has been added");
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
 		//This case is Showing the client that connect to the server and showing it on the table GUI and shows a message.
 		case Connected:
 			String onlineStatuString = (clientIp + ", " + clientPCName + ", Connected");

@@ -6,7 +6,10 @@ package common;
 public enum UserSelect {
     ShowAllSubscribers("Show All Subscribers"),
     UpdatePhoneNumber("Update Phone Number"),
-    UpdateEmailAddress("Update Email Address");
+    UpdateEmailAddress("Update Email Address"),
+    GetBorrowedRecord("Get Borrowed Record"),
+	UpdateBorrowedReturnTime("Update Borrowed Return Time"),
+	AddBorrowedRedocrd("Add Borrowed Redocrd");
 
     private final String displayName;
 

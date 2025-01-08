@@ -110,10 +110,10 @@ public class MenuController {
 					ShowAllSubscribersController subtable = loader.getController();
 
 					// Check if the subscribers table is empty
-					if (ChatClient.subscribersTable == null || ChatClient.subscribersTable.isEmpty()) {
-						System.out.println("Empty Table=" + ChatClient.subscribersTable);
+					if (ChatClient.listFromServer == null || ChatClient.listFromServer.isEmpty()) {
+						System.out.println("Empty Table=" + ChatClient.listFromServer);
 					} else { // Pass the table directly to the controller
-						subtable.loadSubscribers(ChatClient.subscribersTable);
+						subtable.loadSubscribers(ChatClient.listFromServer);
 					}
 				});
 				return null;
