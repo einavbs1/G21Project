@@ -1,7 +1,10 @@
 package entity;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
+import client.ChatClient;
+import client.ClientUI;
 
 /**
  * Author: Einav
@@ -14,81 +17,114 @@ public class BookCopy extends Book {
 	private Date returnDate;
 	private int subscriberID;
 
-	/**Author: Einav
-	 * Constractor that load bookCopy from DB if exist.
+	/**
+	 * Author: Einav Constractor that load bookCopy from DB if exist.
+	 * 
 	 * @param barcode
 	 * @param CopyNo
 	 */
-	public BookCopy(int barcode, int CopyNo) {
+	public BookCopy(String barcode, int copyNo) {
 		super(barcode);
-		String[] str = getBookCopyFromDB(barcode);
+		String[] str = getBookCopyFromDB(barcode, copyNo);
 		loadBookCopy(str);
 	}
 
-
-	/**Constractor that adding new bookcopy to DB
+	/**
+	 * Author: Einav Constractor that adding new bookcopy to DB
+	 * 
 	 * @param barcode
-	 * @param CopyNo
-	 * @param isNew - just to distinguish between two constractors
 	 */
-	public BookCopy(int barcode, int CopyNo, Boolean isNew) {
+	public BookCopy(String barcode) {
 		super(barcode);
-		String newBookCopy = barcode + ", " + CopyNo + ", 1, 0, null, null";
+		int newCopyNo = getAllCopies() + 1;
+		String newBookCopy = barcode + ", " + newCopyNo + ", 1, 0, null, null";
 		/// addBookCopyToDB
-		// now load to this Book
-		loadBookCopy(getBookCopyFromDB(barcode));
-		super.addToAvailableCopies();
-		super.addToAllCopies();
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("CreateBookCopy", newBookCopy);
+		ClientUI.chat.accept(requestHashMap);
+		// after adding The bookCopy adding +1 to the book counter.
+		Book mybook = new Book(barcode);
+		mybook.addToAvailableCopies();
+		mybook.addToAllCopies();
+		mybook.UpdateDetails();
+		// loading this copy from db
+		String[] str = getBookCopyFromDB(barcode, newCopyNo);
+		loadBookCopy(str);
 	}
 
 	/**
-	 * private method that loading the details in this Book instance.
+	 * Author: Einav private method that loading the details in this Book instance.
 	 * 
 	 * @param str -book's details string array (usually from the DB).
 	 */
 	private void loadBookCopy(String[] str) {
-		barcode = Integer.parseInt(str[0]);
-		title = str[1];
-		subject = str[2];
-		description = str[3];
-		allCopies = Integer.parseInt(str[4]);
-		availableCopies = Integer.parseInt(str[5]);
-		ordersNumber = Integer.parseInt(str[6]);
-		lostNumber = Integer.parseInt(str[7]);
-		location = str[8];
+		barcode = str[0];
+		copyNo = Integer.parseInt(str[1]);
+		isAvailable = Integer.parseInt(str[2]);
+		isLost = Integer.parseInt(str[3]);
+		returnDate = Date.valueOf(str[4]);
+		subscriberID = Integer.parseInt(str[5]);
 	}
 
-	
-	
-	private String[] getBookCopyFromDB(int barcode) throws NoSuchElementException {
+	/**
+	 * Author: Einav
+	 * 
+	 * @param barcode
+	 * @return String[] - array of BookCopy's string with each field in array's
+	 *         positions.
+	 * @throws NoSuchElementException
+	 */
+	private String[] getBookCopyFromDB(String barcode, int copyNo) throws NoSuchElementException {
 		String str = new String();
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("GetBookCopy", barcode + ", " + String.valueOf(copyNo));
+		ClientUI.chat.accept(requestHashMap);
 		/// send request to DB to get the string.
+		str = ChatClient.fromserverString;
+		ChatClient.ResetServerString();
 		if (str.contains(",")) {
 			String[] parts = str.split(", ");
 			return parts;
 		} else {
 			throw new NoSuchElementException(
-					"We are not recognizing this barcode: " + barcode + ". We might add it soon.");
+					"This book :" + barcode + " has no copies in our library. We might add it soon.");
 		}
 	}
 
 	/**
-	 * After we set the new information that we want to save we will send request to
-	 * DB. see details in the setter section VVV.
+	 * Author: Einav After we set the new information that we want to save we will
+	 * send request to DB. see details in the setter section VVV.
 	 */
 	public void UpdateDetails() {
 		String newDetails = toString();
 		// send request to DB to save all this data.
-
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("UpdateBookCopyDetails", newDetails);
+		ClientUI.chat.accept(requestHashMap);
 		// loading new information from DB. ------- was before update might delete.
-		loadBookCopy(getBookCopyFromDB(barcode));
+		loadBookCopy(getBookCopyFromDB(barcode, copyNo));
 
 	}
 
-	
-	
-	
-
+	/**
+	 * Author: Einav checking if the same subscriber is the holder of this book at
+	 * this moment if he is so update to lost the book.
+	 * 
+	 * @param subid - subscriber id (holder of the book)
+	 * @throws Exception - id that lost the book doesn't hold this copy.
+	 */
+	public void lostThisCopy(int subid) throws Exception {
+		if (subscriberID == subid) {
+			returnDate = null;
+			Book mybook = new Book(barcode);
+			mybook.addToLostNumber();
+			mybook.UpdateDetails();
+			isLost = 1;
+			UpdateDetails();
+		} else {
+			throw new Exception("The id: " + subid + " isn't the owner of this bookcopy: " + barcode + ", " + copyNo);
+		}
+	}
 
 	@Override
 	public String toString() {
@@ -98,7 +134,7 @@ public class BookCopy extends Book {
 	///////////////////////
 	/// Getters
 	///////////////////////
-	public int getBarcode() {
+	public String getBarcode() {
 		return barcode;
 	}
 
@@ -118,9 +154,6 @@ public class BookCopy extends Book {
 		return location;
 	}
 
-
-	
-
 	/////////////////////////////////////////////////
 	/// Setters
 	///
@@ -132,7 +165,6 @@ public class BookCopy extends Book {
 	/// ******* can change specific things. *******
 	//////////////////////////////////////////////////
 
-
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
@@ -140,18 +172,5 @@ public class BookCopy extends Book {
 	public void setSubscriberID(int subscriberID) {
 		this.subscriberID = subscriberID;
 	}
-	
-	
-	
-	public void lostThisCopy(int subid) throws Exception {
-		if (subscriberID == subid) {
-			returnDate = null;
-			isLost = 1;
-			UpdateDetails();
-		} else {
-			throw new Exception("The id: " + subid + " isn't the owner of this bookcopy: " + barcode + ", " + copyNo);
-		}
-	}
-	
-	
+
 }

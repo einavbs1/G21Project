@@ -1,10 +1,16 @@
 package entity;
 
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+import client.ChatClient;
+import client.ClientUI;
+/**
+ * Author: Einav
+ */
 public class Book {
 
-	protected int barcode;
+	protected String barcode;
 	protected String title;
 	protected String subject;
 	protected String description;
@@ -14,18 +20,18 @@ public class Book {
 	protected int lostNumber;
 	protected String location;
 
-	/**
+	/**Author: Einav
 	 * Constractor that load book from DB if exist.
 	 * 
 	 * @param id
 	 */
-	public Book(int barcode) {
-		String[] str = getBookFromDB(barcode);
-		loadBook(str);
+	public Book(String barcode) {
+		loadBook(getBookFromDB(barcode));
 	}
 
 	
-	/** Constractor to add new book to DB
+	/**Author: Einav
+	 * Constractor to add new book to DB
 	 * @param barcode
 	 * @param title
 	 * @param subject
@@ -36,20 +42,23 @@ public class Book {
 	 * @param lostNumber
 	 * @param location
 	 */
-	public Book(int barcode, String title, String subject, String description, String location) {
+	public Book(String barcode, String title, String subject, String description, String location) {
 		String newBook = barcode + ", " + title + ", " + subject + ", " + description + ", 0, 0, 0, 0, " + location;
 		/// addBookToDB
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("CreateBook", newBook);
+		ClientUI.chat.accept(requestHashMap);		
 		// now load to this Book
 		loadBook(getBookFromDB(barcode));
 	}
 
-	/**
+	/**Author: Einav
 	 * private method that loading the details in this Book instance.
 	 * 
 	 * @param str -book's details string array (usually from the DB).
 	 */
 	private void loadBook(String[] str) {
-		barcode = Integer.parseInt(str[0]);
+		barcode = str[0];
 		title = str[1];
 		subject = str[2];
 		description = str[3];
@@ -60,9 +69,20 @@ public class Book {
 		location = str[8];
 	}
 
-	private String[] getBookFromDB(int barcode) throws NoSuchElementException {
+	/**Author: Einav
+	 * 
+	 * @param barcode
+	 * @return String[] - array of Book's string with each field in array's positions.
+	 * @throws NoSuchElementException
+	 */
+	private String[] getBookFromDB(String barcode) throws NoSuchElementException {
 		String str = new String();
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("GetBook", barcode);
+		ClientUI.chat.accept(requestHashMap);
 		/// send request to DB to get the string.
+		str = ChatClient.fromserverString;
+		ChatClient.ResetServerString();
 		if (str.contains(",")) {
 			String[] parts = str.split(", ");
 			return parts;
@@ -72,14 +92,16 @@ public class Book {
 		}
 	}
 
-	/**
-	 * After we set the new information that we want to save we will send request to
+	/**Author: Einav
+	 *  After we set the new information that we want to save we will send request to
 	 * DB. see details in the setter section VVV.
 	 */
 	public void UpdateDetails() {
 		String newDetails = toString();
 		// send request to DB to save all this data.
-
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("UpdateBookDetails", newDetails);
+		ClientUI.chat.accept(requestHashMap);
 		// loading new information from DB. ------- was before update might delete.
 		loadBook(getBookFromDB(barcode));
 
@@ -95,7 +117,7 @@ public class Book {
 	///////////////////////
 	///     Getters
 	///////////////////////
-	public int getBarcode() {
+	public String getBarcode() {
 		return barcode;
 	}
 

@@ -8,7 +8,15 @@ public enum UserSelect {
     UpdateEmailAddress("Update Email Address"),
 	LoadSubscriber("Load Subscriber"),
 	Connected("Connected"),
-	Disconnect("Disconnect");
+	Disconnect("Disconnect"),
+    ///////-----Einav books start.-----///////
+    CreateBook("Create Book"),
+    GetBook("Get Book"),
+    UpdateBookDetails("Update Book Details"),
+    CreateBookCopy("Create Book Copy"),
+    GetBookCopy("Get Book Copy"),
+    UpdateBookCopyDetails("Update Book Copy Details");
+	///////-----Einav books Done.-----///////
 
     private final String displayName;
 
