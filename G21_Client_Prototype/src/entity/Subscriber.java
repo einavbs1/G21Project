@@ -1,6 +1,10 @@
 package entity;
 
+import java.util.HashMap;
 import java.util.NoSuchElementException;
+
+import client.ChatClient;
+import client.ClientUI;
 
 public class Subscriber {
 
@@ -13,31 +17,40 @@ public class Subscriber {
 	private String status;
 
 	
-	/**Constractor that load id from DB if exist. 
+	/** Author: Avishag.
+	 * Constructor that load id from DB if exist. 
 	 * @param id
 	 */
 	public Subscriber(int id) {
-		String[] str = getStudentFromDB(id);
+		String[] str = getSubscriberFromDB(id);
 		loadSubscriber(str);
 	}
 	
-	/**Constractor that creating new subscriber and adding it to DB.
-	 * @param id
-	 * @param name
-	 * @param phoneNumber
-	 * @param email
-	 * @param password
+	
+	/** Author: Avishag.
+	 * Constructor that creates a new subscriber and adds it to the DB.
+	 * @param id          - Subscriber ID
+	 * @param name        - Subscriber name
+	 * @param phoneNumber - Subscriber phone number
+	 * @param email       - Subscriber email address
+	 * @param password    - Subscriber password
 	 */
 	public Subscriber(int id, String name, String phoneNumber, String email, String password) {
 		String newsub = id +", "+name+", 0,"+phoneNumber+", "+email+", "+password+", Active";
-		///addSוubscriberToDB
+		
+		///addSubscriberToDB
+		HashMap<String, String> addSubscriberMap = new HashMap<>();
+	    addSubscriberMap.put("AddNewSubscriber", newsub);
+	    ClientUI.chat.accept(addSubscriberMap);
+
 		//now load to this subscriber
-		String[] str = getStudentFromDB(id);
+		String[] str = getSubscriberFromDB(id);
 		loadSubscriber(str);
 	}
 	
 	
-	/**private method that loading the details in this id subscriber instance.
+	/** Author: Avishag.
+	 * private method that loading the details in this id subscriber instance.
 	 * @param str - subscriber's details string array (usually from the DB).
 	 */
 	private void loadSubscriber(String[] str) {
@@ -50,44 +63,59 @@ public class Subscriber {
 		status = str[6];
 	}
 
-	private String[] getStudentFromDB(int id) throws NoSuchElementException {
-		String str = new String();
-		/// send request to DB to get the string.
-		if (str.contains(",")) {
-			String[] parts = str.split(", ");
+	
+	/** Author: Avishag.
+	 * @param id - subscriber's id to get.
+	 */
+	private String[] getSubscriberFromDB(int id) throws NoSuchElementException {
+		String response = new String();
+		
+		/// send request to DB to get the string
+		
+	    HashMap<String, String> request = new HashMap<>();
+	    request.put("GetSubscriberDetails", String.valueOf(id));
+	    ClientUI.chat.accept(request);
+	    response = ChatClient.fromserverString;
+	    ChatClient.ResetServerString();
+	    
+		if (response.contains(",")) {
+			String[] parts = response.split(", ");
 			return parts;
 		} else {
 			throw new NoSuchElementException("The id: "+id+" is not registered to the system.");
 		}
 	}
-	
-	
 
-	/**
+	
+	/** Author: Avishag.
 	 * After we set the new information that we want to save we will send request to DB.
 	 * see details in the setter section VVV. 
 	 */
 	public void UpdateDetails(){
-		String newDetails = toString();
-		// send request to DB to save all this data.
-		
+	    String newDetails = toString();	    
+	    /// Send the update request to the server
+
+	    HashMap<String, String> updateMap = new HashMap<>();
+	    updateMap.put("UpdateSubscriber", newDetails);
+
+	    ClientUI.chat.accept(updateMap);
+	    
 		//loading new information from DB. ------- was before update might delete.
-		loadSubscriber(getStudentFromDB(id));
-		
+	    loadSubscriber(getSubscriberFromDB(id));
 	}
 	
 	
-	
-	/**toString of subscriber
-	 *
+	/** Author: Avishag.
+	 *toString of subscriber
 	 */
 	public String toString() {
 		return id+", "+name+", "+subscripption_details+", "+phoneNumber+", "+email+", "+password+", "+status;
 	}
 	
-	///////////////////////
-	///     Getters
-	///////////////////////
+	
+	/////////////////////////////////
+	/// Getters - Author: Avishag.
+	/////////////////////////////////
 	public int getId() {
 		return id;
 	}
@@ -116,8 +144,9 @@ public class Subscriber {
 		return status;
 	}
 	
+	
 	/////////////////////////////////////////////////
-	///     			Setters
+	///     	Setters - Author: Avishag.
 	///
 	///  if we want to update the subscriber details:
 	/// 	1. we will set the change.

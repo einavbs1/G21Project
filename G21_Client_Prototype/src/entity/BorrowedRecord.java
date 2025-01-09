@@ -1,18 +1,18 @@
 package entity;
 
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
 import client.ClientUI;
 
 /**
- * Author: Matan 
+ * Author: Matan
  */
 public class BorrowedRecord {
+
 	private int borrowNumber;
 	private int subscriberId;
 	private String bookBarcode;
@@ -24,11 +24,22 @@ public class BorrowedRecord {
 	private int librarianId;
 	private String librarianName;
 	private int borrowLostBook;
-	
-	//private static BorrowedRecords[] allBorrowedRecords;
-	
-	/**Author: Matan.
+
+
+	/**
+	 * Author: Matan. Constructor that load borrow records from DB if exist.
+	 * 
+	 * @param id
+	 */
+	public BorrowedRecord(int borrowNumber) {
+		loadBorrowRecord(getBorrowRecordFromDB(borrowNumber));
+	}
+
+	/**
+	 * Author: Matan.
+	 * 	
 	 * Constractor that add new borrow record to the DB.
+	 * 
 	 * @param borrowNumber
 	 * @param subscriberId
 	 * @param bookBarcode
@@ -41,68 +52,39 @@ public class BorrowedRecord {
 	 * @param librarianName
 	 * @param borrowLostBook
 	 */
-	public BorrowedRecord(int borrowNumber, int subscriberId, String bookBarcode, String bookTitle, int bookcopyNo, Date borrowDate,
-			Date borrowExpectReturnDate, Date borrowActualReturnDate, int librarianId, String librarianName,int borrowLostBook)
-	{
-		this.borrowNumber = borrowNumber;
-		this.subscriberId = subscriberId;
-		this.bookBarcode = bookBarcode;
-		this.bookTitle = bookTitle;
-		this.bookcopyNo = bookcopyNo;
-		this.borrowDate = borrowDate;
-		this.borrowExpectReturnDate = borrowExpectReturnDate;
-		this.borrowActualReturnDate = borrowActualReturnDate;
-		this.librarianId = librarianId;
-		this.librarianName = librarianName;
-		this.borrowLostBook = borrowLostBook;
+	public BorrowedRecord(int subscriberId, String bookBarcode, String bookTitle, int bookcopyNo, int librarianId,
+			String librarianName) {
+		Date currentDate = new Date(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.DAY_OF_MONTH, 14);
+        Date newReturnDate = new Date(calendar.getTimeInMillis());
+        
+		String newBorrow = subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "
+				+ currentDate + ", " + newReturnDate + ", null, " + librarianId + ", " + librarianName
+				+ ", 0";
+
+		// change to DB format
+		HashMap<String, String> AddNewBorrowMap = new HashMap<>();
+		AddNewBorrowMap.put("AddNewBorrow", newBorrow);
+		ClientUI.chat.accept(AddNewBorrowMap);
 		
-		String borrowRecord = toString();
+		String ordernumString = ChatClient.fromserverString;
+		ChatClient.ResetServerString();
 		
-		//change to DB format
-		HashMap<String, String> addBorrowRecordMap = new HashMap<>();
-		addBorrowRecordMap.put("AddBorrowRedocrd", borrowRecord);
-		ClientUI.chat.accept(addBorrowRecordMap);
+		int newOrderNum =Integer.parseInt(ordernumString);
 		
+		loadBorrowRecord(getBorrowRecordFromDB(newOrderNum));
+
 	}
-	
-	/** Author: Matan.
-	 * Constructor that load borrow records from DB if exist. 
-	 * @param id
-	 */
-	public BorrowedRecord(int borrowNumber) {
-		loadBorrowRecord(getBorrowRecordFromDB(borrowNumber));
-	}
-	/*
-	/**Author: Matan.
-	 * loading all Borrowed Records of subscriber.
-	 * @param str - BorrowRecord as string array (usually from the DB).
-	 *//*
-	private  static void loadBorrowRecords(List<String> listofstring) {
-		int i = 0;
-		for (String borrowedRecordString : listofstring) {
-			String[] borrowedRecordParts = borrowedRecordString.split(",");
-			
-			allBorrowedRecords[i].bookBarcode = borrowedRecordParts[0];
-			allBorrowedRecords[i].bookTitle = borrowedRecordParts[1];
-			allBorrowedRecords[i].bookcopyNo = Integer.parseInt(borrowedRecordParts[2]);
-			allBorrowedRecords[i].borrowActualReturnDate = Date.valueOf(borrowedRecordParts[3]);
-			allBorrowedRecords[i].borrowDate = Date.valueOf(borrowedRecordParts[4]);
-			allBorrowedRecords[i].borrowExpectReturnDate = Date.valueOf(borrowedRecordParts[5]);
-			allBorrowedRecords[i].borrowLostBook = Integer.parseInt(borrowedRecordParts[6]);
-			allBorrowedRecords[i].borrowNumber = Integer.parseInt(borrowedRecordParts[7]);
-			allBorrowedRecords[i].librarianId = Integer.parseInt(borrowedRecordParts[8]);
-			allBorrowedRecords[i].librarianName = borrowedRecordParts[9];
-			allBorrowedRecords[i].subscriberId = Integer.parseInt(borrowedRecordParts[10]);
-			
-			i++;
-		}
-	} */
-	
-	/**Author: Matan.
+
+
+	/**
+	 * Author: Matan.
 	 * loading the details in this BorrowRecord object.
 	 * @param str - BorrowRecord as string array (usually from the DB).
 	 */
-	private void loadBorrowRecord(String[]  str) {
+	private void loadBorrowRecord(String[] str) {
 		borrowNumber = Integer.parseInt(str[0]);
 		subscriberId = Integer.parseInt(str[1]);
 		bookBarcode = str[2];
@@ -110,141 +92,144 @@ public class BorrowedRecord {
 		bookcopyNo = Integer.parseInt(str[4]);
 		borrowDate = Date.valueOf(str[5]);
 		borrowExpectReturnDate = Date.valueOf(str[6]);
-		borrowActualReturnDate = Date.valueOf(str[7]);
+		borrowActualReturnDate = (str[7] == null || str[7].equals("")) ? null : Date.valueOf(str[7]);
 		librarianId = Integer.parseInt(str[8]);
 		librarianName = str[9];
 		borrowLostBook = Integer.parseInt(str[10]);
 	}
-	
-	/**Author: Matan.
-	 * @param subscriberId
-	 * @return - all borrow records of specific subcriber
+
+	/**
+	 * Author: Matan.
+	 * 
+	 * @param borrowNumber
+	 * @return borrow String[] of specific borrow number.
 	 * @throws NoSuchElementException
 	 */
 	private String[] getBorrowRecordFromDB(int borrowNumber) throws NoSuchElementException {
-		String borrowedRecord = new String();	
+		String borrowedRecord = new String();
 		HashMap<String, String> BorrowRecordHashMap = new HashMap<>();
-		BorrowRecordHashMap.put("getBorrowRecord", String.valueOf(subscriberId));
-		
+		BorrowRecordHashMap.put("GetBorrowRecord", String.valueOf(borrowNumber));
+
 		ClientUI.chat.accept(BorrowRecordHashMap); // send request to DB to get record
-		
+
 		borrowedRecord = ChatClient.fromserverString;
 		ChatClient.ResetServerString();
-		
+
 		if (borrowedRecord.contains(",")) {
 			String[] recordParts = borrowedRecord.split(", ");
 			return recordParts;
 		} else {
-			throw new NoSuchElementException("The subscriberId: "+subscriberId+" is not registered to the system.");
+			throw new NoSuchElementException("The borrowNumber: " + borrowNumber + " is not exists in the system.");
+		}
+	}
+
+	
+	/**
+	 * Author: Matan.
+	 * Update new return time and send update request to DB.
+	 */
+	public void UpdateBorrowDetails() {
+		String updatedBorrowRecord = toString();
+
+		// Send the update record to the server
+		HashMap<String, String> updatedBorrowRecordMap = new HashMap<>();
+		updatedBorrowRecordMap.put("UpdateBorrowDetails", updatedBorrowRecord);
+
+		ClientUI.chat.accept(updatedBorrowRecordMap);
+
+	}
+	
+	/** author: Einav
+	 * checking if the same subscriber is the owner of this borrow
+	 * and updating this borrow to be lost if so.
+	 * @param subid 
+	 * @throws Exception
+	 */
+	public void lostThisBook(int subid) throws Exception {
+		if (subscriberId == subid) {
+			borrowActualReturnDate = null;
+			borrowLostBook = 1;
+			UpdateBorrowDetails();
+		} else {
+			throw new Exception("The id: " + subid + " isn't the owner of this borrow: " + borrowNumber);
 		}
 	}
 	
-	/** Author: Matan.
-	 * Update new return time and send update request to DB.
-	 */
-	public void UpdateBorrowRecordReturnTime() {
-		String updatedBorrowRecord = toString();
-		
-		// Send the update record to the server
-		HashMap<String, String> updatedBorrowRecordMap = new HashMap<>();
-		updatedBorrowRecordMap.put("UpdateBorrowRecordReturnTime", updatedBorrowRecord);
-		
-		ClientUI.chat.accept(updatedBorrowRecordMap);
-		
-	}
-	
+
 	@Override
 	public String toString() {
-		return borrowNumber+", "+subscriberId+", "+bookBarcode+", "+bookTitle+", "+bookcopyNo+", "+borrowDate+", "+borrowExpectReturnDate+", "
-				+borrowActualReturnDate+", "+librarianId+", "+librarianName+", "+borrowLostBook;
+		return borrowNumber + ", " + subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "
+				+ borrowDate + ", " + borrowExpectReturnDate + ", " + borrowActualReturnDate + ", " + librarianId + ", "
+				+ librarianName + ", " + borrowLostBook;
 	}
-	
+
 	///////////////////////
-	///     Getters
+	/// Getters
 	///////////////////////
 
+	public int getBorrowNumber() {
+		return borrowNumber;
+	}
+
+	public int getSubscriberId() {
+		return subscriberId;
+	}
+	
 	public String getBookBarcode() {
 		return bookBarcode;
 	}
-
 
 	public String getBookTitle() {
 		return bookTitle;
 	}
 
-
 	public int getBookcopyNo() {
 		return bookcopyNo;
 	}
-
-
-	public Date getBorrowActualReturnDate() {
-		return borrowActualReturnDate;
-	}
-
 
 	public Date getBorrowDate() {
 		return borrowDate;
 	}
 
+	public Date getBorrowActualReturnDate() {
+		return borrowActualReturnDate;
+	}
 
 	public Date getBorrowExpectReturnDate() {
 		return borrowExpectReturnDate;
 	}
 
+	public int getLibrarianId() {
+		return librarianId;
+	}
+
+	public String getLibrarianName() {
+		return librarianName;
+	}
 
 	public int getBorrowLostBook() {
 		return borrowLostBook;
 	}
 
 
-	public int getBorrowNumber() {
-		return borrowNumber;
-	}
-
-
-	public int getLibrarianId() {
-		return librarianId;
-	}
-
-
-	public String getLibrarianName() {
-		return librarianName;
-	}
-
-
-	public int getSubscriberId() {
-		return subscriberId;
-	}
-	
 	/////////////////////////////////////////////////
-	///     			Setters
+	/// Setters
 	///
-	///  if we want to update the subscriber details:
-	/// 	1. we will set the change.
-	/// 	2. generate toString
-	/// 	3. send String to save in DB.
+	/// if we want to update the subscriber details:
+	/// 1. we will set the change.
+	/// 2. generate toString
+	/// 3. send String to save in DB.
 	///
-	///   ******* change only Dates(borrow extension) *******
+	/// ******* change only Dates(borrow extension) *******
 	//////////////////////////////////////////////////
-	
+
 	public void setBorrowActualReturnDate(Date borrowActualReturnDate) {
 		this.borrowActualReturnDate = borrowActualReturnDate;
 	}
-
 
 	public void setBorrowExpectReturnDate(Date borrowExpectReturnDate) {
 		this.borrowExpectReturnDate = borrowExpectReturnDate;
 	}
 
 
-	public void setBorrowLostBook(int borrowLostBook) {
-		this.borrowLostBook = borrowLostBook;
-	}
-
-
-	
-	
-	
-	
 }
