@@ -80,8 +80,7 @@ public class BookCopy extends Book {
 		requestHashMap.put("GetBookCopy", barcode + ", " + String.valueOf(copyNo));
 		ClientUI.chat.accept(requestHashMap);
 		/// send request to DB to get the string.
-		str = ChatClient.fromserverString;
-		ChatClient.ResetServerString();
+		str = ChatClient.getStringfromServer();
 		if (str.contains(",")) {
 			String[] parts = str.split(", ");
 			return parts;

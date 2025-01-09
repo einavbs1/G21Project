@@ -13,15 +13,36 @@ import java.util.List;
 public class ChatClient extends AbstractClient {
 
 	ChatIF clientUI;
-	public static List<String> listFromServer = new ArrayList<String>();
-	public static String fromserverString = new String();
+	private static List<String> listFromServer = new ArrayList<String>();
+	private static String fromserverString = new String();
 	public static boolean awaitResponse = false;
+	
 
 	public ChatClient(String host, int port, ChatIF clientUI) throws IOException {
 		super(host, port); // Call the superclass constructor
 		this.clientUI = clientUI;
 		// openConnection();
 	}
+	
+	/**Author: Einav
+	 * getting the respond from the server and clear the message. (who needed to take it took).
+	 * @return String - the respond from the server
+	 */
+	public static String getStringfromServer() {
+		String toRet = fromserverString;
+		fromserverString = new String();
+		return toRet;
+	}
+	/**Author: Einav
+	 * getting the respond from the server and clear the message. (who needed to take it took).
+	 * @return List<String> - the respond from the server
+	 */
+	public static List<String> getListfromServer() {
+		List<String> toRet = listFromServer;
+		listFromServer = new ArrayList<String>();
+		return toRet;
+	}
+	
 
 	/**
 	 * This method is handeling the msg from the server, we got 2 options to get the
@@ -43,15 +64,6 @@ public class ChatClient extends AbstractClient {
 		}
 		//note that we got the result right now.
 		awaitResponse = false;
-	}
-
-	/**
-	 * This method is for to reset the string after the client took the information
-	 * to the UI so nex time he come for the string he knows for sure its new
-	 * string.
-	 */
-	public static void ResetServerString() {
-		fromserverString = new String();
 	}
 
 	

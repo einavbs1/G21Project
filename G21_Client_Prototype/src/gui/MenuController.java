@@ -1,6 +1,7 @@
 package gui;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
@@ -108,12 +109,12 @@ public class MenuController {
 					ShowTheTable.put(key, "");
 					ClientUI.chat.accept(ShowTheTable);
 					ShowAllSubscribersController subtable = loader.getController();
-
+					List<String> list = ChatClient.getListfromServer();
 					// Check if the subscribers table is empty
-					if (ChatClient.listFromServer == null || ChatClient.listFromServer.isEmpty()) {
-						System.out.println("Empty Table=" + ChatClient.listFromServer);
+					if (list == null || list.isEmpty()) {
+						new Exception("Empty Table=" + list);
 					} else { // Pass the table directly to the controller
-						subtable.loadSubscribers(ChatClient.listFromServer);
+						subtable.loadSubscribers(list);
 					}
 				});
 				return null;

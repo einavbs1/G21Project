@@ -6,7 +6,13 @@ package common;
 public enum UserSelect {
     ShowAllSubscribers("Show All Subscribers"),
     UpdatePhoneNumber("Update Phone Number"),
-    UpdateEmailAddress("Update Email Address");
+    UpdateEmailAddress("Update Email Address"),
+    /* ADDED BY AMIR*/
+	LoadActivityById("Load Activities By ID"),
+	/* ADDED BY AMIR*/
+    LoadActivityBySerial("Load Activity By Serial"),
+    /* ADDED BY AMIR*/
+    SaveLogActivity("Save Log Activity");
 
     private final String displayName;
 

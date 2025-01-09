@@ -65,8 +65,7 @@ public class Librarian {
 	    HashMap<String, String> request = new HashMap<>();
 	    request.put("GetLibrarianDetails", String.valueOf(librarian_id));
 	    ClientUI.chat.accept(request);
-	    response = ChatClient.fromserverString;
-	    ChatClient.ResetServerString();
+	    response = ChatClient.getStringfromServer();
 	    
 		if (response.contains(",")) {
 			String[] parts = response.split(", ");

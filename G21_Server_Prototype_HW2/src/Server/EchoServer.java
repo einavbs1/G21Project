@@ -1,5 +1,6 @@
 package Server;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import common.UserSelect;
@@ -53,10 +54,11 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients(TheTable);
 			flag++;
 			break;
-			
+
 		// This case is getting the information to change from the user and saving in
 		// DB.
-		//This case is getting the information to change from the user and saving in DB.
+		// This case is getting the information to change from the user and saving in
+		// DB.
 		case UpdatePhoneNumber:
 			String idNphone[] = infoFromUser.get(menuChoiceString).split(" ");
 			boolean succ1 = mysqlConnection.updatephone(Integer.parseInt(idNphone[0]), idNphone[1]);
@@ -71,8 +73,9 @@ public class EchoServer extends AbstractServer {
 
 		// This case is getting the information to change from the user and saving in
 		// DB.
-			
-		//This case is getting the information to change from the user and saving in DB.
+
+		// This case is getting the information to change from the user and saving in
+		// DB.
 
 		case UpdateEmailAddress:
 			String idNemail[] = infoFromUser.get(menuChoiceString).split(" ");
@@ -86,13 +89,13 @@ public class EchoServer extends AbstractServer {
 			break;
 
 		// This case is loading the requested ID from the DB and sending to the client.
-		//This case is loading the requested ID from the DB and sending to the client.
+		// This case is loading the requested ID from the DB and sending to the client.
 		case LoadSubscriber:
 			String RequestedID = mysqlConnection.Load(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(RequestedID);
 			flag++;
 			break;
-			
+
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Einavs adding ///////////////////////
 
@@ -175,15 +178,16 @@ public class EchoServer extends AbstractServer {
 		////////////////////// END of Einavs adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
 
-			
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Avishag adding ///////////////////////
-			
-		//Author: Avishag.
-		//This case is getting the information to change from the user and saving in DB.
+
+		// Author: Avishag.
+		// This case is getting the information to change from the user and saving in
+		// DB.
 		case UpdateSubscriber:
 			String idNinfo[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ3 = mysqlConnection.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1], Integer.parseInt(idNinfo[2]), idNinfo[3], idNinfo[4], idNinfo[5], idNinfo[6]);
+			boolean succ3 = mysqlConnection.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1],
+					Integer.parseInt(idNinfo[2]), idNinfo[3], idNinfo[4], idNinfo[5], idNinfo[6]);
 			if (succ3) {
 				this.sendToAllClients("Updated");
 			} else {
@@ -191,12 +195,13 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-			
-			//Author: Avishag.
-			//This case is getting the information to add new user and saving in DB.
+
+		// Author: Avishag.
+		// This case is getting the information to add new user and saving in DB.
 		case AddNewSubscriber:
 			String idNinfoNew[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ4 = mysqlConnection.addNewSubscriber(Integer.parseInt(idNinfoNew[0]), idNinfoNew[1], Integer.parseInt(idNinfoNew[2]), idNinfoNew[3], idNinfoNew[4], idNinfoNew[5], idNinfoNew[6]);
+			boolean succ4 = mysqlConnection.addNewSubscriber(Integer.parseInt(idNinfoNew[0]), idNinfoNew[1],
+					Integer.parseInt(idNinfoNew[2]), idNinfoNew[3], idNinfoNew[4], idNinfoNew[5], idNinfoNew[6]);
 			if (succ4) {
 				this.sendToAllClients("Added");
 			} else {
@@ -204,27 +209,29 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-			
-			//Author: Avishag.
-			//This case is loading the requested ID from the DB and sending to the client.
+
+		// Author: Avishag.
+		// This case is loading the requested ID from the DB and sending to the client.
 		case GetSubscriberDetails:
-			String RequestedIDToGet = mysqlConnection.getSubscriberDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			String RequestedIDToGet = mysqlConnection
+					.getSubscriberDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(RequestedIDToGet);
 			flag++;
 			break;
-			
-		//////////////////////END of Avishag adding ///////////////////////
+
+		////////////////////// END of Avishag adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
-		
-			
+
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Yuval adding ///////////////////////
-			
-			//Author: Yuval.
-			//This case is getting the information to change from the user and saving in DB.
+
+		// Author: Yuval.
+		// This case is getting the information to change from the user and saving in
+		// DB.
 		case UpdateLibrarian:
 			String idNlibinfo[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ5 = mysqlConnection.updateLibrarianDetails(Integer.parseInt(idNlibinfo[0]), idNlibinfo[1], idNlibinfo[2]);
+			boolean succ5 = mysqlConnection.updateLibrarianDetails(Integer.parseInt(idNlibinfo[0]), idNlibinfo[1],
+					idNlibinfo[2]);
 			if (succ5) {
 				this.sendToAllClients("Updated");
 			} else {
@@ -232,12 +239,13 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-			
-			//Author: Yuval.
-			//This case is getting the information to add new Librarian and saving in DB.
+
+		// Author: Yuval.
+		// This case is getting the information to add new Librarian and saving in DB.
 		case AddNewLibrarian:
 			String idNinfoNewlib[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ6 = mysqlConnection.addNewLibrarian(Integer.parseInt(idNinfoNewlib[0]), idNinfoNewlib[1], idNinfoNewlib[2]);
+			boolean succ6 = mysqlConnection.addNewLibrarian(Integer.parseInt(idNinfoNewlib[0]), idNinfoNewlib[1],
+					idNinfoNewlib[2]);
 			if (succ6) {
 				this.sendToAllClients("Added");
 			} else {
@@ -245,38 +253,43 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-				
-			//Author: Yuval.
-			//This case is loading the requested Librarian ID from the DB and sending to the client.
+
+		// Author: Yuval.
+		// This case is loading the requested Librarian ID from the DB and sending to
+		// the client.
 		case GetLibrarianDetails:
-			String RequestedLibToGet = mysqlConnection.getLibrarianDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			String RequestedLibToGet = mysqlConnection
+					.getLibrarianDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(RequestedLibToGet);
 			flag++;
 			break;
-			
-		//////////////////////END of Yuval adding ///////////////////////
+
+		////////////////////// END of Yuval adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
-			
-				
+
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Matan adding ///////////////////////
-					
 
-		//This case is loading the requested borrowing records(by id) from the DB and sending to the client.
+		// This case is loading the requested borrowing records(by id) from the DB and
+		// sending to the client.
 		case GetBorrowRecord:
 			String getBorrowedRecord = infoFromUser.get(menuChoiceString);
-			String borrowedRecordTableByid = mysqlConnection.getBorrowedRecordFromDB(Integer.parseInt(getBorrowedRecord));
+			String borrowedRecordTableByid = mysqlConnection
+					.getBorrowedRecordFromDB(Integer.parseInt(getBorrowedRecord));
 			this.sendToAllClients(borrowedRecordTableByid);
 			flag++;
 			break;
-			
-		//This case is updating the expected borrowing time in the record from the client and sending to the DB.
+
+		// This case is updating the expected borrowing time in the record from the
+		// client and sending to the DB.
 		case UpdateBorrowDetails:
 			String updateBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean borrowRecordUpdateSuccess = mysqlConnection.UpdateBorrowedRecordReturnTime(Integer.parseInt(updateBorrowRecordsdetails[0]),
-					 java.sql.Date.valueOf(updateBorrowRecordsdetails[6]), java.sql.Date.valueOf(updateBorrowRecordsdetails[7]),
-							 Integer.parseInt(updateBorrowRecordsdetails[10]));
-			
+			boolean borrowRecordUpdateSuccess = mysqlConnection.UpdateBorrowedRecordReturnTime(
+					Integer.parseInt(updateBorrowRecordsdetails[0]),
+					java.sql.Date.valueOf(updateBorrowRecordsdetails[6]),
+					java.sql.Date.valueOf(updateBorrowRecordsdetails[7]),
+					Integer.parseInt(updateBorrowRecordsdetails[10]));
+
 			if (borrowRecordUpdateSuccess) {
 				this.sendToAllClients("Borrow record has been updated");
 			} else {
@@ -284,15 +297,17 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-		//This case is getting new borrowing record from the client and saving in DB.
+		// This case is getting new borrowing record from the client and saving in DB.
 		case AddNewBorrow:
 			String newBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
 			int newBorrowNumber = mysqlConnection.createNewBorrowedRecord(Integer.parseInt(newBorrowRecordsdetails[0]),
-					newBorrowRecordsdetails[1], newBorrowRecordsdetails[2], Integer.parseInt(newBorrowRecordsdetails[3]), java.sql.Date.valueOf(newBorrowRecordsdetails[4]),
-					java.sql.Date.valueOf(newBorrowRecordsdetails[5]), java.sql.Date.valueOf(newBorrowRecordsdetails[6]), Integer.parseInt(newBorrowRecordsdetails[7]),
-					newBorrowRecordsdetails[8],Integer.parseInt(newBorrowRecordsdetails[9]));
-			
-			if (newBorrowNumber>0) {
+					newBorrowRecordsdetails[1], newBorrowRecordsdetails[2],
+					Integer.parseInt(newBorrowRecordsdetails[3]), java.sql.Date.valueOf(newBorrowRecordsdetails[4]),
+					java.sql.Date.valueOf(newBorrowRecordsdetails[5]),
+					java.sql.Date.valueOf(newBorrowRecordsdetails[6]), Integer.parseInt(newBorrowRecordsdetails[7]),
+					newBorrowRecordsdetails[8], Integer.parseInt(newBorrowRecordsdetails[9]));
+
+			if (newBorrowNumber > 0) {
 				this.sendToAllClients(String.valueOf(newBorrowNumber));
 			} else {
 				this.sendToAllClients("Error");
@@ -300,14 +315,56 @@ public class EchoServer extends AbstractServer {
 			flag++;
 			break;
 
-			//////////////////////END of Matan adding ///////////////////////
-			////////////////////////////////////////////////////////////////////
-				
-					
-			////////////////////////////////////////////////////////////////////
-			////////////////////// start of ??? adding ///////////////////////
+		////////////////////// END of Matan adding ///////////////////////
+		////////////////////////////////////////////////////////////////////
+
+		////////////////////////////////////////////////////////////////////
+		////////////////////// start of Amir adding ///////////////////////
+
+		case AddNewLogActivity:
+			String[] activityData = infoFromUser.get(menuChoiceString).split(", ");
+			int NewActivityNumber = mysqlConnection.AddNewLogActivity(Integer.parseInt(activityData[0]), // subscriberId
+					activityData[1], // activityAction
+					activityData[2], // bookBarcode
+					activityData[3], // bookTitle
+					activityData[4].equals("null") ? null : Integer.parseInt(activityData[4]), // bookcopyCopyNo
+					Date.valueOf(activityData[5]) // activityDate
+			);
+
+			if (NewActivityNumber>0) {
+				this.sendToAllClients(String.valueOf(NewActivityNumber));
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
+
+		case LoadActivityById:
+			List<String> activities = mysqlConnection
+					.LoadLogActivitybyid(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			this.sendToAllClients(activities);
+			flag++;
+			break;
+
+		case LoadActivityBySerial:
+			String activity = mysqlConnection
+					.LoadLogActivityBySerialId(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			this.sendToAllClients(activity);
+			flag++;
+			break;
+
+		////////////////////// END of Amir adding ///////////////////////
+		////////////////////////////////////////////////////////////////////
+
+		////////////////////////////////////////////////////////////////////
+		////////////////////// start of Chen adding ///////////////////////
+
 			
-		//This case is Showing the client that connect to the server and showing it on the table GUI and shows a message.
+		//////////////////////END of Chen adding ///////////////////////
+		////////////////////////////////////////////////////////////////////
+		
+		// This case is Showing the client that connect to the server and showing it on
+		// the table GUI and shows a message.
 		case Connected:
 			String onlineStatuString = (clientIp + ", " + clientPCName + ", Connected");
 			popUpString = "Client from IP: " + clientIp + ", HostName: " + clientPCName + ", Status: Connected";
@@ -338,6 +395,7 @@ public class EchoServer extends AbstractServer {
 
 		// error with the userselect action. - probably didn't sent the key good from
 		// the client.
+		// error with the userselect action.
 		default:
 			System.out.println("Error with the choise? = " + menuChoiceString);
 			break;
@@ -346,6 +404,7 @@ public class EchoServer extends AbstractServer {
 		if (flag != 1) {
 			this.sendToAllClients("Error");
 		}
+
 	}
 
 	/**

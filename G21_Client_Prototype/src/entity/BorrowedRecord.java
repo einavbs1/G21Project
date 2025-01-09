@@ -69,8 +69,7 @@ public class BorrowedRecord {
 		AddNewBorrowMap.put("AddNewBorrow", newBorrow);
 		ClientUI.chat.accept(AddNewBorrowMap);
 		
-		String ordernumString = ChatClient.fromserverString;
-		ChatClient.ResetServerString();
+		String ordernumString = ChatClient.getStringfromServer();
 		
 		int newOrderNum =Integer.parseInt(ordernumString);
 		
@@ -112,8 +111,7 @@ public class BorrowedRecord {
 
 		ClientUI.chat.accept(BorrowRecordHashMap); // send request to DB to get record
 
-		borrowedRecord = ChatClient.fromserverString;
-		ChatClient.ResetServerString();
+		borrowedRecord = ChatClient.getStringfromServer();
 
 		if (borrowedRecord.contains(",")) {
 			String[] recordParts = borrowedRecord.split(", ");

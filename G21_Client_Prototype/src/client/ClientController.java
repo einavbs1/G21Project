@@ -37,6 +37,10 @@ public class ClientController implements ChatIF {
 	 * it to the client's message handler.
 	 */
 	public void accept(Object obj) {
+		//reset string and list every time we are sending request to server.
+		ChatClient.getStringfromServer();
+		ChatClient.getListfromServer();
+		//handle the message
 		client.handleMessageFromClientUI(obj);
 	}
 

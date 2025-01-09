@@ -104,8 +104,8 @@ public class ConnectionSetupController {
 							HashMap<String, String> connectionHash = new HashMap<>();
 							connectionHash.put("Connected", localIp);
 							ClientUI.chat.accept(connectionHash);
-
-							if (!ChatClient.fromserverString.equals("Error!")) {
+							String string = ChatClient.getStringfromServer();
+							if (!string.equals("Error!")) {
 								System.out.println("Connected to the server");
 								try {
 									FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Menu.fxml"));
@@ -126,7 +126,6 @@ public class ConnectionSetupController {
 								changeString("Connection failed.");
 							}
 
-							ChatClient.ResetServerString();
 						}
 					});
 					return null;

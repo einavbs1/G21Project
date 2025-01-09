@@ -27,7 +27,11 @@ public enum UserSelect {
 	///////-----Author: Matan.-----///////
 	AddNewBorrow("Add New Borrow"),
 	GetBorrowRecord("Get Borrow Record"),
-	UpdateBorrowDetails("Update Borrow Details");
+	UpdateBorrowDetails("Update Borrow Details"),
+	///////-----Author: Amir.-----///////
+	AddNewLogActivity("Add New Log Activity"),
+	LoadActivityById("Load Activities By ID"), 
+    LoadActivityBySerial("Load Activity By Serial");
 
     private final String displayName;
 

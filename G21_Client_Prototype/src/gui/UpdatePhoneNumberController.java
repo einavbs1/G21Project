@@ -98,12 +98,12 @@ public class UpdatePhoneNumberController {
 			Callable<Void> task = () -> {
 				Platform.runLater(() -> {
 					ClientUI.chat.accept(updateHashMap);
-					if (ChatClient.fromserverString.equals("Updated")) {
+					String str = ChatClient.getStringfromServer();
+					if (str.equals("Updated")) {
 						lblStatus.setText("Updated successfully.");
 					} else {
 						lblStatus.setText("Cant update.");
 					}
-					ChatClient.ResetServerString();
 				});
 				return null;
 			};
@@ -136,21 +136,15 @@ public class UpdatePhoneNumberController {
 		    HashMap<String, String> loadthisid = new HashMap<String, String>();
 			loadthisid.put("LoadSubscriber", idnumber);
 			ClientUI.chat.accept(loadthisid);
-			while (ChatClient.fromserverString.equals(new String())) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			if (!ChatClient.fromserverString.contains(",")) {
+			String str = ChatClient.getStringfromServer();
+
+			if (!str.contains(",")) {
 				lbliderr.setText("Cant load the requested ID. Please make sure you entered the right id.");
 			} else {
 				lbliderr.setText("Requested ID loaded.\nYou can update ONLY the phone number:");
 				loaded = 1;
-				LoadDetails(ChatClient.fromserverString);
+				LoadDetails(str);
 			}
-			ChatClient.ResetServerString();
 		//The string contains more chars that not digits or empty.
 		} else {
 			lbliderr.setText("Please enter id that contains ONLY digits");
