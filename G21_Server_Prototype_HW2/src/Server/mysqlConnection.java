@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,8 +150,8 @@ public class mysqlConnection {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////// --- Einavs books & bookCopy Entity
-	////////////////////////////////////////////////////////////////////////////////////////// section---///////////////////////
+	///////////////////// --- Einavs books Entity section---///////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Author: Einav This method is getting all information to create new Book in DB
@@ -191,39 +192,6 @@ public class mysqlConnection {
 	}
 
 	/**
-	 * Author: Einav This method is getting all information to create new BookCopy
-	 * in DB
-	 * 
-	 * @param barcode
-	 * @param copyNo
-	 * @param isAvailable
-	 * @param isLost
-	 * @param returnDate
-	 * @param subscriberID
-	 * @return
-	 */
-	public static boolean addNewBookCopyToDB(String barcode, int copyNo, int isAvailable, int isLost, Date returnDate,
-			int subscriberID) {
-		PreparedStatement stmt;
-		try {
-			stmt = conn.prepareStatement("INSERT INTO bookcopy VALUES (?, ?, ?, ?, ?, ?)");
-
-			stmt.setString(1, barcode);
-			stmt.setInt(2, copyNo);
-			stmt.setInt(3, isAvailable);
-			stmt.setInt(4, isLost);
-			stmt.setDate(5, returnDate);
-			stmt.setInt(6, subscriberID);
-
-			stmt.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	/**
 	 * Author: Einav This method is returning book string by his barcode.
 	 * 
 	 * @param barcode
@@ -248,43 +216,6 @@ public class mysqlConnection {
 					int book_lostNumber = rs.getInt("book_lostNumber");
 					String book_location = rs.getString("book_location");
 
-					bookData = book_barcode + ", " + book_title + ", " + book_subject + ", " + book_description + ", "
-							+ book_allCopies + ", " + book_availableCopies + ", " + book_ordersNumber + ", "
-							+ book_lostNumber + ", " + book_location;
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return bookData;
-	}
-
-	/**
-	 * Author: Einav This method is returning bookCopy string by his barcode and
-	 * copyNo.
-	 * 
-	 * @param barcode
-	 * @param copyNo
-	 * @return String of the requested book
-	 */
-	public static String GetBookCopyFromDB(String barcode, int copyNo) {
-		String query = "SELECT * FROM BookCopy WHERE book_barcode = ? AND bookcopy_copyNo = ?";
-		String bookData = "Empty";
-		try (PreparedStatement stmt = conn.prepareStatement(query)) {
-			stmt.setString(1, barcode);
-			stmt.setInt(2, copyNo);
-			try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) {
-					String book_barcode = rs.getString("book_barcode");
-					String book_title = rs.getString("book_title");
-					String book_subject = rs.getString("book_subject");
-					String book_description = rs.getString("book_description");
-					int book_allCopies = rs.getInt("book_allCopies");
-					int book_availableCopies = rs.getInt("book_availableCopies");
-					int book_ordersNumber = rs.getInt("book_ordersNumber");
-					int book_lostNumber = rs.getInt("book_lostNumber");
-					String book_location = rs.getString("book_location");
 					bookData = book_barcode + ", " + book_title + ", " + book_subject + ", " + book_description + ", "
 							+ book_allCopies + ", " + book_availableCopies + ", " + book_ordersNumber + ", "
 							+ book_lostNumber + ", " + book_location;
@@ -337,6 +268,85 @@ public class mysqlConnection {
 		}
 	}
 
+	/////////////////////// END //////////////////////////////////
+	///////////////////// --- Einavs books Entity section ---///////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////// --- Einavs bookCopy Entity
+	////////////////////////////////////////////////////////////////////////////////////////// section---///////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * Author: Einav This method is getting all information to create new BookCopy
+	 * in DB
+	 * 
+	 * @param barcode
+	 * @param copyNo
+	 * @param isAvailable
+	 * @param isLost
+	 * @param returnDate
+	 * @param subscriberID
+	 * @return
+	 */
+	public static boolean addNewBookCopyToDB(String barcode, int copyNo, int isAvailable, int isLost, Date returnDate,
+			int subscriberID) {
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement("INSERT INTO bookcopy VALUES (?, ?, ?, ?, ?, ?)");
+
+			stmt.setString(1, barcode);
+			stmt.setInt(2, copyNo);
+			stmt.setInt(3, isAvailable);
+			stmt.setInt(4, isLost);
+			stmt.setDate(5, returnDate);
+			stmt.setInt(6, subscriberID);
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * Author: Einav This method is returning bookCopy string by his barcode and
+	 * copyNo.
+	 * 
+	 * @param barcode
+	 * @param copyNo
+	 * @return String of the requested book
+	 */
+	public static String GetBookCopyFromDB(String barcode, int copyNo) {
+		String query = "SELECT * FROM BookCopy WHERE book_barcode = ? AND bookcopy_copyNo = ?";
+		String bookData = "Empty";
+		try (PreparedStatement stmt = conn.prepareStatement(query)) {
+			stmt.setString(1, barcode);
+			stmt.setInt(2, copyNo);
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					String book_barcode = rs.getString("book_barcode");
+					String book_title = rs.getString("book_title");
+					String book_subject = rs.getString("book_subject");
+					String book_description = rs.getString("book_description");
+					int book_allCopies = rs.getInt("book_allCopies");
+					int book_availableCopies = rs.getInt("book_availableCopies");
+					int book_ordersNumber = rs.getInt("book_ordersNumber");
+					int book_lostNumber = rs.getInt("book_lostNumber");
+					String book_location = rs.getString("book_location");
+					bookData = book_barcode + ", " + book_title + ", " + book_subject + ", " + book_description + ", "
+							+ book_allCopies + ", " + book_availableCopies + ", " + book_ordersNumber + ", "
+							+ book_lostNumber + ", " + book_location;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return bookData;
+	}
+
 	/**
 	 * Author: Einav this method is updating the bookCopy details if we need to
 	 * change.
@@ -369,14 +379,16 @@ public class mysqlConnection {
 			return false;
 		}
 	}
+
 	/////////////////////// END //////////////////////////////////
-	///////////////////// --- Einavs books & bookCopy Entity section
+	///////////////////// --- Einavs bookCopy Entity section
 	/////////////////////// ---///////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////// --- Avishag Subscriber Entity
 	////////////////////////////////////////////////////////////////////////////////////////// section---///////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Author: Avishag. This method adds a new subscriber to the database.
@@ -771,13 +783,12 @@ public class mysqlConnection {
 
 	/* ADDED BY AMIR */
 	public static int AddNewLogActivity(int subscriberId, String activityAction, String bookBarcode, String bookTitle,
-			Integer bookcopyCopyNo, Date activityDate) {
-		String query = "INSERT INTO activitylog VALUES (?, ?, ?, ?, ?, ?)";
+			int bookcopyCopyNo, Date activityDate) {
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement("INSERT INTO activitylog VALUES (?, ?, ?, ?, ?, ?)",
+					PreparedStatement.RETURN_GENERATED_KEYS);
 
-			PreparedStatement stmt;
-			try {
-			stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			
 			stmt.setInt(1, subscriberId);
 			stmt.setString(2, activityAction);
 			stmt.setString(3, bookBarcode);
@@ -792,7 +803,7 @@ public class mysqlConnection {
 			return -1;
 		}
 	}
-	
+
 	/////////////////////// END //////////////////////////////////
 	///////////////////// --- Amir LogActivity Entity section
 	/////////////////////// ---///////////////////////
@@ -801,9 +812,129 @@ public class mysqlConnection {
 	//////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////// --- Chen Orders Entity section---///////////////////////
 
-	
-	
-	
+	/**
+	 * Author: Chen Creates a new order in the database.
+	 *
+	 * @param subscriberId The ID of the subscriber making the order
+	 * @param bookBarcode  The barcode of the book being ordered
+	 * @return int The new order number if successful, -1 if failed
+	 * 
+	 *         Note: This method automatically: - Generates the next available order
+	 *         number - Sets the request date to current date - Sets the initial
+	 *         status to 0 (pending)
+	 */
+	public static int createOrder(int subscriberId, String bookBarcode) {
+
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement("INSERT INTO orders VALUES (?, ?, ?, ?)",
+					PreparedStatement.RETURN_GENERATED_KEYS);
+
+			stmt.setInt(1, subscriberId);
+			stmt.setString(2, bookBarcode);
+			stmt.setDate(3, new java.sql.Date(System.currentTimeMillis()));
+			stmt.setInt(4, 0); // Initial status - pending (waiting)
+
+			int CreatedOrderNum = stmt.executeUpdate();
+			return CreatedOrderNum;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	/**
+	 * Author: Chen Retrieves all orders from the database.
+	 * 
+	 * @return List<String> A list of strings, each representing an order with its
+	 *         details in the format: "orderNumber, subscriberId, bookBarcode,
+	 *         requestDate, status, arrivedDate"
+	 */
+	public static List<String> GetOrdersTable() {
+		List<String> orders = new ArrayList<>();
+		String query = "SELECT * FROM Orders";
+
+		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+			while (rs.next()) {
+				String orderData = rs.getInt("order_number") + ", " + rs.getInt("subscriber_id") + ", "
+						+ rs.getString("book_barcode") + ", " + rs.getDate("order_requestedDate") + ", "
+						+ rs.getInt("order_status") + ", " + rs.getDate("order_bookArrivedDate");
+				orders.add(orderData);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return orders;
+	}
+
+	/**
+	 * Author: Chen Loads a specific order from the database.
+	 * 
+	 * @param orderNumber The unique identifier of the order to load
+	 * @return String The order details as a comma-separated string, or "Empty" if
+	 *         not found
+	 */
+
+	public static String LoadOrder(int orderNumber) {
+		String query = "SELECT * FROM Orders WHERE order_number = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, orderNumber);
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				return rs.getInt("order_number") + ", " + rs.getInt("subscriber_id") + ", "
+						+ rs.getString("book_barcode") + ", " + rs.getInt("bookcopy_copyNo") + ", "
+						+ rs.getDate("order_requestedDate") + ", " + rs.getInt("order_status") + ", "
+						+ (rs.getDate("order_bookArrivedDate") == null ? "null" : rs.getDate("order_bookArrivedDate"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "Empty";
+	}
+
+	/**
+	 * Author: Chen Updates an existing order's details in the database.
+	 * 
+	 * @param orderNumber  The unique identifier of the order to update
+	 * @param subscriberId The ID of the subscriber associated with the order
+	 * @param bookBarcode  The barcode of the book being ordered
+	 * @param copyNo       The copy number of the book
+	 * @param requestDate  The date when the order was requested
+	 * @param status       The new status of the order (-1: cancelled, 0: pending,
+	 *                     1: fulfilled)
+	 * @param arrivedDate  The date when the book arrived (can be null)
+	 * @return boolean True if update was successful, false otherwise
+	 */
+	public static boolean updateOrderDetails(int orderNumber, int subscriberId, String bookBarcode, int copyNo,
+			Date requestDate, int status, Date arrivedDate) {
+		try {
+			String query = "UPDATE Orders SET subscriber_id = ?, book_barcode = ?, "
+					+ "bookcopy_copyNo = ?, order_requestedDate = ?, " + "order_status = ?, order_bookArrivedDate = ? "
+					+ "WHERE order_number = ?";
+
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, subscriberId);
+			pstmt.setString(2, bookBarcode);
+			pstmt.setInt(3, copyNo);
+			pstmt.setDate(4, requestDate);
+			pstmt.setInt(5, status);
+			if (arrivedDate != null) {
+				pstmt.setDate(6, arrivedDate);
+			} else {
+				pstmt.setNull(6, Types.DATE);
+			}
+			pstmt.setInt(7, orderNumber);
+
+			int rowsAffected = pstmt.executeUpdate();
+			return rowsAffected > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	/////////////////////// END //////////////////////////////////
 	///////////////////// --- Chen Orders Entity section ---///////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////

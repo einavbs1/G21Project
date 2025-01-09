@@ -331,7 +331,7 @@ public class EchoServer extends AbstractServer {
 					Date.valueOf(activityData[5]) // activityDate
 			);
 
-			if (NewActivityNumber>0) {
+			if (NewActivityNumber > 0) {
 				this.sendToAllClients(String.valueOf(NewActivityNumber));
 			} else {
 				this.sendToAllClients("Error");
@@ -359,10 +359,64 @@ public class EchoServer extends AbstractServer {
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Chen adding ///////////////////////
 
-			
-		//////////////////////END of Chen adding ///////////////////////
+		// This case Sending all existing orders from the orders table to client. (chen
+		// tsafir)
+		case ShowAllOrders:
+			List<String> ordersTable = mysqlConnection.GetOrdersTable();
+			this.sendToAllClients(ordersTable);
+			flag++;
+			break;
+		// This case Retrieves details of a specific order by order number and sends the
+		// information to the client. (chen tsafir)
+		case LoadOrder:
+			String requestedOrder = mysqlConnection.LoadOrder(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			this.sendToAllClients(requestedOrder); // send the string or "empty"
+			flag++;
+			break;
+		// This case Creates a new order with the details provided by the user and sends
+		// the order number to client. (chen tsafir)
+		case CreateNewOrder:
+			String[] orderDetails = infoFromUser.get(menuChoiceString).split(" ");
+			int newOrderNum = mysqlConnection.createOrder(Integer.parseInt(orderDetails[0]), orderDetails[1]);
+			if (newOrderNum != -1) {
+				this.sendToAllClients("OrderCreated:" + newOrderNum);
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
+
+		// This case Updating the order details (chen tsafir)
+		case UpdateOrderDetails:
+			try {
+				String[] orderData = infoFromUser.get(menuChoiceString).split(", ");
+				if (orderData.length < 7) {
+					this.sendToAllClients("Error: Missing data");
+					break;
+				}
+
+				boolean success = mysqlConnection.updateOrderDetails(Integer.parseInt(orderData[0]),
+						Integer.parseInt(orderData[1]), orderData[2], Integer.parseInt(orderData[3]),
+						Date.valueOf(orderData[4]), Integer.parseInt(orderData[5]),
+						orderData[6].equals("null") ? null : Date.valueOf(orderData[6]));
+
+				if (success) {
+					this.sendToAllClients("Updated");
+				} else {
+					this.sendToAllClients("Error");
+				}
+			} catch (NumberFormatException e) {
+				this.sendToAllClients("Error: Invalid number format");
+			} catch (IllegalArgumentException e) {
+				this.sendToAllClients("Error: Invalid date format");
+			}
+			flag++;
+			break;
+
+		////////////////////// END of Chen adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
-		
+
+		// error with the userselect action.
 		// This case is Showing the client that connect to the server and showing it on
 		// the table GUI and shows a message.
 		case Connected:

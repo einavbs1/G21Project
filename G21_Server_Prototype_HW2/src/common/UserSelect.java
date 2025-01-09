@@ -31,7 +31,12 @@ public enum UserSelect {
 	///////-----Author: Amir.-----///////
 	AddNewLogActivity("Add New Log Activity"),
 	LoadActivityById("Load Activities By ID"), 
-    LoadActivityBySerial("Load Activity By Serial");
+    LoadActivityBySerial("Load Activity By Serial"),
+	///////-----Author: Chen.-----///////
+    ShowAllOrders("Show All Orders"),
+    CreateNewOrder("Create New Order"),
+    LoadOrder("Load Order"),
+    UpdateOrderDetails("Update Order Details");
 
     private final String displayName;
 
