@@ -16,6 +16,10 @@ public enum UserSelect {
     CreateBookCopy("Create Book Copy"),
     GetBookCopy("Get Book Copy"),
     UpdateBookCopyDetails("Update Book Copy Details"),
+    CreateNotification("Create Notification"),
+    GetNotification("Get Notification"),
+    CreateReminder("Create Reminder"),
+    GetReminder("Get Reminder"),
 	///////-----Author: Avishag.-----///////
 	AddNewSubscriber("Add New Subscriber"),
 	GetSubscriberDetails("Get Subscriber Details"),

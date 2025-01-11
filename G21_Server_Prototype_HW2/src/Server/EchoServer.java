@@ -175,6 +175,48 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
+			
+		case CreateNotification:
+			String NewNotificationDetails[] = infoFromUser.get(menuChoiceString).split(", ");
+			int NotificationCreateNumber = mysqlConnection.addNewNotificationToDB(NewNotificationDetails[0],
+					Integer.parseInt(NewNotificationDetails[1]), java.sql.Date.valueOf(NewNotificationDetails[2]),
+					Integer.parseInt(NewNotificationDetails[3]));
+			if (NotificationCreateNumber > 0) {
+				this.sendToAllClients(String.valueOf(NotificationCreateNumber));
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
+			
+		case GetNotification:
+			String GetNotiDetails = infoFromUser.get(menuChoiceString);
+			String MyNotification = mysqlConnection.GetNotification(Integer.valueOf(GetNotiDetails));
+			this.sendToAllClients(MyNotification);
+			flag++;
+			break;
+			
+		case CreateReminder:
+			String NewReminderDetails[] = infoFromUser.get(menuChoiceString).split(", ");
+			int ReminderCreateNumber = mysqlConnection.addNewReminderToDB(NewReminderDetails[0],
+					Integer.parseInt(NewReminderDetails[1]), NewReminderDetails[2], NewReminderDetails[3], java.sql.Date.valueOf(NewReminderDetails[4]),
+					Integer.parseInt(NewReminderDetails[5]));
+			if (ReminderCreateNumber > 0) {
+				this.sendToAllClients(String.valueOf(ReminderCreateNumber));
+			} else {
+				this.sendToAllClients("Error");
+			}
+			flag++;
+			break;
+			
+		case GetReminder:
+			String GetReminderDetails = infoFromUser.get(menuChoiceString);
+			String MyReminder = mysqlConnection.GetNotification(Integer.valueOf(GetReminderDetails));
+			this.sendToAllClients(MyReminder);
+			flag++;
+			break;
+			
+			
 		////////////////////// END of Einavs adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
 
@@ -218,6 +260,7 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients(RequestedIDToGet);
 			flag++;
 			break;
+		
 
 		////////////////////// END of Avishag adding ///////////////////////
 		////////////////////////////////////////////////////////////////////

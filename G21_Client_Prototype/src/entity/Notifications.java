@@ -36,7 +36,7 @@ public class Notifications {
 		String newNotification = message + ", " + subscriberID + ", " + date + ", " + borrow_number;
 		/// addBookToDB
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("CreateBook", newNotification);
+		requestHashMap.put("CreateNotification", newNotification);
 		ClientUI.chat.accept(requestHashMap);		
 		// now load to this Book
 		String NewNotificationString = ChatClient.getStringfromServer();
