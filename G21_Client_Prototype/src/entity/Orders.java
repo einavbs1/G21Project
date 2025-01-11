@@ -172,7 +172,7 @@ public class Orders {
 		this.order_status = status;
 	}
 
-	public void cancelReservation() {
+	/*public void cancelReservation() {
 		this.order_status = -1;
 		UpdateDetails();
 	}
@@ -181,7 +181,7 @@ public class Orders {
 		this.order_status = 1;
 		this.order_bookArrivedDate = new Date(System.currentTimeMillis());
 		UpdateDetails();
-	}
+	}*/
 
 	public void setBookArrivedDate(Date arrivedDate) {
 		this.order_bookArrivedDate = arrivedDate;
