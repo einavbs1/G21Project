@@ -1,6 +1,6 @@
 /client/
 /common/
+/controllers/
 /entity/
 /gui/
-/controllers/
-/css/
+/bin/
