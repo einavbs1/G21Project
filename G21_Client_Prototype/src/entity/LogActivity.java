@@ -9,6 +9,7 @@ import client.ClientUI;
 
 //CLASS ADDED BY AMIR
 public class LogActivity {
+	
     private int activitySerial;
     private int subscriberId;
     private String activityAction;

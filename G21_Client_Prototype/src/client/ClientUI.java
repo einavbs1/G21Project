@@ -10,7 +10,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
-import gui.ConnectionSetupController;
+import controllers.ConnectionSetupController;
 
 /**This class is starting the clientUI that we see
  * 

@@ -1,4 +1,4 @@
-package gui;
+package controllers;
 
 import java.util.HashMap;
 import java.util.List;

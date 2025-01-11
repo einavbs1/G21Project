@@ -1,4 +1,4 @@
-package gui;
+package controllers;
 
 import java.io.IOException;
 import java.util.HashMap;

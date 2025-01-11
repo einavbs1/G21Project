@@ -2,4 +2,5 @@
 /common/
 /entity/
 /gui/
-/bin/
+/controllers/
+/css/

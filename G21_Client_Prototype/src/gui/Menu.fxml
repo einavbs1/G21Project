@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="171.0" prefWidth="319.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
+<AnchorPane prefHeight="171.0" prefWidth="319.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
    <children>
       <Button id="btnExit" fx:id="btnExit" layoutX="31.0" layoutY="118.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
       <Label id="lblinstructions" fx:id="lblinstructions" layoutX="60.0" layoutY="35.0" text="Select the action that you want to do:" />

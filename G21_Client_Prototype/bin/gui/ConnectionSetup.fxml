@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="261.0" prefWidth="246.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ConnectionSetupController">
+<AnchorPane prefHeight="261.0" prefWidth="246.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ConnectionSetupController">
    <children>
       <Button id="btnExit" fx:id="btnExit" layoutX="14.0" layoutY="212.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
       <Button id="btnConnect" fx:id="btnConnect" layoutX="138.0" layoutY="206.0" mnemonicParsing="false" onAction="#Connect" prefHeight="38.0" prefWidth="90.0" text="Connect">
