@@ -8,6 +8,7 @@ import gui.ClientConnectionStatusController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ocsf.server.*;
+import queries.*;
 
 /*
  * This class is defining as a server
@@ -102,7 +103,7 @@ public class EchoServer extends AbstractServer {
 		// This case is adding the book to the DB.
 		case CreateBook:
 			String NewBookDetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean BookCreatesucc = mysqlConnection.addNewBookToDB(NewBookDetails[0], NewBookDetails[1],
+			boolean BookCreatesucc = queriesForBooks.addNewBookToDB(NewBookDetails[0], NewBookDetails[1],
 					NewBookDetails[2], NewBookDetails[3], Integer.parseInt(NewBookDetails[4]),
 					Integer.parseInt(NewBookDetails[5]), Integer.parseInt(NewBookDetails[6]),
 					Integer.parseInt(NewBookDetails[7]), NewBookDetails[8]);
@@ -116,7 +117,7 @@ public class EchoServer extends AbstractServer {
 
 		// This case is getting book from DB with barcode and returning to client.
 		case GetBook:
-			String RequestedBookFromDB = mysqlConnection.GetBookFromDB(infoFromUser.get(menuChoiceString));
+			String RequestedBookFromDB = queriesForBooks.GetBookFromDB(infoFromUser.get(menuChoiceString));
 			this.sendToAllClients(RequestedBookFromDB);
 			flag++;
 			break;
@@ -124,7 +125,7 @@ public class EchoServer extends AbstractServer {
 		// This case is updating the book details in the DB.
 		case UpdateBookDetails:
 			String UpdateBookDetailes[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean UpdateBookSucc = mysqlConnection.updateBookDetails(UpdateBookDetailes[0], UpdateBookDetailes[1],
+			boolean UpdateBookSucc = queriesForBooks.updateBookDetails(UpdateBookDetailes[0], UpdateBookDetailes[1],
 					UpdateBookDetailes[2], UpdateBookDetailes[3], Integer.parseInt(UpdateBookDetailes[4]),
 					Integer.parseInt(UpdateBookDetailes[5]), Integer.parseInt(UpdateBookDetailes[6]),
 					Integer.parseInt(UpdateBookDetailes[7]), UpdateBookDetailes[8]);
@@ -139,7 +140,7 @@ public class EchoServer extends AbstractServer {
 		// This case is adding the bookCopy to the DB.
 		case CreateBookCopy:
 			String NewBookCopyDetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean BookCopyCreatesucc = mysqlConnection.addNewBookCopyToDB(NewBookCopyDetails[0],
+			boolean BookCopyCreatesucc = queriesForBookCopy.addNewBookCopyToDB(NewBookCopyDetails[0],
 					Integer.parseInt(NewBookCopyDetails[1]), Integer.parseInt(NewBookCopyDetails[2]),
 					Integer.parseInt(NewBookCopyDetails[3]), java.sql.Date.valueOf(NewBookCopyDetails[4]),
 					Integer.parseInt(NewBookCopyDetails[5]));
@@ -155,7 +156,7 @@ public class EchoServer extends AbstractServer {
 		// client.
 		case GetBookCopy:
 			String GetBookCopyDetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			String RequestedBookCopyFromDB = mysqlConnection.GetBookCopyFromDB(GetBookCopyDetails[0],
+			String RequestedBookCopyFromDB = queriesForBookCopy.GetBookCopyFromDB(GetBookCopyDetails[0],
 					Integer.parseInt(GetBookCopyDetails[1]));
 			this.sendToAllClients(RequestedBookCopyFromDB);
 			flag++;
@@ -164,7 +165,7 @@ public class EchoServer extends AbstractServer {
 		// This case is updating the bookCopy details in the DB.
 		case UpdateBookCopyDetails:
 			String UpdateBookCopyDetailes[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean UpdateBookCopySucc = mysqlConnection.updateBookCopyDetails(UpdateBookCopyDetailes[0],
+			boolean UpdateBookCopySucc = queriesForBookCopy.updateBookCopyDetails(UpdateBookCopyDetailes[0],
 					Integer.parseInt(UpdateBookCopyDetailes[1]), Integer.parseInt(UpdateBookCopyDetailes[2]),
 					Integer.parseInt(UpdateBookCopyDetailes[3]), java.sql.Date.valueOf(UpdateBookCopyDetailes[4]),
 					Integer.parseInt(UpdateBookCopyDetailes[5]));
@@ -178,7 +179,7 @@ public class EchoServer extends AbstractServer {
 			
 		case CreateNotification:
 			String NewNotificationDetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			int NotificationCreateNumber = mysqlConnection.addNewNotificationToDB(NewNotificationDetails[0],
+			int NotificationCreateNumber = queriesForNotifications.addNewNotificationToDB(NewNotificationDetails[0],
 					Integer.parseInt(NewNotificationDetails[1]), java.sql.Date.valueOf(NewNotificationDetails[2]),
 					Integer.parseInt(NewNotificationDetails[3]));
 			if (NotificationCreateNumber > 0) {
@@ -191,14 +192,14 @@ public class EchoServer extends AbstractServer {
 			
 		case GetNotification:
 			String GetNotiDetails = infoFromUser.get(menuChoiceString);
-			String MyNotification = mysqlConnection.GetNotification(Integer.valueOf(GetNotiDetails));
+			String MyNotification = queriesForNotifications.GetNotification(Integer.valueOf(GetNotiDetails));
 			this.sendToAllClients(MyNotification);
 			flag++;
 			break;
 			
 		case CreateReminder:
 			String NewReminderDetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			int ReminderCreateNumber = mysqlConnection.addNewReminderToDB(NewReminderDetails[0],
+			int ReminderCreateNumber = queriesForReminders.addNewReminderToDB(NewReminderDetails[0],
 					Integer.parseInt(NewReminderDetails[1]), NewReminderDetails[2], NewReminderDetails[3], java.sql.Date.valueOf(NewReminderDetails[4]),
 					Integer.parseInt(NewReminderDetails[5]));
 			if (ReminderCreateNumber > 0) {
@@ -211,7 +212,7 @@ public class EchoServer extends AbstractServer {
 			
 		case GetReminder:
 			String GetReminderDetails = infoFromUser.get(menuChoiceString);
-			String MyReminder = mysqlConnection.GetNotification(Integer.valueOf(GetReminderDetails));
+			String MyReminder = queriesForReminders.GetReminder(Integer.valueOf(GetReminderDetails));
 			this.sendToAllClients(MyReminder);
 			flag++;
 			break;
@@ -222,13 +223,13 @@ public class EchoServer extends AbstractServer {
 
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Avishag adding ///////////////////////
-
+			
 		// Author: Avishag.
 		// This case is getting the information to change from the user and saving in
 		// DB.
 		case UpdateSubscriber:
 			String idNinfo[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ3 = mysqlConnection.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1],
+			boolean succ3 = queriesForSubscriber.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1],
 					Integer.parseInt(idNinfo[2]), idNinfo[3], idNinfo[4], idNinfo[5], idNinfo[6]);
 			if (succ3) {
 				this.sendToAllClients("Updated");
@@ -242,7 +243,7 @@ public class EchoServer extends AbstractServer {
 		// This case is getting the information to add new user and saving in DB.
 		case AddNewSubscriber:
 			String idNinfoNew[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ4 = mysqlConnection.addNewSubscriber(Integer.parseInt(idNinfoNew[0]), idNinfoNew[1],
+			boolean succ4 = queriesForSubscriber.addNewSubscriber(Integer.parseInt(idNinfoNew[0]), idNinfoNew[1],
 					Integer.parseInt(idNinfoNew[2]), idNinfoNew[3], idNinfoNew[4], idNinfoNew[5], idNinfoNew[6]);
 			if (succ4) {
 				this.sendToAllClients("Added");
@@ -255,8 +256,7 @@ public class EchoServer extends AbstractServer {
 		// Author: Avishag.
 		// This case is loading the requested ID from the DB and sending to the client.
 		case GetSubscriberDetails:
-			String RequestedIDToGet = mysqlConnection
-					.getSubscriberDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			String RequestedIDToGet = queriesForSubscriber.getSubscriberDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(RequestedIDToGet);
 			flag++;
 			break;
@@ -267,13 +267,13 @@ public class EchoServer extends AbstractServer {
 
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Yuval adding ///////////////////////
-
+			
 		// Author: Yuval.
 		// This case is getting the information to change from the user and saving in
 		// DB.
 		case UpdateLibrarian:
 			String idNlibinfo[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ5 = mysqlConnection.updateLibrarianDetails(Integer.parseInt(idNlibinfo[0]), idNlibinfo[1],
+			boolean succ5 = queriesForLibrarian.updateLibrarianDetails(Integer.parseInt(idNlibinfo[0]), idNlibinfo[1],
 					idNlibinfo[2]);
 			if (succ5) {
 				this.sendToAllClients("Updated");
@@ -287,7 +287,7 @@ public class EchoServer extends AbstractServer {
 		// This case is getting the information to add new Librarian and saving in DB.
 		case AddNewLibrarian:
 			String idNinfoNewlib[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ6 = mysqlConnection.addNewLibrarian(Integer.parseInt(idNinfoNewlib[0]), idNinfoNewlib[1],
+			boolean succ6 = queriesForLibrarian.addNewLibrarian(Integer.parseInt(idNinfoNewlib[0]), idNinfoNewlib[1],
 					idNinfoNewlib[2]);
 			if (succ6) {
 				this.sendToAllClients("Added");
@@ -301,8 +301,7 @@ public class EchoServer extends AbstractServer {
 		// This case is loading the requested Librarian ID from the DB and sending to
 		// the client.
 		case GetLibrarianDetails:
-			String RequestedLibToGet = mysqlConnection
-					.getLibrarianDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			String RequestedLibToGet = queriesForLibrarian.getLibrarianDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(RequestedLibToGet);
 			flag++;
 			break;
@@ -312,12 +311,12 @@ public class EchoServer extends AbstractServer {
 
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Matan adding ///////////////////////
-
+			
 		// This case is loading the requested borrowing records(by id) from the DB and
 		// sending to the client.
 		case GetBorrowRecord:
 			String getBorrowedRecord = infoFromUser.get(menuChoiceString);
-			String borrowedRecordTableByid = mysqlConnection
+			String borrowedRecordTableByid = queriesForBorrows
 					.getBorrowedRecordFromDB(Integer.parseInt(getBorrowedRecord));
 			this.sendToAllClients(borrowedRecordTableByid);
 			flag++;
@@ -327,7 +326,7 @@ public class EchoServer extends AbstractServer {
 		// client and sending to the DB.
 		case UpdateBorrowDetails:
 			String updateBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean borrowRecordUpdateSuccess = mysqlConnection.UpdateBorrowedRecordReturnTime(
+			boolean borrowRecordUpdateSuccess = queriesForBorrows.UpdateBorrowedRecordReturnTime(
 					Integer.parseInt(updateBorrowRecordsdetails[0]),
 					java.sql.Date.valueOf(updateBorrowRecordsdetails[6]),
 					java.sql.Date.valueOf(updateBorrowRecordsdetails[7]),
@@ -343,7 +342,7 @@ public class EchoServer extends AbstractServer {
 		// This case is getting new borrowing record from the client and saving in DB.
 		case AddNewBorrow:
 			String newBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			int newBorrowNumber = mysqlConnection.createNewBorrowedRecord(Integer.parseInt(newBorrowRecordsdetails[0]),
+			int newBorrowNumber = queriesForBorrows.createNewBorrowedRecord(Integer.parseInt(newBorrowRecordsdetails[0]),
 					newBorrowRecordsdetails[1], newBorrowRecordsdetails[2],
 					Integer.parseInt(newBorrowRecordsdetails[3]), java.sql.Date.valueOf(newBorrowRecordsdetails[4]),
 					java.sql.Date.valueOf(newBorrowRecordsdetails[5]),
@@ -360,13 +359,13 @@ public class EchoServer extends AbstractServer {
 
 		////////////////////// END of Matan adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
-
+			
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Amir adding ///////////////////////
 
 		case AddNewLogActivity:
 			String[] activityData = infoFromUser.get(menuChoiceString).split(", ");
-			int NewActivityNumber = mysqlConnection.AddNewLogActivity(Integer.parseInt(activityData[0]), // subscriberId
+			int NewActivityNumber = queriesForActivityLogs.AddNewLogActivity(Integer.parseInt(activityData[0]), // subscriberId
 					activityData[1], // activityAction
 					activityData[2], // bookBarcode
 					activityData[3], // bookTitle
@@ -383,14 +382,14 @@ public class EchoServer extends AbstractServer {
 			break;
 
 		case LoadActivityById:
-			List<String> activities = mysqlConnection
+			List<String> activities = queriesForActivityLogs
 					.LoadLogActivitybyid(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(activities);
 			flag++;
 			break;
 
 		case LoadActivityBySerial:
-			String activity = mysqlConnection
+			String activity = queriesForActivityLogs
 					.LoadLogActivityBySerialId(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(activity);
 			flag++;
@@ -405,14 +404,14 @@ public class EchoServer extends AbstractServer {
 		// This case Sending all existing orders from the orders table to client. (chen
 		// tsafir)
 		case ShowAllOrders:
-			List<String> ordersTable = mysqlConnection.GetOrdersTable();
+			List<String> ordersTable = queriesForOrders.GetOrdersTable();
 			this.sendToAllClients(ordersTable);
 			flag++;
 			break;
 		// This case Retrieves details of a specific order by order number and sends the
 		// information to the client. (chen tsafir)
 		case LoadOrder:
-			String requestedOrder = mysqlConnection.LoadOrder(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			String requestedOrder = queriesForOrders.LoadOrder(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(requestedOrder); // send the string or "empty"
 			flag++;
 			break;
@@ -420,7 +419,7 @@ public class EchoServer extends AbstractServer {
 		// the order number to client. (chen tsafir)
 		case CreateNewOrder:
 			String[] orderDetails = infoFromUser.get(menuChoiceString).split(" ");
-			int newOrderNum = mysqlConnection.createOrder(Integer.parseInt(orderDetails[0]), orderDetails[1]);
+			int newOrderNum = queriesForOrders.createOrder(Integer.parseInt(orderDetails[0]), orderDetails[1]);
 			if (newOrderNum != -1) {
 				this.sendToAllClients("OrderCreated:" + newOrderNum);
 			} else {
@@ -438,7 +437,7 @@ public class EchoServer extends AbstractServer {
 					break;
 				}
 
-				boolean success = mysqlConnection.updateOrderDetails(Integer.parseInt(orderData[0]),
+				boolean success = queriesForOrders.updateOrderDetails(Integer.parseInt(orderData[0]),
 						Integer.parseInt(orderData[1]), orderData[2], Integer.parseInt(orderData[3]),
 						Date.valueOf(orderData[4]), Integer.parseInt(orderData[5]),
 						orderData[6].equals("null") ? null : Date.valueOf(orderData[6]));
