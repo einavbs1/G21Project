@@ -51,7 +51,7 @@ public class EchoServer extends AbstractServer {
 
 		// This case is getting the table from the SQL and sending to the client
 		case ShowAllSubscribers:
-			List<String> TheTable = mysqlConnection.GetSubscriberTable();
+			List<String> TheTable = queriesForSubscriber.GetSubscriberTable();
 			this.sendToAllClients(TheTable);
 			flag++;
 			break;
@@ -305,6 +305,16 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients(RequestedLibToGet);
 			flag++;
 			break;
+			
+		// Author: Yuval.
+		// This case is getting the table of subscriber active borrows from the SQL and sending to the client.
+		// the client.
+		case SubscriberActiveBorrows:
+			String getSubscriberId = infoFromUser.get(menuChoiceString);
+			List<String> ActievBorrowTable = queriesForBorrows.getAllSubscriberActiveBorrowRecordsFromDB(Integer.parseInt(getSubscriberId));
+			this.sendToAllClients(ActievBorrowTable);
+			flag++;
+			break;	
 
 		////////////////////// END of Yuval adding ///////////////////////
 		////////////////////////////////////////////////////////////////////

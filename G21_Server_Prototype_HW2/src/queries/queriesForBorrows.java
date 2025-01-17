@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Flow.Subscriber;
 
 import Server.mysqlConnection;
 
@@ -138,5 +141,42 @@ public class queriesForBorrows {
 	///////////////////// --- Matan Borrow Entity section ---///////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
 
+	
+	/**
+	 * Author: Yuval.
+	 * This method is returning the list of active borrow records for a specific subscriber from the DB.
+	 * 
+	 * @param subscriber_id
+	 * @return List of active borrow records
+	 */
+	public static List<String> getAllSubscriberActiveBorrowRecordsFromDB(int subscriber_id) {
+		
+	    List<String> activeBorrowRecords = new ArrayList<>();
+	    String query = "SELECT * FROM BorrowedRecords WHERE subscriber_id = ? AND borrow_status = 1";
+
+	    try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+	        stmt.setInt(1, subscriber_id);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                int borrow_number = rs.getInt("borrow_number");
+	                String book_barcode = rs.getString("book_barcode");
+	                String book_title = rs.getString("book_title");
+	                int bookcopy_copyNo = rs.getInt("bookcopy_copyNo");
+	                String borrow_date = rs.getString("borrow_date");
+	                String borrow_expectReturnDate = rs.getString("borrow_expectReturnDate");
+
+	                String borrowRecord = borrow_number + ", " + book_barcode + ", " + book_title + ", "
+	                        + bookcopy_copyNo + ", " + borrow_date + ", " + borrow_expectReturnDate;
+
+	                activeBorrowRecords.add(borrowRecord);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return activeBorrowRecords;
+	}
 	
 }

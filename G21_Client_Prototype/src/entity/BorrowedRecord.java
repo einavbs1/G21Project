@@ -1,6 +1,7 @@
 package entity;
 
 import java.sql.Date;
+import java.time.chrono.ThaiBuddhistChronology;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -118,6 +119,28 @@ public class BorrowedRecord {
 			return recordParts;
 		} else {
 			throw new NoSuchElementException("The borrowNumber: " + borrowNumber + " is not exists in the system.");
+		}
+	}
+	
+	
+	/** Author: Yuval.
+	 * @param id - subscriber's id to get his active borrows.
+	 */
+	public static String[] getSubscriberActiveBorrowsFromDB(int subscriberId) throws NoSuchElementException {
+		String response = new String();
+		
+		/// send request to DB to get the string
+		
+	    HashMap<String, String> request = new HashMap<>();
+	    request.put("SubscriberActiveBorrows", String.valueOf(subscriberId));
+	    ClientUI.chat.accept(request);
+	    response = ChatClient.getStringfromServer();
+	    
+		if (response.contains(",")) {
+			String[] parts = response.split(", ");
+			return parts;
+		} else {
+			throw new NoSuchElementException("The id: "+subscriberId+" is not registered to the system.");
 		}
 	}
 

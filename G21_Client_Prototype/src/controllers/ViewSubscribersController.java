@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,35 +14,39 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
+import entity.*;
+
 /**
  * This class is showing us the GUI with table of all the subscribers
  */
-public class ShowAllSubscribersController {
-	
+public class ViewSubscribersController {
+
     @FXML
     private Button btnExit = null;
     @FXML
     private Button btnBack = null;
 
     @FXML
-    private TableView<String> subscriberTable;  // Change TableView type to String
+    private TableView<String> subscriberTable; // Change TableView type to String
     @FXML
     private TableColumn<String, String> idColumn;
     @FXML
     private TableColumn<String, String> nameColumn;
     @FXML
-    private TableColumn<String, String> historyColumn;
+    private TableColumn<String, String> subscriptionDetailsColumn;
     @FXML
     private TableColumn<String, String> phoneColumn;
     @FXML
     private TableColumn<String, String> emailColumn;
+    @FXML
+    private TableColumn<String, String> statusColumn;
 
-    /*
+    
+    /*Author: Avishag.
 	 * initialize the GUI with the data to the table view.
 	 */
     public void initialize() {
@@ -50,26 +55,44 @@ public class ShowAllSubscribersController {
             String[] parts = cellData.getValue().split(", ");
             return new javafx.beans.property.SimpleStringProperty(parts[0]);
         });
+
         nameColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
             return new javafx.beans.property.SimpleStringProperty(parts[1]);
         });
-        historyColumn.setCellValueFactory(cellData -> {
+
+        subscriptionDetailsColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
             return new javafx.beans.property.SimpleStringProperty(parts[2]);
         });
+
         phoneColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
             return new javafx.beans.property.SimpleStringProperty(parts[3]);
         });
+
         emailColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
             return new javafx.beans.property.SimpleStringProperty(parts[4]);
         });
-    }
 
+        statusColumn.setCellValueFactory(cellData -> {
+            String[] parts = cellData.getValue().split(", ");
+            return new javafx.beans.property.SimpleStringProperty(parts[5]);
+        });
+    }
     
-    /** This method is for the back button closing the current GUI and uploading the menu GUI.
+    /**Author: Avishag.
+     * This method is getting list of the subscribers and uploading it to the table view
+     * @param subs - list of the subscribers.
+     */
+    public void loadSubscribers(List<String> subs) {
+        // Convert the list to an observable list and set it to the table
+        subscriberTable.setItems(FXCollections.observableArrayList(subs));
+    }  
+    
+    /**Author: Avishag.
+     * This method is for the back button closing the current GUI and uploading the menu GUI.
      * @param event - click on the back button.
      * @throws IOException
      */
@@ -86,16 +109,7 @@ public class ShowAllSubscribersController {
     }
 
     
-    
-    /**This method is getting list of the subscribers and uploading it to the table view
-     * @param subs - list of the subscribers.
-     */
-    public void loadSubscribers(List<String> subs) {
-        // Convert the list to an observable list and set it to the table
-        subscriberTable.setItems(FXCollections.observableArrayList(subs));
-    }
-    
-	/*
+	/*Author: Avishag.
 	 * This method is for the exit button sending a message to the server that now we are disconnecting,
 	 * closing the GUI and the connection for the server.
 	 */
