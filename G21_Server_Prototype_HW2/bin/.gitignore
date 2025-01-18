@@ -1,4 +1,5 @@
 /Server/
 /common/
 /gui/
-/bin/
+/queries.class
+/queries/
