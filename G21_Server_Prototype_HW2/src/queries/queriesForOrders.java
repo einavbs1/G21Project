@@ -139,6 +139,58 @@ public class queriesForOrders {
 			return false;
 		}
 	}
+	
+	
+	/**
+	 * Author: Chen
+	 * Retrieves all orders for a specific subscriber from the database.
+	 * 
+	 * @param subscriberId The ID of the subscriber whose orders we want to fetch
+	 * @return List<String> A list of strings, each representing an order
+	 */
+	public static List<String> GetOrdersBySubscriber(int subscriberId) {
+	    List<String> orders = new ArrayList<>();
+	    String query = "SELECT * FROM Orders WHERE subscriber_id = ?";
+
+	    try (PreparedStatement pstmt = mysqlConnection.conn.prepareStatement(query)) {
+	        pstmt.setInt(1, subscriberId);
+	        ResultSet rs = pstmt.executeQuery();
+	        
+	        while (rs.next()) {
+	            String orderData = rs.getInt("order_number") + ", " + 
+	                             rs.getInt("subscriber_id") + ", " +
+	                             rs.getString("book_barcode") + ", " + 
+	                             rs.getDate("order_requestedDate") + ", " +
+	                             rs.getInt("order_status") + ", " + 
+	                             rs.getDate("order_bookArrivedDate");
+	            orders.add(orderData);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return orders;
+	}
+	
+	/**
+	 * Author: Chen
+	 * Returns the number of active orders for a specific book.
+	 * 
+	 * @param bookBarcode The barcode of the book to check
+	 * @return int Number of active orders for this book
+	 */
+	public static int getActiveOrdersCountForBook(String bookBarcode) {
+	    String query = "SELECT COUNT(*) FROM Orders WHERE book_barcode = ? AND order_status = 1";
+	    try (PreparedStatement pstmt = mysqlConnection.conn.prepareStatement(query)) {
+	        pstmt.setString(1, bookBarcode);
+	        ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getInt(1);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return 0;
+	}
 
 	/////////////////////// END //////////////////////////////////
 	///////////////////// --- Chen Orders Entity section ---///////////////////////

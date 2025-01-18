@@ -40,6 +40,10 @@ public enum UserSelect {
     ShowAllOrders("Show All Orders"),
     CreateNewOrder("Create New Order"),
     LoadOrder("Load Order"),
+    ShowSubscriberOrders("Show all activate orders of specific user"),
+    GetActiveOrdersCount("Get Active Orders Count"),
+    GetAllNotifications("Get All Notifications"),
+    ShowAllNotifications("Show All Notifications"),
     UpdateOrderDetails("Update Order Details");
 
     private final String displayName;

@@ -1,5 +1,7 @@
 package common;
 
+import controllers.CancelOrderController;
+
 /** This enum is as menu to user select options
  * 
  */
@@ -9,7 +11,10 @@ public enum UserSelect {
     UpdateEmailAddress("Update Email Address"),
     LoadSubscriber("Load Subscriber"),
     Connected("Connected"),
-    Disconnect("Disconnect");
+    Disconnect("Disconnect"),
+	CancelOrder("Cancel an existing Order");
+	
+	
 
     private final String displayName;
 

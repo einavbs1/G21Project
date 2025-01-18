@@ -454,7 +454,30 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-
+			
+			// This case Sends all active orders for specific subscriber (chen tsafir)
+		case ShowSubscriberOrders:
+		   List<String> activeOrdersForSubscriber = queriesForOrders.GetOrdersBySubscriber(
+		       Integer.parseInt(infoFromUser.get(menuChoiceString))
+		   );
+		   this.sendToAllClients(activeOrdersForSubscriber);
+		   flag++;
+		   break;
+		   
+		   // This case ask the number of active order for specific book by barcode book (chen tsafir)
+		case GetActiveOrdersCount:
+		    String bookBarcodeForCount = infoFromUser.get(menuChoiceString);
+		    int orderCount = queriesForOrders.getActiveOrdersCountForBook(bookBarcodeForCount);
+		    this.sendToAllClients(String.valueOf(orderCount));
+		    flag++;
+		    break;
+		    
+		    //This case retrieves all notifications from the database (chen tsafir)
+		case GetAllNotifications:
+		    List<String> notificationsTable = queriesForNotifications.GetAllNotifications();
+		    this.sendToAllClients(notificationsTable);
+		    flag++;
+		    break;
 		////////////////////// END of Chen adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
 
