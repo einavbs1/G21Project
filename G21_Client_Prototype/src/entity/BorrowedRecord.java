@@ -3,6 +3,7 @@ package entity;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
@@ -153,7 +154,18 @@ public class BorrowedRecord {
 		}
 	}
 	
-
+	
+	/**Author: Amir 18.1.2025 monthlyStatsMap
+	 * Static method to get monthly borrowed books statistics
+	 * Used for generating monthly reports
+	 * @return List of borrowed books with loan duration details for the current month
+	 */	
+	public static List<String> getMonthlyBorrowedBooksStats() {
+	    HashMap<String, String> monthlyStatsMap = new HashMap<>();
+	    monthlyStatsMap.put("GetMonthlyBorrowedStats", "");
+	    ClientUI.chat.accept(monthlyStatsMap);
+	    return ChatClient.getListfromServer();
+	}
 	@Override
 	public String toString() {
 		return borrowNumber + ", " + subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "

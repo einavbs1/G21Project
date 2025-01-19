@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Server.mysqlConnection;
 
@@ -138,5 +140,65 @@ public class queriesForBorrows {
 	///////////////////// --- Matan Borrow Entity section ---///////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
 
+	
+	
+	//added by amir 18.1
+	
+	/**
+	 * Gets borrowed books statistics for the current month
+	 * @return List of borrowed books with loan duration details for the current month
+	 */
+	public static List<String> getMonthlyBorrowedBooksStats() {
+	    ArrayList<String> monthlyBorrows = new ArrayList<>();
+	    
+	    String query = "SELECT br.*, " +
+	                  "DATEDIFF(COALESCE(br.borrow_actualReturnDate, CURRENT_DATE), br.borrow_date) as loan_duration, " +
+	                  "CASE WHEN br.borrow_actualReturnDate IS NULL THEN " +
+	                  "    DATEDIFF(CURRENT_DATE, br.borrow_expectReturnDate) " +
+	                  "ELSE " +
+	                  "    DATEDIFF(br.borrow_actualReturnDate, br.borrow_expectReturnDate) " +
+	                  "END as delay_days " +
+	                  "FROM borrowedrecords br " +
+	                  "WHERE (YEAR(br.borrow_date) = YEAR(CURRENT_DATE) AND " +
+	                  "       MONTH(br.borrow_date) = MONTH(CURRENT_DATE)) OR " +
+	                  "      (br.borrow_actualReturnDate IS NULL) " +
+	                  "ORDER BY loan_duration DESC";
+
+	    try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query);
+	         ResultSet rs = stmt.executeQuery()) {
+	        
+	        while (rs.next()) {
+	            int borrow_number = rs.getInt("borrow_number");
+	            int subscriber_id = rs.getInt("subscriber_id");
+	            String book_barcode = rs.getString("book_barcode");
+	            String book_title = rs.getString("book_title");
+	            int bookcopy_copyNo = rs.getInt("bookcopy_copyNo");
+	            String borrow_date = rs.getString("borrow_date");
+	            String borrow_expectReturnDate = rs.getString("borrow_expectReturnDate");
+	            String borrow_actualReturnDate = rs.getString("borrow_actualReturnDate");
+	            int librarian_id = rs.getInt("librarian_id");
+	            int loan_duration = rs.getInt("loan_duration");
+	            int delay_days = rs.getInt("delay_days");
+
+	            String borrowRecord = borrow_number + ", " + 
+	                                subscriber_id + ", " + 
+	                                book_barcode + ", " + 
+	                                book_title + ", " + 
+	                                bookcopy_copyNo + ", " + 
+	                                borrow_date + ", " + 
+	                                borrow_expectReturnDate + ", " +
+	                                borrow_actualReturnDate + ", " +
+	                                librarian_id + ", " +
+	                                loan_duration + ", " +
+	                                (delay_days > 0 ? delay_days : 0);
+	            
+	            monthlyBorrows.add(borrowRecord);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return monthlyBorrows;
+	}
 	
 }

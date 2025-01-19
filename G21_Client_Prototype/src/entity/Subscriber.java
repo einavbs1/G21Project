@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
@@ -101,6 +102,21 @@ public class Subscriber {
 	    
 		//loading new information from DB. ------- was before update might delete.
 	    loadSubscriber(getSubscriberFromDB(id));
+	}
+	
+	
+	/**
+	 * Author: Amir 19.1.2025
+	 * Static method to get monthly subscriber statistics
+	 * Used for generating monthly subscriber status reports.
+	 * Returns current subscriber status including.
+	 * @return List of subscribers with their monthly status details
+	 */
+	public static List<String> getMonthlySubscriberStats() {
+	    HashMap<String, String> monthlyStatsMap = new HashMap<>();
+	    monthlyStatsMap.put("GetMonthlySubscriberStats", "");
+	    ClientUI.chat.accept(monthlyStatsMap);
+	    return ChatClient.getListfromServer();
 	}
 	
 	

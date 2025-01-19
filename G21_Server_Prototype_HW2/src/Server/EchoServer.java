@@ -488,6 +488,15 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients("Disconnected");
 			flag++;
 			break;
+		
+			
+		//added by amir 18.1	
+		// This case is Showing the borrowed books right now.	
+		case GetMonthlyBorrowedStats:
+		    List<String> currentlyBorrowed = queriesForBorrows.getMonthlyBorrowedBooksStats();
+		    this.sendToAllClients(currentlyBorrowed);
+		    flag++;
+		    break;
 
 		// error with the userselect action. - probably didn't sent the key good from
 		// the client.
@@ -510,6 +519,8 @@ public class EchoServer extends AbstractServer {
 	protected void serverStopped() {
 		System.out.println("Server has stopped listening for connections.");
 	}
+	
+	
 
 }
 //End of EchoServer class

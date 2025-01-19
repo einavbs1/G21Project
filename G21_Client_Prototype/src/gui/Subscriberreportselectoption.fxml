@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SubscriberStatusReportController">
+   <children>
+      <VBox alignment="CENTER" layoutX="150.0" layoutY="80.0" prefHeight="200.0" prefWidth="300.0" spacing="20.0">
+         <!-- Title -->
+         <Label alignment="CENTER" prefHeight="50.0" prefWidth="300.0" text="Subscribers Status Report" textFill="RED">
+            <font>
+               <Font name="System Bold" size="24.0" />
+            </font>
+         </Label>
+         
+         <!-- Display Type Selection -->
+         <Label text="Select Display Type:" textFill="#2c3e50">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Label>
+         
+         <!-- View Selection Buttons -->
+         <Button fx:id="btnTableView" mnemonicParsing="false" onAction="#showTableView" prefHeight="50.0" prefWidth="200.0" styleClass="view-button" text="Table View">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Button>
+         
+         <Button fx:id="btnChartView" mnemonicParsing="false" onAction="#showChartView" prefHeight="50.0" prefWidth="200.0" styleClass="view-button" text="Bar Chart View">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Button>
+      </VBox>
+      
+      <!-- Navigation Buttons -->
+      <Button fx:id="btnBack" layoutX="30.0" layoutY="340.0" mnemonicParsing="false" onAction="#Back" prefHeight="40.0" prefWidth="100.0" styleClass="nav-button" text="Back">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      
+      <Button fx:id="btnExit" layoutX="470.0" layoutY="340.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="40.0" prefWidth="100.0" styleClass="nav-button" text="Exit">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

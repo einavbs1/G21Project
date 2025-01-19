@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SubscriberStatusTableController">
+   <children>
+      <VBox layoutX="10.0" layoutY="10.0" prefHeight="580.0" prefWidth="780.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="40.0" prefWidth="780.0" text="Current Month Subscriber Status Report" textFill="#2c3e50">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            
+            <TableView fx:id="subscriberTable" prefHeight="480.0" prefWidth="780.0">
+              <columns>
+                <TableColumn fx:id="subscriberIdColumn" prefWidth="200.0" text="Subscriber ID" />
+                <TableColumn fx:id="subscriberNameColumn" prefWidth="380.0" text="Subscriber Name" />
+                <TableColumn fx:id="statusColumn" prefWidth="200.0" text="Status" />
+              </columns>
+            </TableView>
+            
+            <AnchorPane prefHeight="60.0" prefWidth="780.0">
+               <children>
+                  <Button fx:id="btnBack" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#Back" prefHeight="40.0" prefWidth="120.0" styleClass="nav-button" text="Back" />
+                  <Button fx:id="btnExit" layoutX="646.0" layoutY="10.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="40.0" prefWidth="120.0" styleClass="nav-button" text="Exit" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
