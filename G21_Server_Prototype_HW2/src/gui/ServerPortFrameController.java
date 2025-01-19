@@ -122,6 +122,7 @@ public class ServerPortFrameController  {
 	}
 	
 	public void initialize() {
+		portxt.setText("12345");
         try {
             String localIp = InetAddress.getLocalHost().getHostAddress();
             this.lbllocalip.setText("Your ip: \t\t" + localIp); // Set the local IP in the TextField

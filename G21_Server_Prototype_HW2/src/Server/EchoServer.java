@@ -217,6 +217,40 @@ public class EchoServer extends AbstractServer {
 			flag++;
 			break;
 			
+		case GetAllSubjects:
+			List <String> allSubjectsList = queriesForSubjects.getAllSubjects();
+			this.sendToAllClients(allSubjectsList);
+			flag++;
+			break;
+			
+		case SearchBookByName:
+			String bookNameToSearch = infoFromUser.get(menuChoiceString);
+			List <String> allBooksByName = queriesForBooks.SearchBooksByName(bookNameToSearch);
+			this.sendToAllClients(allBooksByName);
+			flag++;
+			break;
+			
+		case SearchBookBySubject:
+			String subjectToSearch = infoFromUser.get(menuChoiceString);
+			List <String> allBooksBySubject = queriesForBooks.SearchBooksBySubject(subjectToSearch);
+			this.sendToAllClients(allBooksBySubject);
+			flag++;
+			break;
+			
+		case SearchBookByDescription:
+			String DescriptionToSearch = infoFromUser.get(menuChoiceString);
+			List <String> allBooksByDescription = queriesForBooks.SearchBooksByDescription(DescriptionToSearch);
+			this.sendToAllClients(allBooksByDescription);
+			flag++;
+			break;
+			
+		case GetAllMyCopies:
+			String bookBarcodeNeedsCopies = infoFromUser.get(menuChoiceString);
+			List <String> allMycopies = queriesForBooks.GetAllMyCopies(bookBarcodeNeedsCopies);
+			this.sendToAllClients(allMycopies);
+			flag++;
+			break;
+			
 			
 		////////////////////// END of Einavs adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
@@ -229,8 +263,7 @@ public class EchoServer extends AbstractServer {
 		// DB.
 		case UpdateSubscriber:
 			String idNinfo[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ3 = queriesForSubscriber.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1],
-					Integer.parseInt(idNinfo[2]), idNinfo[3], idNinfo[4], idNinfo[5], idNinfo[6]);
+			boolean succ3 = queriesForSubscriber.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1], idNinfo[2], idNinfo[3], idNinfo[4], idNinfo[5]);
 			if (succ3) {
 				this.sendToAllClients("Updated");
 			} else {
@@ -244,7 +277,7 @@ public class EchoServer extends AbstractServer {
 		case AddNewSubscriber:
 			String idNinfoNew[] = infoFromUser.get(menuChoiceString).split(", ");
 			boolean succ4 = queriesForSubscriber.addNewSubscriber(Integer.parseInt(idNinfoNew[0]), idNinfoNew[1],
-					Integer.parseInt(idNinfoNew[2]), idNinfoNew[3], idNinfoNew[4], idNinfoNew[5], idNinfoNew[6]);
+								idNinfoNew[2], idNinfoNew[3], idNinfoNew[4], idNinfoNew[5]);
 			if (succ4) {
 				this.sendToAllClients("Added");
 			} else {

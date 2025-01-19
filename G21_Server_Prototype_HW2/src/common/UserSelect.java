@@ -20,6 +20,12 @@ public enum UserSelect {
     GetNotification("Get Notification"),
     CreateReminder("Create Reminder"),
     GetReminder("Get Reminder"),
+    //-------------- new EINAV --------------
+    GetAllSubjects("Get All Subjects"),
+    SearchBookByName("Search Book By Name"),
+    SearchBookBySubject("Search Book By Subject"),
+    SearchBookByDescription("Search Book By Description"),
+    GetAllMyCopies("Get All My Copies"),
 	///////-----Author: Avishag.-----///////
 	AddNewSubscriber("Add New Subscriber"),
 	GetSubscriberDetails("Get Subscriber Details"),

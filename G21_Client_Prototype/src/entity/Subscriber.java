@@ -10,7 +10,6 @@ public class Subscriber {
 
 	private static int id;
 	private String name;
-	private int subscripption_details;
 	private String phoneNumber;
 	private String email;
 	private String password;
@@ -36,7 +35,7 @@ public class Subscriber {
 	 * @param password    - Subscriber password
 	 */
 	public Subscriber(int id, String name, String phoneNumber, String email, String password) {
-		String newsub = id +", "+name+", 0,"+phoneNumber+", "+email+", "+password+", Active";
+		String newsub = id +", "+name+", "+phoneNumber+", "+email+", "+password+", Active";
 		
 		///addSubscriberToDB
 		HashMap<String, String> addSubscriberMap = new HashMap<>();
@@ -56,11 +55,10 @@ public class Subscriber {
 	private void loadSubscriber(String[] str) {
 		id = Integer.parseInt(str[0]);
 		name = str[1];
-		subscripption_details = Integer.parseInt(str[2]);
-		phoneNumber = str[3];
-		email = str[4];
-		password = str[5];
-		status = str[6];
+		phoneNumber = str[2];
+		email = str[3];
+		password = str[4];
+		status = str[5];
 	}
 
 	
@@ -76,7 +74,6 @@ public class Subscriber {
 	    request.put("GetSubscriberDetails", String.valueOf(id));
 	    ClientUI.chat.accept(request);
 	    response = ChatClient.getStringfromServer();
-	    
 		if (response.contains(",")) {
 			String[] parts = response.split(", ");
 			return parts;
@@ -108,7 +105,7 @@ public class Subscriber {
 	 *toString of subscriber
 	 */
 	public String toString() {
-		return id+", "+name+", "+subscripption_details+", "+phoneNumber+", "+email+", "+password+", "+status;
+		return id+", "+name+", "+phoneNumber+", "+email+", "+password+", "+status;
 	}
 	
 	
@@ -121,10 +118,6 @@ public class Subscriber {
 
 	public String getName() {
 		return name;
-	}
-
-	public int getSubscripption_details() {
-		return subscripption_details;
 	}
 
 	public String getPhoneNumber() {
@@ -157,10 +150,6 @@ public class Subscriber {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void setSubscripption_details(int subscripption_details) {
-		this.subscripption_details = subscripption_details;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {

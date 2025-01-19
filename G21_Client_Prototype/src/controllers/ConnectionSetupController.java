@@ -108,14 +108,14 @@ public class ConnectionSetupController {
 							if (!string.equals("Error!")) {
 								System.out.println("Connected to the server");
 								try {
-									FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/Menu.fxml"));
+									FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainLoginScreen.fxml"));
 									Parent root = loader.load();
 									Stage stage = new Stage();
 									Scene scene = new Scene(root);
 									scene.getStylesheets()
-											.add(getClass().getResource("/gui/Menu.css").toExternalForm());
+											.add(getClass().getResource("/gui/MainLoginScreen.css").toExternalForm());
 									stage.setScene(scene);
-									stage.setTitle("Menu");
+									stage.setTitle("Main Login Screen");
 									stage.show();
 									((Node) event.getSource()).getScene().getWindow().hide();
 								} catch (IOException e) {
@@ -169,9 +169,11 @@ public class ConnectionSetupController {
 	 * 
 	 */
 	public void initialize() {
+		porttxt.setText("12345");
 		try {
 			localIp = InetAddress.getLocalHost().getHostAddress();
 			lblLocalip.setText("Your local ip: \t" + localIp);
+			serveriptxt.setText(localIp);
 		} catch (UnknownHostException e) {
 			lblLocalip.setText("Unable to determine the local IP address\n Unknown IP");
 			e.printStackTrace();

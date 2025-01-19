@@ -1,8 +1,13 @@
 package queries;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import Server.mysqlConnection;
 
@@ -125,6 +130,174 @@ public class queriesForBooks {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	/**
+	 * Author: Einav This method is returning book list of the like the name.
+	 * 
+	 * @param bookname - bookname need to contains this string.
+	 * @return List of books that match the name
+	 */
+	public static List<String> SearchBooksByName(String bookname) {
+		String query = "SELECT * FROM Books WHERE LOWER(book_title) LIKE ?";
+		String bookData = new String();
+		List<String> foundBooks = new ArrayList<String>();
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+			String normalizedInput = "%" + bookname.trim().toLowerCase() + "%";
+			stmt.setString(1, normalizedInput);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					String book_barcode = rs.getString("book_barcode");
+					String book_title = rs.getString("book_title");
+					String book_subject = rs.getString("book_subject");
+					String book_description = rs.getString("book_description");
+					int book_allCopies = rs.getInt("book_allCopies");
+					int book_availableCopies = rs.getInt("book_availableCopies");
+					int book_ordersNumber = rs.getInt("book_ordersNumber");
+					int book_lostNumber = rs.getInt("book_lostNumber");
+					String book_location = rs.getString("book_location");
+
+					bookData = book_barcode + ", " + book_title + ", " + book_subject + ", " + book_description + ", "
+							+ book_allCopies + ", " + book_availableCopies + ", " + book_ordersNumber + ", "
+							+ book_lostNumber + ", " + book_location;
+					foundBooks.add(bookData);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return foundBooks;
+	}
+
+	/**
+	 * Author: Einav This method is returning book list that with the requested subject.
+	 * 
+	 * @param subject - subject of the books.
+	 * @return List of books that match the subject
+	 */
+	public static List<String> SearchBooksBySubject(String subject) {
+		String query = "SELECT * FROM Books WHERE book_subject = ?";
+		String bookData = new String();
+		List<String> foundBooks = new ArrayList<String>();
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+
+			stmt.setString(1, subject);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					String book_barcode = rs.getString("book_barcode");
+					String book_title = rs.getString("book_title");
+					String book_subject = rs.getString("book_subject");
+					String book_description = rs.getString("book_description");
+					int book_allCopies = rs.getInt("book_allCopies");
+					int book_availableCopies = rs.getInt("book_availableCopies");
+					int book_ordersNumber = rs.getInt("book_ordersNumber");
+					int book_lostNumber = rs.getInt("book_lostNumber");
+					String book_location = rs.getString("book_location");
+
+					bookData = book_barcode + ", " + book_title + ", " + book_subject + ", " + book_description + ", "
+							+ book_allCopies + ", " + book_availableCopies + ", " + book_ordersNumber + ", "
+							+ book_lostNumber + ", " + book_location;
+
+					foundBooks.add(bookData);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return foundBooks;
+	}
+
+	/**
+	 * Author: Einav This method is returning book list that matches to the description.
+	 * 
+	 * @param description - keywords that we want to search in the descriptions
+	 * @return List of books that match the description
+	 */
+	public static List<String> SearchBooksByDescription(String description) {
+		String[] tags = description.split(", ");
+	    List<String> foundBooks = new ArrayList<>();
+
+	    StringBuilder queryBuilder = new StringBuilder("SELECT * FROM Books WHERE ");
+	    for (int i = 0; i < tags.length; i++) {
+	        queryBuilder.append("book_description LIKE ?");
+	        if (i < tags.length - 1) {
+	            queryBuilder.append(" OR ");
+	        }
+	    }
+
+	    String query = queryBuilder.toString();
+
+	    try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+	        for (int i = 0; i < tags.length; i++) {
+	            stmt.setString(i + 1, "%" + tags[i] + "%");
+	        }
+	        
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                String book_barcode = rs.getString("book_barcode");
+	                String book_title = rs.getString("book_title");
+	                String book_subject = rs.getString("book_subject");
+	                String book_description = rs.getString("book_description");
+	                int book_allCopies = rs.getInt("book_allCopies");
+	                int book_availableCopies = rs.getInt("book_availableCopies");
+	                int book_ordersNumber = rs.getInt("book_ordersNumber");
+	                int book_lostNumber = rs.getInt("book_lostNumber");
+	                String book_location = rs.getString("book_location");
+
+	                String bookData = book_barcode + ", " + book_title + ", " + book_subject + ", " +
+	                        book_description + ", " + book_allCopies + ", " + book_availableCopies + ", " +
+	                        book_ordersNumber + ", " + book_lostNumber + ", " + book_location;
+
+	                if (!foundBooks.contains(bookData)) { 
+	                    foundBooks.add(bookData);
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return foundBooks;
+	}
+
+	
+	
+	/**
+	 * Author: Einav This method is returning book list of all the copies on this book.
+	 * 
+	 * @param barcode - the barcode on the requested book
+	 * @return List of copybooks on this book barcode
+	 */
+	public static List<String> GetAllMyCopies(String barcode) {
+		String query = "SELECT * FROM Bookcopy WHERE book_barcode = ?";
+		String bookcopyData = new String();
+		List<String> foundBooks = new ArrayList<String>();
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+
+			stmt.setString(1, barcode);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					String book_barcode = rs.getString("book_barcode");
+					String bookcopy_copyNo = rs.getString("bookcopy_copyNo");
+					int bookCopy_isAvailable = rs.getInt("bookCopy_isAvailable");
+					int bookCopy_isLost = rs.getInt("bookCopy_isLost");
+					Date bookcopy_returnDate = rs.getDate("bookcopy_returnDate");
+					int subscriber_id = rs.getInt("subscriber_id");
+					bookcopyData = book_barcode + ", " + bookcopy_copyNo + ", " + bookCopy_isAvailable + ", " + bookCopy_isLost + ", "
+							+ bookcopy_returnDate + ", " + subscriber_id;
+
+					foundBooks.add(bookcopyData);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return foundBooks;
 	}
 
 /////////////////////// END //////////////////////////////////

@@ -1,6 +1,8 @@
 package entity;
 
+import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
@@ -105,6 +107,65 @@ public class Book {
 		loadBook(getBookFromDB(barcode));
 
 	}
+	
+	
+	public static List<String> SearchBookByName(String bookname){
+		
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("SearchBookByName", bookname);
+		ClientUI.chat.accept(requestHashMap);
+		List<String> myRes = ChatClient.getListfromServer();
+		
+		return myRes;
+	}
+
+
+	public static List<String> SearchBookBySubject(String subject){
+	
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("SearchBookBySubject", subject);
+		ClientUI.chat.accept(requestHashMap);
+		List<String> myRes = ChatClient.getListfromServer();
+		
+		return myRes;
+	}	
+	
+	public static List<String> SearchBookByDescription(String tags){
+		
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("SearchBookByDescription", tags);
+		ClientUI.chat.accept(requestHashMap);
+		List<String> myRes = ChatClient.getListfromServer();
+		return myRes;
+	}
+	
+	
+	public static List<String> getAllmyCopies(String barcode){
+		
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("GetAllMyCopies", barcode);
+		ClientUI.chat.accept(requestHashMap);
+		List<String> myCopies = ChatClient.getListfromServer();
+		
+		return myCopies;
+		
+	}
+	
+	
+	public static Date getClosestReturnDate(String barcode) {
+		Date closestDate = null; 
+		List<String> myCopies = getAllmyCopies(barcode);
+		for(String copyString : myCopies) {
+			String[] temp = copyString.split(", ");
+			if((closestDate == null) || (Date.valueOf(temp[4]).before(closestDate))) {
+				closestDate = Date.valueOf(temp[4]);
+			}
+		}
+		return closestDate;
+		
+		
+	}
+	
 	
 	
 	@Override
