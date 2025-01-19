@@ -176,6 +176,14 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
+		
+		//
+		case GetAllMyCopies:
+			String bookBarcodeNeedsCopies = infoFromUser.get(menuChoiceString);
+			List <String> allMycopies = queriesForBooks.GetAllMyCopies(bookBarcodeNeedsCopies);
+			this.sendToAllClients(allMycopies);
+			flag++;
+			break;
 			
 		case CreateNotification:
 			String NewNotificationDetails[] = infoFromUser.get(menuChoiceString).split(", ");
@@ -454,7 +462,13 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-
+		// Get all existing orders for specific Book.
+		case GetAllOrdersofaBook:
+			String bookBarcodeNeedsOrders = infoFromUser.get(menuChoiceString);
+			List <String> allMyOrders = queriesForOrders.GetAllMyOrders(bookBarcodeNeedsOrders);
+			this.sendToAllClients(allMyOrders);
+			flag++;
+			break;
 		////////////////////// END of Chen adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
 

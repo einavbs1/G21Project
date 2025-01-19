@@ -1,10 +1,12 @@
 package entity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
 import client.ClientUI;
+
 /**
  * Author: Einav
  */
@@ -20,8 +22,8 @@ public class Book {
 	protected int lostNumber;
 	protected String location;
 
-	/**Author: Einav
-	 * Constractor that load book from DB if exist.
+	/**
+	 * Author: Einav Constractor that load book from DB if exist.
 	 * 
 	 * @param id
 	 */
@@ -29,9 +31,9 @@ public class Book {
 		loadBook(getBookFromDB(barcode));
 	}
 
-	
-	/**Author: Einav
-	 * Constractor to add new book to DB
+	/**
+	 * Author: Einav Constractor to add new book to DB
+	 * 
 	 * @param barcode
 	 * @param title
 	 * @param subject
@@ -47,13 +49,13 @@ public class Book {
 		/// addBookToDB
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
 		requestHashMap.put("CreateBook", newBook);
-		ClientUI.chat.accept(requestHashMap);		
+		ClientUI.chat.accept(requestHashMap);
 		// now load to this Book
 		loadBook(getBookFromDB(barcode));
 	}
 
-	/**Author: Einav
-	 * private method that loading the details in this Book instance.
+	/**
+	 * Author: Einav private method that loading the details in this Book instance.
 	 * 
 	 * @param str -book's details string array (usually from the DB).
 	 */
@@ -69,10 +71,12 @@ public class Book {
 		location = str[8];
 	}
 
-	/**Author: Einav
+	/**
+	 * Author: Einav
 	 * 
 	 * @param barcode
-	 * @return String[] - array of Book's string with each field in array's positions.
+	 * @return String[] - array of Book's string with each field in array's
+	 *         positions.
 	 * @throws NoSuchElementException
 	 */
 	private String[] getBookFromDB(String barcode) throws NoSuchElementException {
@@ -91,9 +95,20 @@ public class Book {
 		}
 	}
 
-	/**Author: Einav
-	 *  After we set the new information that we want to save we will send request to
-	 * DB. see details in the setter section VVV.
+	public static List<String> getAllmyCopies(String barcode) {
+
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("GetAllMyCopies", barcode);
+		ClientUI.chat.accept(requestHashMap);
+		List<String> myCopies = ChatClient.getListfromServer();
+
+		return myCopies;
+
+	}
+
+	/**
+	 * Author: Einav After we set the new information that we want to save we will
+	 * send request to DB. see details in the setter section VVV.
 	 */
 	public void UpdateDetails() {
 		String newDetails = toString();
@@ -105,73 +120,63 @@ public class Book {
 		loadBook(getBookFromDB(barcode));
 
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return barcode + ", " + title + ", " + subject + ", " + description + ", " + allCopies + ", " + availableCopies
 				+ ", " + ordersNumber + ", " + lostNumber + ", " + location;
 	}
-	
+
 	///////////////////////
-	///     Getters
+	/// Getters
 	///////////////////////
 	public String getBarcode() {
 		return barcode;
 	}
 
-
 	public String getTitle() {
 		return title;
 	}
-
 
 	public String getSubject() {
 		return subject;
 	}
 
-
 	public String getDescription() {
 		return description;
 	}
-
 
 	public int getAllCopies() {
 		return allCopies;
 	}
 
-
 	public int getAvailableCopies() {
 		return availableCopies;
 	}
-
 
 	public int getOrdersNumber() {
 		return ordersNumber;
 	}
 
-
 	public int getLostNumber() {
 		return lostNumber;
 	}
 
-
 	public String getLocation() {
 		return location;
 	}
-	
+
 	/////////////////////////////////////////////////
-	///     			Setters
+	/// Setters
 	///
-	///  if we want to update the Book details:
-	/// 	1. we will set the change.
-	/// 	2. generate toString
-	/// 	3. send String to save in DB.
+	/// if we want to update the Book details:
+	/// 1. we will set the change.
+	/// 2. generate toString
+	/// 3. send String to save in DB.
 	///
-	///   ******* can change specific things. *******
+	/// ******* can change specific things. *******
 	//////////////////////////////////////////////////
-	
-	
+
 	public void setAllCopies(int allCopies) {
 		this.allCopies = allCopies;
 	}
@@ -180,43 +185,34 @@ public class Book {
 		this.location = location;
 	}
 
-	
-	
-	
 	/////////////// ----- adding 1 -----
 	public void addToAllCopies() {
 		this.availableCopies += 1;
 	}
-	
-	
+
 	public void addToAvailableCopies() {
 		this.availableCopies += 1;
 	}
-
 
 	public void addToOrdersNumber() {
 		this.ordersNumber += 1;
 	}
 
-
 	public void addToLostNumber() {
 		this.lostNumber += 1;
 	}
-	
+
 	/////////////// ----- Removing 1 -----
 	public void removeFromAvailableCopies() {
 		this.availableCopies -= 1;
 	}
 
-
 	public void removeFromOrdersNumber() {
 		this.ordersNumber -= 1;
 	}
 
-
 	public void removeFromLostNumber() {
 		this.lostNumber -= 1;
 	}
-	
-	
+
 }

@@ -21,7 +21,7 @@ public class queriesForOrders {
 	 * Author: Chen Creates a new order in the database.
 	 *
 	 * @param subscriberId The ID of the subscriber making the order
-	 * @param bookBarcode  The barcode of the book being ordered
+	 * @param bookBarcode The barcode of the book being ordered
 	 * @return int The new order number if successful, -1 if failed
 	 * 
 	 *         Note: This method automatically: - Generates the next available order
@@ -139,7 +139,41 @@ public class queriesForOrders {
 			return false;
 		}
 	}
+	
+	/**
+	 * Author: Matan This method is returning order list of specific book.
+	 * 
+	 * @param barcode - the barcode on the requested book
+	 * @return List of copybooks on this book barcode
+	 */
+	public static List<String> GetAllMyOrders(String barcode) {
+		String query = "SELECT * FROM orders WHERE book_barcode = ?";
+		String bookcopyData = new String();
+		List<String> foundOrders = new ArrayList<String>();
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
 
+			stmt.setString(1, barcode);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					int order_number = rs.getInt("order_number");
+					int subscriber_id = rs.getInt("subscriber_id");
+					String book_barcode = rs.getString("book_barcode");
+					Date order_requestedDate = rs.getDate("order_requestedDate");
+					int order_status = rs.getInt("order_status");
+					Date order_bookArrivedDate = rs.getDate("order_bookArrivedDate");
+					bookcopyData = order_number + ", " + subscriber_id + ", " + book_barcode + ", " + order_requestedDate + ", "
+							+ order_status + ", " + order_bookArrivedDate;
+
+					foundOrders.add(bookcopyData);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return foundOrders;
+	}
 	/////////////////////// END //////////////////////////////////
 	///////////////////// --- Chen Orders Entity section ---///////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////

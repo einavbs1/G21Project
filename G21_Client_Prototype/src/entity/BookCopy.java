@@ -153,6 +153,22 @@ public class BookCopy extends Book {
 		return location;
 	}
 
+	///////////////////////////////////////////
+	// temporary method
+	public int getSubscriberId() {
+		return subscriberID;
+	}
+
+	// temporary method
+	public int getCopyNo() {
+		return copyNo;
+	}
+
+	// temporary method
+	public int getisAvailableStatus() {
+		return isAvailable;
+	}
+
 	/////////////////////////////////////////////////
 	/// Setters
 	///
@@ -164,11 +180,16 @@ public class BookCopy extends Book {
 	/// ******* can change specific things. *******
 	//////////////////////////////////////////////////
 
+	// temporary method
+	public void setisAvailableStatus(int isAvailable) {
+		this.isAvailable = isAvailable ;
+	}
+
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
 
-	public void setSubscriberID(int subscriberID) {
+	public void setSubscriberID(Integer subscriberID) {
 		this.subscriberID = subscriberID;
 	}
 

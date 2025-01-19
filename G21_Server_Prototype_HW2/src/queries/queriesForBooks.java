@@ -1,8 +1,11 @@
 package queries;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Server.mysqlConnection;
 
@@ -125,6 +128,41 @@ public class queriesForBooks {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	/**
+	 * Author: Einav This method is returning book list of all the copies on this book.
+	 * 
+	 * @param barcode - the barcode on the requested book
+	 * @return List of copybooks on this book barcode
+	 */
+	public static List<String> GetAllMyCopies(String barcode) {
+		String query = "SELECT * FROM Bookcopy WHERE book_barcode = ?";
+		String bookcopyData = new String();
+		List<String> foundBooks = new ArrayList<String>();
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+
+			stmt.setString(1, barcode);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					String book_barcode = rs.getString("book_barcode");
+					String bookcopy_copyNo = rs.getString("bookcopy_copyNo");
+					int bookCopy_isAvailable = rs.getInt("bookCopy_isAvailable");
+					int bookCopy_isLost = rs.getInt("bookCopy_isLost");
+					Date bookcopy_returnDate = rs.getDate("bookcopy_returnDate");
+					int subscriber_id = rs.getInt("subscriber_id");
+					bookcopyData = book_barcode + ", " + bookcopy_copyNo + ", " + bookCopy_isAvailable + ", " + bookCopy_isLost + ", "
+							+ bookcopy_returnDate + ", " + subscriber_id;
+
+					foundBooks.add(bookcopyData);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return foundBooks;
 	}
 
 /////////////////////// END //////////////////////////////////

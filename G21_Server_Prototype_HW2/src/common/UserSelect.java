@@ -16,6 +16,7 @@ public enum UserSelect {
     CreateBookCopy("Create Book Copy"),
     GetBookCopy("Get Book Copy"),
     UpdateBookCopyDetails("Update Book Copy Details"),
+    GetAllMyCopies("Get All My Copies"),
     CreateNotification("Create Notification"),
     GetNotification("Get Notification"),
     CreateReminder("Create Reminder"),
@@ -40,7 +41,8 @@ public enum UserSelect {
     ShowAllOrders("Show All Orders"),
     CreateNewOrder("Create New Order"),
     LoadOrder("Load Order"),
-    UpdateOrderDetails("Update Order Details");
+    UpdateOrderDetails("Update Order Details"),
+    GetAllOrdersofaBook("Get All Orders for a Book");
 
     private final String displayName;
 
