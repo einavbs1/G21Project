@@ -153,21 +153,20 @@ public class BookCopy extends Book {
 		return location;
 	}
 
-	///////////////////////////////////////////
-	// temporary method
+	/////////////////////////////////////////// - add by Matan
 	public int getSubscriberId() {
 		return subscriberID;
 	}
-
-	// temporary method
+ 
 	public int getCopyNo() {
 		return copyNo;
 	}
 
-	// temporary method
 	public int getisAvailableStatus() {
 		return isAvailable;
 	}
+	
+	//////////////////////////////////////////
 
 	/////////////////////////////////////////////////
 	/// Setters
@@ -180,7 +179,7 @@ public class BookCopy extends Book {
 	/// ******* can change specific things. *******
 	//////////////////////////////////////////////////
 
-	// temporary method
+	// add by Matan //
 	public void setisAvailableStatus(int isAvailable) {
 		this.isAvailable = isAvailable ;
 	}

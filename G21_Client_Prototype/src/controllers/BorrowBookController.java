@@ -102,7 +102,7 @@ public class BorrowBookController {
 
 	/**
 	 * Author: Matan. load subscriber details and display its status. Displays a
-	 * message depending on the input
+	 * message depending on the input.
 	 * 
 	 * @param event - click on the display subscriber button.
 	 */
@@ -137,7 +137,7 @@ public class BorrowBookController {
 	}
 
 	/**
-	 * Author: Matan. load book details and display if its posiblle to borrow.
+	 * Author: Matan. load book details and display if its possible to borrow.
 	 * Displays a message depending on the input
 	 * 
 	 * @param event - click on the display book button.
@@ -163,9 +163,10 @@ public class BorrowBookController {
 	}
 
 	/**
-	 * Author: Matan. Borrow copy of book(after all the checks). Displays a message
+	 * Author: Matan.
+	 * Borrow copy of book(after all the checks). Displays a message
 	 * depending on the input.
-	 * 
+	 * update each table of DB - Book, Bookcopy, BoorowedRecords and activityLog
 	 * @param event - click on the borrow now button.
 	 */
 	public void borrowBtn(ActionEvent event) {
@@ -174,7 +175,7 @@ public class BorrowBookController {
 			List<String> listOfBookCopies = new ArrayList<String>();
 			listOfBookCopies = Book.getAllmyCopies(bookToBorrow.getBarcode());
 
-			BookCopy availabeCopyToBorrow = BorrowBookController.whoIsAvliable(listOfBookCopies);
+			BookCopy availabeCopyToBorrow = BorrowBookController.whoIsAvailable(listOfBookCopies);
 
 			if (!availabeCopyToBorrow.equals(null)) {
 
@@ -213,7 +214,13 @@ public class BorrowBookController {
 		}
 	}
 
-	public static BookCopy whoIsAvliable(List<String> listOfBookCopies) {
+	/**
+	 * Author: Matan.
+	 * find the first copy that available for borrow from data that receive from DB
+	 * @param listOfBookCopies
+	 * @return BookCopy
+	 */
+	public static BookCopy whoIsAvailable(List<String> listOfBookCopies) {
 
 		for (String bookCopy : listOfBookCopies) {
 			String[] fullBookCopy = bookCopy.split(", ");

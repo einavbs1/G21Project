@@ -26,7 +26,8 @@ public class ReturnBookController {
 	public static final int AVAILABLE = 1;
 	public static final int NotAVAILABLE = 0;
 	public static int ORDERNUMBER = 0;
-	public static int ORDERDATE = 5;
+	public static int STATUS = 5;
+	public static int ORDERBOOKARRIVEDATE = 5;
 	public static int BORROWNUMBER = 123;
 	 
 
@@ -163,7 +164,7 @@ public class ReturnBookController {
 
 	/**
 	 * Author: Matan.
-	 * Borrow copy of book(after all the checks).
+	 * Return copy of book(after all the checks).
 	 * Displays a message depending on the input.
 	 * @param event - click on the borrow now button.
 	 */
@@ -181,7 +182,8 @@ public class ReturnBookController {
 			bookCopyToReturn.setSubscriberID(null);
 			bookCopyToReturn.UpdateDetails();
 			
-			long timeDifferenceDays = this.updateReturnTimeandlates();
+			// Returns the days difference between 2 dates: returnDate and expectRerurnDate
+			long timeDifferenceDays = ReturnBookController.updateReturnTimeandlates(); 
 
 			// Check if the difference is greater than 14 days
 			if (timeDifferenceDays > 7) {
@@ -189,16 +191,14 @@ public class ReturnBookController {
 			    subscriber.setStatus("Frozen");
 				subscriber.UpdateDetails();
 				returnmsg.setText("congratulations, The returning of " + bookCopyToReturn.getTitle() + 
-						" was successful Your subscription is frozen for a month");
+						" was successful. Your subscription is frozen for a month");
 				
 			} else {
 			    System.out.println("The book was returned on time or within the 7-day window.");
 			    returnmsg.setText("congratulations, The returning of " + bookCopyToReturn.getTitle() + " was successful");
 			    
 			}
-				
-			returnmsg.setText("congratulations, The returning of " + bookCopyToReturn.getTitle() + " was successful");
-			
+							
 			LogActivity returnLogActivity = new LogActivity(bookCopyToReturn.getSubscriberId(), "Return a Book", 
 					bookCopyToReturn.getBarcode(), bookCopyToReturn.getTitle(), bookCopyToReturn.getCopyNo());
 			
@@ -220,13 +220,19 @@ public class ReturnBookController {
 			returnmsg.setText("fill the details of Subscriber and a Book");
 		}
 	}
+	
+	/**
+	 * Author: Matan.
+	 * find the first order that  from data that receive from DB
+	 * @param listOfBookCopies
+	 * @return BookCopy
+	 */
+	public static Orders whoIsFirstOrder(List<String> listOfBookCopyOrders) {
 
-	public static Orders whoIsFirstOrder(List<String> listOfBookCopies) {
-
-		for (String orderOfaBook : listOfBookCopies) {
+		for (String orderOfaBook : listOfBookCopyOrders) {
 			String[] order = orderOfaBook.split(", ");
 			
-			if (!(Date.valueOf(order[ORDERDATE]) == null)) {
+			if ((Date.valueOf(order[ORDERBOOKARRIVEDATE]) == null) && (Integer.parseInt(order[STATUS]) == AVAILABLE)) {
 				Orders orderToUpdate = new Orders(Integer.parseInt(order[ORDERNUMBER]));
 				return orderToUpdate;
 			}
@@ -234,6 +240,11 @@ public class ReturnBookController {
 		return null;
 	}
 	
+	/** Author Matan
+	 * check the difference days between the accutal return date and the expect return date
+	 * also convert the result to number of days
+	 * @return long
+	 */
 	public static long updateReturnTimeandlates() {
 		BorrowedRecord newBorrowedRecord = new BorrowedRecord(BORROWNUMBER);
 		//to get current date

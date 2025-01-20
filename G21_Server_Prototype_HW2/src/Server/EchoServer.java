@@ -462,7 +462,7 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-		// Get all existing orders for specific Book.
+		// Get all existing orders for specific Book. - Matan
 		case GetAllOrdersofaBook:
 			String bookBarcodeNeedsOrders = infoFromUser.get(menuChoiceString);
 			List <String> allMyOrders = queriesForOrders.GetAllMyOrders(bookBarcodeNeedsOrders);
