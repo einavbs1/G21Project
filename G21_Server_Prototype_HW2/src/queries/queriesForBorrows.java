@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Flow.Subscriber;
 
 import Server.mysqlConnection;
 
@@ -81,18 +84,19 @@ public class queriesForBorrows {
 					String book_barcode = rs.getString("book_barcode");
 					String book_title = rs.getString("book_title");
 					int bookcopy_copyNo = rs.getInt("bookcopy_copyNo");
-					String borrow_date = rs.getString("borrow_date");
-					String borrow_expectReturnDate = rs.getString("borrow_expectReturnDate");
-					String borrow_actualReturnDate = rs.getString("borrow_actualReturnDate");
-					int librarian_id = rs.getInt("librarian_id");
+					Date borrow_date = rs.getDate("borrow_date");
+					Date borrow_expectReturnDate = rs.getDate("borrow_expectReturnDate");
+					Date borrow_actualReturnDate = rs.getDate("borrow_actualReturnDate");
+					Integer librarian_id = rs.getInt("librarian_id");
 					String librarian_name = rs.getString("librarian_name");
 					int borrow_lostBook = rs.getInt("borrow_lostBook");
+					int borrow_status = rs.getInt("borrow_status");
 
 					// Create a formatted string with the subscriber's information
 					borrowedRecords = borrow_number + ", " + subscriber_id + ", " + book_barcode + ", " + book_title
 							+ ", " + bookcopy_copyNo + ", " + borrow_date + ", " + borrow_expectReturnDate + ", "
 							+ borrow_actualReturnDate + ", " + librarian_id + ", " + librarian_name + ", "
-							+ borrow_lostBook;
+							+ borrow_lostBook + ", " + borrow_status;
 
 				}
 			}
@@ -113,16 +117,17 @@ public class queriesForBorrows {
 	 * @param borrow_lostBook
 	 * @return
 	 */
-	public static boolean UpdateBorrowedRecordReturnTime(int borrow_number, Date borrow_expectReturnDate,
-			Date borrow_actualReturnDate, int borrow_lostBook) {
-		String query = "UPDATE borrowedrecords SET borrow_expectReturnDate = ?, borrow_actualReturnDate = ?, borrow_lostBook = ?"
-				+ "WHERE  borrow_number = ?";
-
+	public static boolean UpdateBorrowedRecord(int borrow_number, Date borrow_expectReturnDate,
+			Date borrow_actualReturnDate, int borrow_lostBook, int borrow_status) {
+		String query = "UPDATE borrowedrecords SET borrow_expectReturnDate = ?, borrow_actualReturnDate = ?, borrow_lostBook = ?, borrow_status = ?"
+				+ " WHERE  borrow_number = ?";
+		
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
 			stmt.setDate(1, borrow_expectReturnDate);
 			stmt.setDate(2, borrow_actualReturnDate);
 			stmt.setInt(3, borrow_lostBook);
-			stmt.setInt(4, borrow_number);
+			stmt.setInt(4, borrow_status);
+			stmt.setInt(5, borrow_number);
 
 			stmt.executeUpdate();
 
@@ -138,5 +143,41 @@ public class queriesForBorrows {
 	///////////////////// --- Matan Borrow Entity section ---///////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
 
+	
+	/**
+	 * Author: Yuval.
+	 * This method is returning the list of active borrow records for a specific subscriber from the DB.
+	 * 
+	 * @param subscriber_id
+	 * @return List of active borrow records
+	 */
+	public static List<String> getAllSubscriberActiveBorrowRecordsFromDB(int subscriber_id) {
+		
+	    List<String> activeBorrowRecords = new ArrayList<>();
+	    String query = "SELECT * FROM BorrowedRecords WHERE subscriber_id = ? AND borrow_status = 1";
+
+	    try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+	        stmt.setInt(1, subscriber_id);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                int borrow_number = rs.getInt("borrow_number");
+	                String book_barcode = rs.getString("book_barcode");
+	                String book_title = rs.getString("book_title");
+	                int bookcopy_copyNo = rs.getInt("bookcopy_copyNo");
+	                Date borrow_date = rs.getDate("borrow_date");
+	                Date borrow_expectReturnDate = rs.getDate("borrow_expectReturnDate");
+
+	                String borrowRecord = borrow_number + ", " + book_barcode + ", " + book_title + ", "
+	                        + bookcopy_copyNo + ", " + borrow_date + ", " + borrow_expectReturnDate;
+	                activeBorrowRecords.add(borrowRecord);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return activeBorrowRecords;
+	}
 	
 }

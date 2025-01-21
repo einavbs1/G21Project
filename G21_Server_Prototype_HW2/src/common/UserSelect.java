@@ -46,8 +46,14 @@ public enum UserSelect {
     ShowAllOrders("Show All Orders"),
     CreateNewOrder("Create New Order"),
     LoadOrder("Load Order"),
-    UpdateOrderDetails("Update Order Details");
-
+    UpdateOrderDetails("Update Order Details"),
+    ///////-----Author: Yuval New.-----///////
+	SubscriberActiveBorrows("Subscriber Active Borrows");
+	
+	
+	
+	
+	
     private final String displayName;
 
     /* 

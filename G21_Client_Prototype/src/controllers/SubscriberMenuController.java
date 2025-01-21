@@ -103,9 +103,17 @@ public class SubscriberMenuController {
 		 */
 		switch (x) {
 		case SearchBooks:
-			System.out.println("you selected SearchBooks");
+			System.out.println("you selected " + userselect);
+			break;
+			
+		case UpdateMyData:
+			System.out.println("you selected " + userselect);
 			break;
 
+		case ExtendBorrowRequest:
+			System.out.println("you selected " + userselect);
+			break;
+			
 		default:
 			System.out.println("error? you selected: " + userselect);
 			break;

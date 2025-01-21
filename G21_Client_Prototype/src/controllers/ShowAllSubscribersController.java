@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
  * This class is showing us the GUI with table of all the subscribers
  */
 public class ShowAllSubscribersController {
-
+	
     @FXML
     private Button btnExit = null;
     @FXML

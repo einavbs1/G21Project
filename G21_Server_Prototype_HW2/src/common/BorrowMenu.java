@@ -5,7 +5,8 @@ public enum BorrowMenu {
 	///////-----Author: Matan.-----///////
 	AddNewBorrow("Add New Borrow"),
 	GetBorrowRecord("Get Borrow Record"),
-	UpdateBorrowDetails("Update Borrow Details");
+	UpdateBorrowDetails("Update Borrow Details"),
+	SubscriberActiveBorrows("Subscriber Active Borrows");
 
 	private final String displayName;
 

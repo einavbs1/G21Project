@@ -3,6 +3,9 @@ package queries;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import Server.mysqlConnection;
 
@@ -109,6 +112,37 @@ public class queriesForSubscriber {
 		}
 		return subscriberData;
 
+	}
+	
+	
+	/**Author: Avishag.
+	 * This method is returning the list of subscribers from the DB to the client
+	 * 
+	 * @return List of the subscribers
+	 */
+	public static List<String> GetSubscriberTable() {
+	    List<String> subscribers = new ArrayList<>();
+	    String query = "SELECT * FROM subscriber";
+
+	    try (Statement stmt = mysqlConnection.conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+	        while (rs.next()) {
+	            int id = rs.getInt("subscriber_id");
+	            String name = rs.getString("subscriber_name");
+	            String phoneNumber = rs.getString("subscriber_phonenumber");
+	            String email = rs.getString("subscriber_email");
+	            String password = rs.getString("subscriber_password");
+	            String status = rs.getString("subscriber_status"); // Updated field
+
+	            // Create a formatted string with the subscriber's information
+	            String subscriberData = id + ", " + name + ", " + phoneNumber + ", " + email + ", " + password + ", " + status;
+
+	            // Add the formatted string to the list
+	            subscribers.add(subscriberData);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return subscribers;
 	}
 
 /////////////////////// END //////////////////////////////////

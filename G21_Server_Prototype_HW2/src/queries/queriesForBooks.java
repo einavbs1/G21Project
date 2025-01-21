@@ -88,7 +88,6 @@ public class queriesForBooks {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return bookData;
 	}
 

@@ -44,6 +44,18 @@ public class LibrarianLoginScreenController {
 	private Label lblinstruction;
 	@FXML
 	private Label lblerrmsg;
+	
+	
+	//to del:
+		public void initialize() {
+			LibIdtxt.setText("999999999");
+			LibPasswordfield.setText("admin");
+
+		}
+	
+	
+	
+	
 
 	/**
 	 * This method is return the main screen of our library.

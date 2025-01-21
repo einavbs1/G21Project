@@ -1,10 +1,12 @@
 package common;
 
+
 public enum LibrarianOptions {
 	RegisterNewSubscriber("Register New Subscriber"),
 	SearchBooks("Search Books"),
 	BorrowBooks("Borrow Books"),
 	ReturnBooks("Return Books"),
+	CurrentBorrowBooks("Current Borrow Books"),
 	ViewAllSubscribers("View All Subscribers"),
 	UpdateSubscriberData("Update Subscriber Data"),
 	GenerateReports("Generate Reports"),

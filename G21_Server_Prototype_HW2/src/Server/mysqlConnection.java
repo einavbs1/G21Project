@@ -39,7 +39,7 @@ public class mysqlConnection {
 		}
 
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/g21_project_schema?serverTimezone=IST", "root",
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/g21_project_schema?serverTimezone=Asia/Jerusalem", "root",
 					"Aa123456");
 			ret = ret + ("SQL connection succeed");
 		} catch (SQLException ex) {/* handle any errors */
@@ -92,7 +92,7 @@ public class mysqlConnection {
 		}
 	}
 
-	/**
+	/**Author: Avishag. - old one! not me :)
 	 * This method is getting ID and returning String of his data
 	 * 
 	 * @param idtoload - ID that client ask his details
@@ -119,35 +119,5 @@ public class mysqlConnection {
 		return subscriberData;
 
 	}
-
-	/**
-	 * This method is returning the list of subscribers from the DB to the client
-	 * 
-	 * @return List of the subscribers
-	 */
-	public static List<String> GetSubscriberTable() {
-		List<String> subscribers = new ArrayList<>();
-		String query = "SELECT * FROM subscriber";
-
-		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-			while (rs.next()) {
-				int id = rs.getInt("subscriber_id");
-				String name = rs.getString("subscriber_name");
-				int history = rs.getInt("detailed_subscription_history");
-				String phoneNumber = rs.getString("subscriber_phone_number");
-				String email = rs.getString("subscriber_email");
-
-				// Create a formatted string with the subscriber's information
-				String subscriberData = id + ", " + name + ", " + history + ", " + phoneNumber + ", " + email;
-
-				// Add the formatted string to the list
-				subscribers.add(subscriberData);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return subscribers;
-	}
-
 	
 }

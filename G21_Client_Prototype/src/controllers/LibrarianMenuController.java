@@ -98,6 +98,9 @@ public class LibrarianMenuController {
 		case SearchBooks:
 			break;
 
+		case ViewAllSubscribers:
+			break;
+			
 		default:
 			System.out.println("error? you selected: " + selectedActionFromMenu);
 			break;

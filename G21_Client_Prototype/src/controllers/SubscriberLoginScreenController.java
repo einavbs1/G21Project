@@ -44,6 +44,17 @@ public class SubscriberLoginScreenController {
 	@FXML
 	private Label lblerrmsg;
 
+	
+	//to del:
+	public void initialize() {
+		SubIdtxt.setText("315064881");
+		SubPasswordfield.setText("1");
+
+	}
+	
+	
+	
+	
 	/**
 	 * This method is return the main screen of our library.
 	 * @param event - the button action
@@ -96,7 +107,6 @@ public class SubscriberLoginScreenController {
 	 * 			or null if ID not exists.
 	 */
 	private Subscriber VerifyInput() {
-		
 		if(SubIdtxt.getText() ==  "") {
 			changeString("Must enter ID to login.");
 		}else if(!(SubIdtxt.getText().matches("\\d+"))) {

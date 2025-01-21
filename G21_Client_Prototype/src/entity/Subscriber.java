@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
@@ -20,7 +21,7 @@ public class Subscriber {
 	 * Constructor that load id from DB if exist. 
 	 * @param id
 	 */
-	public Subscriber(int id) {
+	public Subscriber(int id) throws NoSuchElementException{
 		String[] str = getSubscriberFromDB(id);
 		loadSubscriber(str);
 	}
@@ -33,15 +34,19 @@ public class Subscriber {
 	 * @param phoneNumber - Subscriber phone number
 	 * @param email       - Subscriber email address
 	 * @param password    - Subscriber password
+	 * @throws Exception 
 	 */
-	public Subscriber(int id, String name, String phoneNumber, String email, String password) {
+	public Subscriber(int id, String name, String phoneNumber, String email, String password) throws Exception {
 		String newsub = id +", "+name+", "+phoneNumber+", "+email+", "+password+", Active";
 		
 		///addSubscriberToDB
 		HashMap<String, String> addSubscriberMap = new HashMap<>();
 	    addSubscriberMap.put("AddNewSubscriber", newsub);
 	    ClientUI.chat.accept(addSubscriberMap);
-
+	    String res = ChatClient.getStringfromServer();
+	    if(res.equals("Error")) {
+	    	throw new Exception("Couldn't add the subscriber = "+name);
+	    }
 		//now load to this subscriber
 		String[] str = getSubscriberFromDB(id);
 		loadSubscriber(str);
@@ -87,7 +92,7 @@ public class Subscriber {
 	 * After we set the new information that we want to save we will send request to DB.
 	 * see details in the setter section VVV. 
 	 */
-	public void UpdateDetails(){
+	public boolean UpdateDetails(){
 	    String newDetails = toString();	    
 	    /// Send the update request to the server
 
@@ -95,10 +100,30 @@ public class Subscriber {
 	    updateMap.put("UpdateSubscriber", newDetails);
 
 	    ClientUI.chat.accept(updateMap);
+	    String str = ChatClient.getStringfromServer();
 	    
 		//loading new information from DB. ------- was before update might delete.
 	    loadSubscriber(getSubscriberFromDB(id));
+	    
+	    if (!str.equals("Updated")) {
+			return false;
+		}
+	    
+		return true;
+		
 	}
+	
+	public static List<String> showAllSubscribers(){
+		HashMap<String, String> requestMap = new HashMap<>();
+		requestMap.put("ShowAllSubscribers", "");
+
+	    ClientUI.chat.accept(requestMap);
+	    List<String> res = ChatClient.getListfromServer();
+	    
+	    return res;
+	
+	}
+	
 	
 	
 	/** Author: Avishag.

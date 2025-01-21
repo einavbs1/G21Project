@@ -51,7 +51,7 @@ public class EchoServer extends AbstractServer {
 
 		// This case is getting the table from the SQL and sending to the client
 		case ShowAllSubscribers:
-			List<String> TheTable = mysqlConnection.GetSubscriberTable();
+			List<String> TheTable = queriesForSubscriber.GetSubscriberTable();
 			this.sendToAllClients(TheTable);
 			flag++;
 			break;
@@ -176,7 +176,7 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-			
+
 		case CreateNotification:
 			String NewNotificationDetails[] = infoFromUser.get(menuChoiceString).split(", ");
 			int NotificationCreateNumber = queriesForNotifications.addNewNotificationToDB(NewNotificationDetails[0],
@@ -189,19 +189,19 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-			
+
 		case GetNotification:
 			String GetNotiDetails = infoFromUser.get(menuChoiceString);
 			String MyNotification = queriesForNotifications.GetNotification(Integer.valueOf(GetNotiDetails));
 			this.sendToAllClients(MyNotification);
 			flag++;
 			break;
-			
+
 		case CreateReminder:
 			String NewReminderDetails[] = infoFromUser.get(menuChoiceString).split(", ");
 			int ReminderCreateNumber = queriesForReminders.addNewReminderToDB(NewReminderDetails[0],
-					Integer.parseInt(NewReminderDetails[1]), NewReminderDetails[2], NewReminderDetails[3], java.sql.Date.valueOf(NewReminderDetails[4]),
-					Integer.parseInt(NewReminderDetails[5]));
+					Integer.parseInt(NewReminderDetails[1]), NewReminderDetails[2], NewReminderDetails[3],
+					java.sql.Date.valueOf(NewReminderDetails[4]), Integer.parseInt(NewReminderDetails[5]));
 			if (ReminderCreateNumber > 0) {
 				this.sendToAllClients(String.valueOf(ReminderCreateNumber));
 			} else {
@@ -209,61 +209,61 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-			
+
 		case GetReminder:
 			String GetReminderDetails = infoFromUser.get(menuChoiceString);
 			String MyReminder = queriesForReminders.GetReminder(Integer.valueOf(GetReminderDetails));
 			this.sendToAllClients(MyReminder);
 			flag++;
 			break;
-			
+
 		case GetAllSubjects:
-			List <String> allSubjectsList = queriesForSubjects.getAllSubjects();
+			List<String> allSubjectsList = queriesForSubjects.getAllSubjects();
 			this.sendToAllClients(allSubjectsList);
 			flag++;
 			break;
-			
+
 		case SearchBookByName:
 			String bookNameToSearch = infoFromUser.get(menuChoiceString);
-			List <String> allBooksByName = queriesForBooks.SearchBooksByName(bookNameToSearch);
+			List<String> allBooksByName = queriesForBooks.SearchBooksByName(bookNameToSearch);
 			this.sendToAllClients(allBooksByName);
 			flag++;
 			break;
-			
+
 		case SearchBookBySubject:
 			String subjectToSearch = infoFromUser.get(menuChoiceString);
-			List <String> allBooksBySubject = queriesForBooks.SearchBooksBySubject(subjectToSearch);
+			List<String> allBooksBySubject = queriesForBooks.SearchBooksBySubject(subjectToSearch);
 			this.sendToAllClients(allBooksBySubject);
 			flag++;
 			break;
-			
+
 		case SearchBookByDescription:
 			String DescriptionToSearch = infoFromUser.get(menuChoiceString);
-			List <String> allBooksByDescription = queriesForBooks.SearchBooksByDescription(DescriptionToSearch);
+			List<String> allBooksByDescription = queriesForBooks.SearchBooksByDescription(DescriptionToSearch);
 			this.sendToAllClients(allBooksByDescription);
 			flag++;
 			break;
-			
+
 		case GetAllMyCopies:
 			String bookBarcodeNeedsCopies = infoFromUser.get(menuChoiceString);
-			List <String> allMycopies = queriesForBooks.GetAllMyCopies(bookBarcodeNeedsCopies);
+			List<String> allMycopies = queriesForBooks.GetAllMyCopies(bookBarcodeNeedsCopies);
 			this.sendToAllClients(allMycopies);
 			flag++;
 			break;
-			
-			
+
 		////////////////////// END of Einavs adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
 
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Avishag adding ///////////////////////
-			
+
 		// Author: Avishag.
 		// This case is getting the information to change from the user and saving in
 		// DB.
 		case UpdateSubscriber:
 			String idNinfo[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean succ3 = queriesForSubscriber.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1], idNinfo[2], idNinfo[3], idNinfo[4], idNinfo[5]);
+			boolean succ3 = queriesForSubscriber.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1],
+					idNinfo[2], idNinfo[3], idNinfo[4], idNinfo[5]);
 			if (succ3) {
 				this.sendToAllClients("Updated");
 			} else {
@@ -277,7 +277,7 @@ public class EchoServer extends AbstractServer {
 		case AddNewSubscriber:
 			String idNinfoNew[] = infoFromUser.get(menuChoiceString).split(", ");
 			boolean succ4 = queriesForSubscriber.addNewSubscriber(Integer.parseInt(idNinfoNew[0]), idNinfoNew[1],
-								idNinfoNew[2], idNinfoNew[3], idNinfoNew[4], idNinfoNew[5]);
+					idNinfoNew[2], idNinfoNew[3], idNinfoNew[4], idNinfoNew[5]);
 			if (succ4) {
 				this.sendToAllClients("Added");
 			} else {
@@ -289,18 +289,18 @@ public class EchoServer extends AbstractServer {
 		// Author: Avishag.
 		// This case is loading the requested ID from the DB and sending to the client.
 		case GetSubscriberDetails:
-			String RequestedIDToGet = queriesForSubscriber.getSubscriberDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			String RequestedIDToGet = queriesForSubscriber
+					.getSubscriberDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(RequestedIDToGet);
 			flag++;
 			break;
-		
 
 		////////////////////// END of Avishag adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
 
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Yuval adding ///////////////////////
-			
+
 		// Author: Yuval.
 		// This case is getting the information to change from the user and saving in
 		// DB.
@@ -334,8 +334,21 @@ public class EchoServer extends AbstractServer {
 		// This case is loading the requested Librarian ID from the DB and sending to
 		// the client.
 		case GetLibrarianDetails:
-			String RequestedLibToGet = queriesForLibrarian.getLibrarianDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			String RequestedLibToGet = queriesForLibrarian
+					.getLibrarianDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			this.sendToAllClients(RequestedLibToGet);
+			flag++;
+			break;
+
+		// Author: Yuval.
+		// This case is getting the table of subscriber active borrows from the SQL and
+		// sending to the client.
+		// the client.
+		case SubscriberActiveBorrows:
+			String getSubscriberId = infoFromUser.get(menuChoiceString);
+			List<String> ActiveBorrowListToTable = queriesForBorrows
+					.getAllSubscriberActiveBorrowRecordsFromDB(Integer.parseInt(getSubscriberId));
+			this.sendToAllClients(ActiveBorrowListToTable);
 			flag++;
 			break;
 
@@ -344,7 +357,7 @@ public class EchoServer extends AbstractServer {
 
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Matan adding ///////////////////////
-			
+
 		// This case is loading the requested borrowing records(by id) from the DB and
 		// sending to the client.
 		case GetBorrowRecord:
@@ -359,11 +372,12 @@ public class EchoServer extends AbstractServer {
 		// client and sending to the DB.
 		case UpdateBorrowDetails:
 			String updateBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			boolean borrowRecordUpdateSuccess = queriesForBorrows.UpdateBorrowedRecordReturnTime(
-					Integer.parseInt(updateBorrowRecordsdetails[0]),
-					java.sql.Date.valueOf(updateBorrowRecordsdetails[6]),
-					java.sql.Date.valueOf(updateBorrowRecordsdetails[7]),
-					Integer.parseInt(updateBorrowRecordsdetails[10]));
+			Date actualReturnDate = updateBorrowRecordsdetails[7].equals("null") ? null
+					: Date.valueOf(updateBorrowRecordsdetails[7]);
+			boolean borrowRecordUpdateSuccess = queriesForBorrows.UpdateBorrowedRecord(
+					Integer.parseInt(updateBorrowRecordsdetails[0]), Date.valueOf(updateBorrowRecordsdetails[6]),
+					actualReturnDate, Integer.parseInt(updateBorrowRecordsdetails[10]),
+					Integer.parseInt(updateBorrowRecordsdetails[11]));
 
 			if (borrowRecordUpdateSuccess) {
 				this.sendToAllClients("Borrow record has been updated");
@@ -375,9 +389,10 @@ public class EchoServer extends AbstractServer {
 		// This case is getting new borrowing record from the client and saving in DB.
 		case AddNewBorrow:
 			String newBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			int newBorrowNumber = queriesForBorrows.createNewBorrowedRecord(Integer.parseInt(newBorrowRecordsdetails[0]),
-					newBorrowRecordsdetails[1], newBorrowRecordsdetails[2],
-					Integer.parseInt(newBorrowRecordsdetails[3]), java.sql.Date.valueOf(newBorrowRecordsdetails[4]),
+			int newBorrowNumber = queriesForBorrows.createNewBorrowedRecord(
+					Integer.parseInt(newBorrowRecordsdetails[0]), newBorrowRecordsdetails[1],
+					newBorrowRecordsdetails[2], Integer.parseInt(newBorrowRecordsdetails[3]),
+					java.sql.Date.valueOf(newBorrowRecordsdetails[4]),
 					java.sql.Date.valueOf(newBorrowRecordsdetails[5]),
 					java.sql.Date.valueOf(newBorrowRecordsdetails[6]), Integer.parseInt(newBorrowRecordsdetails[7]),
 					newBorrowRecordsdetails[8], Integer.parseInt(newBorrowRecordsdetails[9]));
@@ -392,7 +407,7 @@ public class EchoServer extends AbstractServer {
 
 		////////////////////// END of Matan adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
-			
+
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Amir adding ///////////////////////
 
