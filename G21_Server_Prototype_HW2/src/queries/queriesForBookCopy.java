@@ -93,15 +93,25 @@ public class queriesForBookCopy {
 	 * @return
 	 */
 	public static boolean updateBookCopyDetails(String barcode, int copyNo, int isAvailable, int isLost,
-			Date returnDate, int subscriberID) {
+			Date returnDate, Integer subscriberID) {
 		String query = "UPDATE bookcopy SET bookCopy_isAvailable = ?, bookCopy_isLost = ?, bookcopy_returnDate = ?, "
 				+ "subscriber_id = ? WHERE book_barcode = ? AND bookcopy_copyNo = ?";
 
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
 			stmt.setInt(1, isAvailable);
 			stmt.setInt(2, isLost);
-			stmt.setDate(3, returnDate);
-			stmt.setInt(4, subscriberID);
+			if(returnDate == null) {
+				stmt.setNull(3, java.sql.Types.DATE);
+			}else {
+				stmt.setDate(3, returnDate);
+			}
+			if(subscriberID == null) {
+				stmt.setNull(4, java.sql.Types.INTEGER);
+			}else {
+				stmt.setInt(4, subscriberID);
+			}
+			
+			
 			stmt.setString(5, barcode);
 			stmt.setInt(6, copyNo);
 

@@ -2,6 +2,7 @@ package entity;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 import client.ChatClient;
 import client.ClientUI;
@@ -15,7 +16,7 @@ public class BookCopy extends Book {
 	private int isAvailable;
 	private int isLost;
 	private Date returnDate;
-	private int subscriberID;
+	private Integer subscriberID;
 
 	/**
 	 * Author: Einav Constractor that load bookCopy from DB if exist.
@@ -62,8 +63,8 @@ public class BookCopy extends Book {
 		copyNo = Integer.parseInt(str[1]);
 		isAvailable = Integer.parseInt(str[2]);
 		isLost = Integer.parseInt(str[3]);
-		returnDate = Date.valueOf(str[4]);
-		subscriberID = Integer.parseInt(str[5]);
+		returnDate = (str[4].toLowerCase().equals("null"))? null : Date.valueOf(str[4]);
+		subscriberID = (str[5].toLowerCase().equals("null"))? null : Integer.parseInt(str[5]);
 	}
 
 	/**
@@ -85,8 +86,7 @@ public class BookCopy extends Book {
 			String[] parts = str.split(", ");
 			return parts;
 		} else {
-			throw new NoSuchElementException(
-					"This book :" + barcode + " has no copies in our library. We might add it soon.");
+			throw new NoSuchElementException("There is not such a book copy with those details.");
 		}
 	}
 
@@ -100,6 +100,10 @@ public class BookCopy extends Book {
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
 		requestHashMap.put("UpdateBookCopyDetails", newDetails);
 		ClientUI.chat.accept(requestHashMap);
+		String str = ChatClient.getStringfromServer();
+		if(str.toLowerCase().equals("error")) {
+			System.out.println("Cant update...");
+		}
 		// loading new information from DB. ------- was before update might delete.
 		loadBookCopy(getBookCopyFromDB(barcode, copyNo));
 
@@ -124,10 +128,28 @@ public class BookCopy extends Book {
 			throw new Exception("The id: " + subid + " isn't the owner of this bookcopy: " + barcode + ", " + copyNo);
 		}
 	}
+	
+	/**
+	 * Author: Matan.
+	 * find the first copy that available for borrow from data that receive from DB
+	 * @param listOfBookCopies
+	 * @return BookCopy
+	 */
+	public static BookCopy whoIsAvailable(List<String> listOfBookCopies) {
+		for (String bookCopy : listOfBookCopies) {
+			String[] BookCopyString = bookCopy.split(", ");
+			if(Integer.parseInt(BookCopyString[2]) == 1) {
+				BookCopy freeCopy = new BookCopy(BookCopyString[0], Integer.parseInt(BookCopyString[1]));
+				return freeCopy;
+			}
+		}
+		return null;
+	}
+	
 
 	@Override
 	public String toString() {
-		return barcode + ", " + copyNo + ", " + isAvailable + ", " + isLost + ", " + returnDate + ", " + subscriberID;
+		return barcode + ", " + copyNo + ", " + isAvailable + ", " + isLost + ", " + ((returnDate == null) ? "null" : returnDate) + ", " + ((subscriberID == null) ? "null" : subscriberID);
 	}
 
 	///////////////////////
@@ -153,6 +175,21 @@ public class BookCopy extends Book {
 		return location;
 	}
 
+	/////////////////////////////////////////// - add by Matan
+	public int getSubscriberId() {
+		return subscriberID;
+	}
+ 
+	public int getCopyNo() {
+		return copyNo;
+	}
+
+	public int getisAvailableStatus() {
+		return isAvailable;
+	}
+	
+	//////////////////////////////////////////
+
 	/////////////////////////////////////////////////
 	/// Setters
 	///
@@ -164,11 +201,16 @@ public class BookCopy extends Book {
 	/// ******* can change specific things. *******
 	//////////////////////////////////////////////////
 
+	// add by Matan //
+	public void setisAvailableStatus(int isAvailable) {
+		this.isAvailable = isAvailable ;
+	}
+
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
 
-	public void setSubscriberID(int subscriberID) {
+	public void setSubscriberID(Integer subscriberID) {
 		this.subscriberID = subscriberID;
 	}
 

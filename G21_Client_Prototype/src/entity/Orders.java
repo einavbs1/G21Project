@@ -2,6 +2,7 @@ package entity;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
@@ -120,6 +121,41 @@ public class Orders {
 		}
 
 	}
+	
+	/**
+	 * Author: Matan.
+	 * @param barcode
+	 * @return list<String> of orders of the same book
+	 */
+	public static List<String> GetAllOrdersofaBook(String barcode) {
+
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("GetAllOrdersofaBook", barcode);
+		ClientUI.chat.accept(requestHashMap);
+		List<String> myCopies = ChatClient.getListfromServer();
+
+		return myCopies;
+
+	}
+	
+	
+	/**
+	 * Author: Matan.
+	 * find the first order that  from data that receive from DB
+	 * @param listOfBookCopies
+	 * @return BookCopy
+	 */
+	public static String theFirstOrderToNotifyArrivalOfBook(List<String> listOfBookCopyOrders) {
+
+		for (String orderOfaBook : listOfBookCopyOrders) {
+			String[] orderArray = orderOfaBook.split(", ");
+			
+			if ((orderArray[5].equals("null")) && (Integer.parseInt(orderArray[4]) == 1)) {
+				return orderOfaBook;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * (chen tsafir) return string
@@ -172,16 +208,13 @@ public class Orders {
 		this.order_status = status;
 	}
 
-	/*public void cancelReservation() {
-		this.order_status = -1;
-		UpdateDetails();
-	}
-
-	public void completeReservation() {
-		this.order_status = 1;
-		this.order_bookArrivedDate = new Date(System.currentTimeMillis());
-		UpdateDetails();
-	}*/
+	/*
+	 * public void cancelReservation() { this.order_status = -1; UpdateDetails(); }
+	 * 
+	 * public void completeReservation() { this.order_status = 1;
+	 * this.order_bookArrivedDate = new Date(System.currentTimeMillis());
+	 * UpdateDetails(); }
+	 */
 
 	public void setBookArrivedDate(Date arrivedDate) {
 		this.order_bookArrivedDate = arrivedDate;

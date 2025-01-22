@@ -16,6 +16,7 @@ public enum UserSelect {
     CreateBookCopy("Create Book Copy"),
     GetBookCopy("Get Book Copy"),
     UpdateBookCopyDetails("Update Book Copy Details"),
+    GetAllMyCopies("Get All My Copies"),
     CreateNotification("Create Notification"),
     GetNotification("Get Notification"),
     CreateReminder("Create Reminder"),
@@ -25,7 +26,6 @@ public enum UserSelect {
     SearchBookByName("Search Book By Name"),
     SearchBookBySubject("Search Book By Subject"),
     SearchBookByDescription("Search Book By Description"),
-    GetAllMyCopies("Get All My Copies"),
 	///////-----Author: Avishag.-----///////
 	AddNewSubscriber("Add New Subscriber"),
 	GetSubscriberDetails("Get Subscriber Details"),
@@ -48,11 +48,10 @@ public enum UserSelect {
     LoadOrder("Load Order"),
     UpdateOrderDetails("Update Order Details"),
     ///////-----Author: Yuval New.-----///////
-	SubscriberActiveBorrows("Subscriber Active Borrows");
-	
-	
-	
-	
+	SubscriberActiveBorrows("Subscriber Active Borrows"),
+///////-----Author: Matan New.-----///////
+    GetAllOrdersofaBook("Get All Orders for a Book");
+
 	
     private final String displayName;
 

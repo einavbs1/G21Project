@@ -104,6 +104,7 @@ public class Book {
 		}
 	}
 
+
 	/**
 	 * Author: Einav After we set the new information that we want to save we will
 	 * send request to DB. see details in the setter section VVV.
@@ -118,6 +119,7 @@ public class Book {
 		loadBook(getBookFromDB(barcode));
 
 	}
+
 
 	public static List<String> SearchBookByName(String bookname) {
 

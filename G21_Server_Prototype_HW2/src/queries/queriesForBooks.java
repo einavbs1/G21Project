@@ -5,10 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import Server.mysqlConnection;
 
 public class queriesForBooks {
@@ -130,6 +127,7 @@ public class queriesForBooks {
 			return false;
 		}
 	}
+	
 
 	/**
 	 * Author: Einav This method is returning book list of the like the name.
@@ -279,7 +277,7 @@ public class queriesForBooks {
 			stmt.setString(1, barcode);
 
 			try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) {
+				while (rs.next()) {
 					String book_barcode = rs.getString("book_barcode");
 					String bookcopy_copyNo = rs.getString("bookcopy_copyNo");
 					int bookCopy_isAvailable = rs.getInt("bookCopy_isAvailable");
@@ -295,7 +293,6 @@ public class queriesForBooks {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return foundBooks;
 	}
 

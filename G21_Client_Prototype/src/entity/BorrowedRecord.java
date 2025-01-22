@@ -55,8 +55,7 @@ public class BorrowedRecord {
 	 * @param librarianName
 	 * @param borrowLostBook
 	 */
-	public BorrowedRecord(int subscriberId, String bookBarcode, String bookTitle, int bookcopyNo, int librarianId,
-			String librarianName) {
+	public BorrowedRecord(int subscriberId, String bookBarcode, String bookTitle, int bookcopyNo) {
 		Date currentDate = new Date(System.currentTimeMillis());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
@@ -64,8 +63,7 @@ public class BorrowedRecord {
         Date newReturnDate = new Date(calendar.getTimeInMillis());
         
 		String newBorrow = subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "
-				+ currentDate + ", " + newReturnDate + ", null, " + librarianId + ", " + librarianName
-				+ ", 0" +", 1";
+				+ currentDate + ", " + newReturnDate + ", null, null, null, 0, 1";
 
 		// change to DB format
 		HashMap<String, String> AddNewBorrowMap = new HashMap<>();

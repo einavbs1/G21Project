@@ -4,8 +4,8 @@ package common;
 public enum LibrarianOptions {
 	RegisterNewSubscriber("Register New Subscriber"),
 	SearchBooks("Search Books"),
-	BorrowBooks("Borrow Books"),
-	ReturnBooks("Return Books"),
+	BorrowBook("Borrow Book"),
+	ReturnBook("Return Book"),
 	CurrentBorrowBooks("Current Borrow Books"),
 	ViewAllSubscribers("View All Subscribers"),
 	UpdateSubscriberData("Update Subscriber Data"),
