@@ -159,9 +159,18 @@ public class ExtendBorrowRequestController {
 	}
 
 	private boolean VerifyInput() {
-
+		if(tableBorrows.getItems().size() == 0) {
+			changeString("You don't have borrows to extend",lblErrMessage);
+			return false;
+		}
+		
 		if (txtBorrowNumber.getText().isEmpty()) {
 			changeString("You must enter the borrow number that you want to extend",lblErrMessage);
+			return false;
+		}
+		
+		if(!txtBorrowNumber.getText().matches("\\d+")) {
+			changeString("borrow number can contain only digits.",lblErrMessage);
 			return false;
 		}
 

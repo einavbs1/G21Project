@@ -256,43 +256,49 @@ public class ReturnBookController {
 			
 			Book bookToReturn = new Book(bookCopyToReturn.getBarcode());
 			
-			bookToReturn.addToAvailableCopies();
-			bookToReturn.UpdateDetails();
-			
-			bookCopyToReturn.setisAvailableStatus(AVAILABLE);
-			bookCopyToReturn.setReturnDate(null);
-			bookCopyToReturn.setSubscriberID(null);
-			bookCopyToReturn.UpdateDetails();
-			LocalDate currentDate = LocalDate.now();
-	        mySubBorrowedRecord.setBorrowActualReturnDate(Date.valueOf(currentDate));
-	        mySubBorrowedRecord.UpdateBorrowDetails();
-			LocalDate expectReturnDate = mySubBorrowedRecord.getBorrowExpectReturnDate().toLocalDate(); // Assuming `chosenBorrow.getBorrowExpectReturnDate()` returns java.sql.Date
-			long timeDifferenceDays = ChronoUnit.DAYS.between(currentDate, expectReturnDate);
-			
-			if (timeDifferenceDays > 6) {
+			try {
+				bookToReturn.addToAvailableCopies();
+				bookToReturn.UpdateDetails();
 				
-			    subscriber.setStatus("Frozen");
-				subscriber.UpdateDetails();
-				lblreturnmsg.setText("The book is returned late by " + timeDifferenceDays + " days.\n"
-						+ subscriber.getName() +"'s subscription has been frozen for a month.\n"
-						+"The returning of " + bookCopyToReturn.getTitle() + " was successful.");
+				bookCopyToReturn.setisAvailableStatus(AVAILABLE);
+				bookCopyToReturn.setReturnDate(null);
+				bookCopyToReturn.setSubscriberID(null);
+				bookCopyToReturn.UpdateDetails();
+				LocalDate currentDate = LocalDate.now();
+		        mySubBorrowedRecord.setBorrowActualReturnDate(Date.valueOf(currentDate));
+		        mySubBorrowedRecord.UpdateBorrowDetails();
+				LocalDate expectReturnDate = mySubBorrowedRecord.getBorrowExpectReturnDate().toLocalDate(); // Assuming `chosenBorrow.getBorrowExpectReturnDate()` returns java.sql.Date
+				long timeDifferenceDays = ChronoUnit.DAYS.between(currentDate, expectReturnDate);
 				
-			} else {
-			    lblreturnmsg.setText("congratulations, The returning of " + bookCopyToReturn.getTitle() + " was successful");
-			    
+				if (timeDifferenceDays > 6) {
+					
+				    subscriber.setStatus("Frozen");
+					subscriber.UpdateDetails();
+					lblreturnmsg.setText("The book is returned late by " + timeDifferenceDays + " days.\n"
+							+ subscriber.getName() +"'s subscription has been frozen for a month.\n"
+							+"The returning of " + bookCopyToReturn.getTitle() + " was successful.");
+					
+				} else {
+				    lblreturnmsg.setText("congratulations, The returning of " + bookCopyToReturn.getTitle() + " was successful");
+				    
+				}
+						/*		
+				LogActivity returnLogActivity = new LogActivity(bookCopyToReturn.getSubscriberId(), "Return a Book", 
+						bookCopyToReturn.getBarcode(), bookCopyToReturn.getTitle(), bookCopyToReturn.getCopyNo());
+				
+				String ordertoNotifyString = Orders.theFirstOrderToNotifyArrivalOfBook(Orders.GetAllOrdersofaBook(bookCopyToReturn.getBarcode()));
+				if (ordertoNotifyString.contains(",")) {
+					String[] partStrings = ordertoNotifyString.split(", ");
+					Orders notifyThisOrder = new Orders(Integer.parseInt(partStrings[0]));				
+					notifyThisOrder.setBookArrivedDate(Date.valueOf(currentDate));
+					notifyThisOrder.UpdateDetails();
+				}*/
+				initialize();
+			} catch (Exception e) {
+				changeString(e.getMessage(),"#bf3030",lblbookDetailsmsg);
+
 			}
-					/*		
-			LogActivity returnLogActivity = new LogActivity(bookCopyToReturn.getSubscriberId(), "Return a Book", 
-					bookCopyToReturn.getBarcode(), bookCopyToReturn.getTitle(), bookCopyToReturn.getCopyNo());
 			
-			String ordertoNotifyString = Orders.theFirstOrderToNotifyArrivalOfBook(Orders.GetAllOrdersofaBook(bookCopyToReturn.getBarcode()));
-			if (ordertoNotifyString.contains(",")) {
-				String[] partStrings = ordertoNotifyString.split(", ");
-				Orders notifyThisOrder = new Orders(Integer.parseInt(partStrings[0]));				
-				notifyThisOrder.setBookArrivedDate(Date.valueOf(currentDate));
-				notifyThisOrder.UpdateDetails();
-			}*/
-			initialize();
 		}
 	}
 	

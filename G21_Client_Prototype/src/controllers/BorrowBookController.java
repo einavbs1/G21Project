@@ -29,8 +29,6 @@ public class BorrowBookController {
 
 	public static final int AVAILABLE = 1;
 	public static final int NotAVAILABLE = 0;
-	public static int BARCODE = 0;
-	public static int COPY_NUMBER = 1;
 
 	@FXML
 	private Label lblborrowPageTitle;
@@ -242,25 +240,31 @@ public class BorrowBookController {
 				availabeCopyToBorrow.UpdateDetails();
 
 				// update details in the Book for borrowing
-				bookToBorrow.removeFromAvailableCopies();
-				bookToBorrow.UpdateDetails();
-				try {/*
-				// create new record in the borrowed record table
-				new BorrowedRecord(availabeCopyToBorrow.getSubscriberId(), bookToBorrow.getBarcode(),
-						bookToBorrow.getTitle(), availabeCopyToBorrow.getCopyNo());
-				new LogActivity(availabeCopyToBorrow.getSubscriberId(), "Borrow a Book", 
-						bookToBorrow.getBarcode(), bookToBorrow.getTitle(), availabeCopyToBorrow.getCopyNo());*/
-				initialize();
-				changeString(
-						"congratulations, The borrowing of " + availabeCopyToBorrow.getTitle() + " was successful.","#086f03",lblborrowmsg);
+				try {
+					bookToBorrow.removeFromAvailableCopies();
+					bookToBorrow.UpdateDetails();
+					try {/*
+					// create new record in the borrowed record table
+					new BorrowedRecord(availabeCopyToBorrow.getSubscriberId(), bookToBorrow.getBarcode(),
+							bookToBorrow.getTitle(), availabeCopyToBorrow.getCopyNo());
+					new LogActivity(availabeCopyToBorrow.getSubscriberId(), "Borrow a Book", 
+							bookToBorrow.getBarcode(), bookToBorrow.getTitle(), availabeCopyToBorrow.getCopyNo());*/
+					initialize();
+					changeString(
+							"congratulations, The borrowing of " + availabeCopyToBorrow.getTitle() + " was successful.","#086f03",lblborrowmsg);
+					}catch (Exception e) {
+						changeString(e.getMessage(),"#bf3030",lblborrowmsg);
+					}
+
 				}catch (Exception e) {
 					changeString(e.getMessage(),"#bf3030",lblborrowmsg);
-				}
 
-			} else {
-				changeString("There is no avaiable copy of " + bookToBorrow.getTitle() + " in the library","#bf3030",lblborrowmsg);
-			}
+				}
+				
+		} else {
+			changeString("There is no avaiable copy of " + bookToBorrow.getTitle() + " in the library","#bf3030",lblborrowmsg);
 		}
+	}
 	}
 
 

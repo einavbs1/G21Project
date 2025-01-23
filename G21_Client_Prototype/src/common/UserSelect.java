@@ -1,5 +1,6 @@
 package common;
 
+
 /** This enum is as menu to user select options
  * 
  */
@@ -10,6 +11,8 @@ public enum UserSelect {
     LoadSubscriber("Load Subscriber"),
     Connected("Connected"),
     Disconnect("Disconnect");
+	
+	
 
     private final String displayName;
 

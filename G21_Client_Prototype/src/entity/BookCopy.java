@@ -34,8 +34,9 @@ public class BookCopy extends Book {
 	 * Author: Einav Constractor that adding new bookcopy to DB
 	 * 
 	 * @param barcode
+	 * @throws Exception 
 	 */
-	public BookCopy(String barcode) {
+	public BookCopy(String barcode) throws Exception {
 		super(barcode);
 		int newCopyNo = getAllCopies() + 1;
 		String newBookCopy = barcode + ", " + newCopyNo + ", 1, 0, null, null";

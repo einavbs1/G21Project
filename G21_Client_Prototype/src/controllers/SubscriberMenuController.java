@@ -114,6 +114,10 @@ public class SubscriberMenuController {
 			System.out.println("you selected " + userselect);
 			break;
 			
+		case ShowMyOrders:
+			System.out.println("you selected " + userselect);
+			break;
+			
 		default:
 			System.out.println("error? you selected: " + userselect);
 			break;

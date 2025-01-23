@@ -66,13 +66,13 @@ public class Book {
 		title = str[1];
 		subject = str[2];
 		StringBuilder descriptionBuilder = new StringBuilder();
-	    for (int i = 3; i < len - 5; i++) {
-	        descriptionBuilder.append(str[i]);
-	        if (i != len - 6) {
-	            descriptionBuilder.append(", ");
-	        }
-	    }
-	    description = descriptionBuilder.toString();
+		for (int i = 3; i < len - 5; i++) {
+			descriptionBuilder.append(str[i]);
+			if (i != len - 6) {
+				descriptionBuilder.append(", ");
+			}
+		}
+		description = descriptionBuilder.toString();
 		allCopies = Integer.parseInt(str[len - 5]);
 		availableCopies = Integer.parseInt(str[len - 4]);
 		ordersNumber = Integer.parseInt(str[len - 3]);
@@ -99,11 +99,10 @@ public class Book {
 			String[] parts = str.split(", ");
 			return parts;
 		} else {
-			throw new NoSuchElementException(
-					"We are not recognizing this barcode: " + barcode + ". We might add it soon.");
+			throw new NoSuchElementException("Unfortunately, this barcode ("
+					+ barcode + ") isn't recognized.\n We love adding new books as we evolve, it might join our library soon!");
 		}
 	}
-
 
 	/**
 	 * Author: Einav After we set the new information that we want to save we will
@@ -119,7 +118,6 @@ public class Book {
 		loadBook(getBookFromDB(barcode));
 
 	}
-
 
 	public static List<String> SearchBookByName(String bookname) {
 
@@ -243,29 +241,53 @@ public class Book {
 		this.availableCopies += 1;
 	}
 
-	public void addToAvailableCopies() {
-		this.availableCopies += 1;
+	public void addToAvailableCopies()  throws Exception {
+		if(availableCopies < allCopies - lostNumber) {
+			this.availableCopies += 1;
+		}else {
+			throw new Exception("Cant avaiable another copy. Avialable copies reach to maximum.");
+		}
 	}
 
-	public void addToOrdersNumber() {
-		this.ordersNumber += 1;
+	public void addToOrdersNumber() throws Exception {
+		if(ordersNumber < allCopies - lostNumber) {
+			this.ordersNumber += 1;
+		}else {
+			throw new Exception("Cant make order for this book. orders number reach to maximum.");
+		}
 	}
 
-	public void addToLostNumber() {
-		this.lostNumber += 1;
+	public void addToLostNumber() throws Exception {
+		if(lostNumber < allCopies) {
+			this.lostNumber += 1;
+		}else {
+			throw new Exception("Cant lost another book. All the copies already lost.");
+		}
 	}
 
 	/////////////// ----- Removing 1 -----
-	public void removeFromAvailableCopies() {
-		this.availableCopies -= 1;
+	public void removeFromAvailableCopies()  throws Exception {
+		if(availableCopies > 0) {
+			this.availableCopies -= 1;
+		}else {
+			throw new Exception("Available copies can't be negative number.");
+		}
 	}
 
-	public void removeFromOrdersNumber() {
-		this.ordersNumber -= 1;
+	public void removeFromOrdersNumber()  throws Exception {
+		if(ordersNumber > 0) {
+			this.ordersNumber -= 1;
+		}else {
+			throw new Exception("Order number can't be negative number.");
+		}
 	}
 
-	public void removeFromLostNumber() {
-		this.lostNumber -= 1;
+	public void removeFromLostNumber()  throws Exception {
+		if(lostNumber > 0) {
+			this.lostNumber -= 1;
+		}else {
+			throw new Exception("Book lost can't be negative number.");
+		}
 	}
 
 }

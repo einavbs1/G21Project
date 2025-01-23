@@ -133,6 +133,7 @@ public class EchoServer extends AbstractServer {
 		            descriptionBuilder.append(", ");
 		        }
 		    }
+		    
 			boolean UpdateBookSucc = queriesForBooks.updateBookDetails(UpdateBookDetailes[0], UpdateBookDetailes[1],
 					UpdateBookDetailes[2], descriptionBuilder.toString(), Integer.parseInt(UpdateBookDetailes[len-5]),
 					Integer.parseInt(UpdateBookDetailes[len-4]), Integer.parseInt(UpdateBookDetailes[len-3]),
@@ -476,7 +477,7 @@ public class EchoServer extends AbstractServer {
 		// This case Creates a new order with the details provided by the user and sends
 		// the order number to client. (chen tsafir)
 		case CreateNewOrder:
-			String[] orderDetails = infoFromUser.get(menuChoiceString).split(" ");
+			String[] orderDetails = infoFromUser.get(menuChoiceString).split(", ");
 			int newOrderNum = queriesForOrders.createOrder(Integer.parseInt(orderDetails[0]), orderDetails[1]);
 			if (newOrderNum != -1) {
 				this.sendToAllClients("OrderCreated:" + newOrderNum);
@@ -488,30 +489,19 @@ public class EchoServer extends AbstractServer {
 
 		// This case Updating the order details (chen tsafir)
 		case UpdateOrderDetails:
-			try {
-				String[] orderData = infoFromUser.get(menuChoiceString).split(", ");
-				if (orderData.length < 7) {
-					this.sendToAllClients("Error: Missing data");
-					break;
-				}
-
-				boolean success = queriesForOrders.updateOrderDetails(Integer.parseInt(orderData[0]),
-						Integer.parseInt(orderData[1]), orderData[2], Integer.parseInt(orderData[3]),
-						Date.valueOf(orderData[4]), Integer.parseInt(orderData[5]),
-						orderData[6].equals("null") ? null : Date.valueOf(orderData[6]));
-
-				if (success) {
-					this.sendToAllClients("Updated");
-				} else {
-					this.sendToAllClients("Error");
-				}
-			} catch (NumberFormatException e) {
-				this.sendToAllClients("Error: Invalid number format");
-			} catch (IllegalArgumentException e) {
-				this.sendToAllClients("Error: Invalid date format");
+			String[] orderData = infoFromUser.get(menuChoiceString).split(", ");
+			boolean success = queriesForOrders.updateOrderDetails(Integer.parseInt(orderData[0]),
+					Integer.parseInt(orderData[1]), orderData[2],
+					Date.valueOf(orderData[3]), Integer.parseInt(orderData[4]),
+					orderData[5].equals("null") ? null : Date.valueOf(orderData[5]));
+			if (success) {
+				this.sendToAllClients("Updated");
+			} else {
+				this.sendToAllClients("Error");
 			}
 			flag++;
 			break;
+
 		// Get all existing orders for specific Book. - Matan
 		case GetAllOrdersofaBook:
 			String bookBarcodeNeedsOrders = infoFromUser.get(menuChoiceString);
@@ -519,6 +509,31 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients(allMyOrders);
 			flag++;
 			break;
+
+			
+			// This case Sends all active orders for specific subscriber (chen tsafir)
+		case ShowSubscriberActiveOrders:
+		   List<String> activeOrdersForSubscriber = queriesForOrders.GetOrdersBySubscriber(
+		       Integer.parseInt(infoFromUser.get(menuChoiceString))
+		   );
+		   this.sendToAllClients(activeOrdersForSubscriber);
+		   flag++;
+		   break;
+		   
+		   // This case ask the number of active order for specific book by barcode book (chen tsafir)
+		case GetActiveOrdersCount:
+		    String bookBarcodeForCount = infoFromUser.get(menuChoiceString);
+		    int orderCount = queriesForOrders.getActiveOrdersCountForBook(bookBarcodeForCount);
+		    this.sendToAllClients(String.valueOf(orderCount));
+		    flag++;
+		    break;
+		    
+		    //This case retrieves all notifications from the database (chen tsafir)
+		case GetAllNotifications:
+		    List<String> notificationsTable = queriesForNotifications.GetAllNotifications();
+		    this.sendToAllClients(notificationsTable);
+		    flag++;
+		    break;
 		////////////////////// END of Chen adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
 

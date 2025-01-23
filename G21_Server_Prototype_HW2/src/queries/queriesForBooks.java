@@ -104,11 +104,9 @@ public class queriesForBooks {
 	 */
 	public static boolean updateBookDetails(String barcode, String title, String subject, String description,
 			int allCopies, int availableCopies, int ordersNumber, int lostNumber, String location) {
-
 		String query = "UPDATE books SET book_title = ?, book_subject = ?, book_description = ?, "
 				+ "book_allCopies = ?, book_availableCopies = ?, book_ordersNumber = ?, "
 				+ "book_lostNumber = ?, book_location = ? WHERE book_barcode = ?";
-
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
 			stmt.setString(1, title);
 			stmt.setString(2, subject);
@@ -119,7 +117,6 @@ public class queriesForBooks {
 			stmt.setInt(7, lostNumber);
 			stmt.setString(8, location);
 			stmt.setString(9, barcode);
-
 			stmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {

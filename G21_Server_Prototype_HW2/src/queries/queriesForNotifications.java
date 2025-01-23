@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Server.mysqlConnection;
 
@@ -57,6 +59,36 @@ public static String GetNotification(int serial) {
 	}
 
 	return NotificationData;
+}
+
+
+/**
+ * Author: Chen Tsafir
+ * Returns all notifications from the database
+ * 
+ * @return List<String> List of notifications as strings
+ */
+public static List<String> GetAllNotifications() {
+    List<String> notifications = new ArrayList<>();
+    String query = "SELECT * FROM notifications";
+    
+    try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query);
+         ResultSet rs = stmt.executeQuery()) {
+         
+        while (rs.next()) {
+            String notificationData = 
+                rs.getInt("notification_serial") + ", " +
+                rs.getString("notification_message") + ", " +
+                rs.getInt("subscriber_id") + ", " +
+                rs.getDate("notification_date") + ", " +
+                rs.getInt("borrow_number");
+                
+            notifications.add(notificationData);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return notifications;
 }
 
 

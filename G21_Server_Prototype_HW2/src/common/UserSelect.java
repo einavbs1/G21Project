@@ -50,7 +50,12 @@ public enum UserSelect {
     ///////-----Author: Yuval New.-----///////
 	SubscriberActiveBorrows("Subscriber Active Borrows"),
 ///////-----Author: Matan New.-----///////
-    GetAllOrdersofaBook("Get All Orders for a Book");
+    GetAllOrdersofaBook("Get All Orders for a Book"),
+    ///----Author: Chen New.--------//////
+    ShowSubscriberActiveOrders("Show Subscriber Active Orders"),
+    GetActiveOrdersCount("Get Active Orders Count"),
+    GetAllNotifications("Get All Notifications"),
+    ShowAllNotifications("Show All Notifications");
 
 	
     private final String displayName;

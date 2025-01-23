@@ -109,7 +109,7 @@ public class Orders {
 	 * handling the update.
 	 */
 
-	public void UpdateDetails() {
+	public boolean UpdateDetails() {
 		HashMap<String, String> updateMap = new HashMap<>();
 		updateMap.put("UpdateOrderDetails", toString()); // Using toString to generate a string with all the details
 
@@ -118,7 +118,9 @@ public class Orders {
 
 		if (UpdateStatusString.equals("Updated")) {
 			loadOrder(getOrderFromDB(order_number));
+			return true;
 		}
+		return false;
 
 	}
 	
@@ -132,10 +134,25 @@ public class Orders {
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
 		requestHashMap.put("GetAllOrdersofaBook", barcode);
 		ClientUI.chat.accept(requestHashMap);
-		List<String> myCopies = ChatClient.getListfromServer();
+		List<String> myOrders = ChatClient.getListfromServer();
 
-		return myCopies;
+		return myOrders;
+	}
+	
+	
+	/**
+	 * Author: Matan.
+	 * @param barcode
+	 * @return list<String> of orders of the same book
+	 */
+	public static List<String> getMyActiveOrdersSubscriber(int subID) {
 
+		HashMap<String, String> showOrdersMap = new HashMap<>();
+        showOrdersMap.put("ShowSubscriberActiveOrders", String.valueOf(subID));
+        ClientUI.chat.accept(showOrdersMap);
+        List<String> ordersList = ChatClient.getListfromServer();
+
+		return ordersList;
 	}
 	
 	
@@ -163,7 +180,7 @@ public class Orders {
 	@Override
 	public String toString() {
 		return order_number + ", " + subscriber_id + ", " + book_barcode + ", " + order_requestedDate + ", "
-				+ order_status + ", " + order_bookArrivedDate;
+				+ order_status + ", " + ((order_bookArrivedDate == null)? "null" : order_bookArrivedDate);
 	}
 
 	///////////////////////

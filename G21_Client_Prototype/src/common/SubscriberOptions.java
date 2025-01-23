@@ -5,7 +5,8 @@ public enum SubscriberOptions {
 	ViewActionsHistory("View Actions History"),
 	ExtendBorrowRequest("Extend Borrow Request"),
 	SearchBooks("Search Books"),
-	OrderBooks("Order Books"),
+	OrderBook("Order Book"),
+	ShowMyOrders("Show My Orders"),
 	ShowMyReminders("Show My Reminders");
 	
     private final String displayName;

@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+
 /**
  * This class is showing the GUI of updating email address of subscriber.
  */
@@ -135,6 +136,7 @@ public class UpdateEmailAddressController {
 		String idnumber = txtId.getText();
 		// The string contains only numbers.
 		if (idnumber.matches("\\d+")) {
+			
 			HashMap<String, String> loadthisid = new HashMap<String, String>();
 			loadthisid.put("LoadSubscriber", idnumber);
 			ClientUI.chat.accept(loadthisid);
