@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="547.0" prefWidth="355.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.BorrowBookController">
+   <children>
+      <TextField id="txtSubscriberId" fx:id="txtSubscriberId" layoutX="140.0" layoutY="53.0" AnchorPane.rightAnchor="15.0" />
+      <Label id="lblsubscriberId" fx:id="lblsubscriberId" layoutX="31.0" layoutY="57.0" text="Subscriber ID:" AnchorPane.leftAnchor="15.0" />
+      <Button id="btnLoadSubscriber" fx:id="btnLoadSubscriber" alignment="CENTER" layoutX="98.0" layoutY="95.0" mnemonicParsing="false" onAction="#loadSubscriberBtn" prefWidth="159.0" text="Display Subscriber Details" AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="98.0" />
+      <Label id="lblsubscriberInstruction" fx:id="lblsubscriberInstruction" alignment="CENTER" layoutX="12.0" layoutY="26.0" prefHeight="17.0" prefWidth="274.0" text="Please enter subscriber ID number" textAlignment="CENTER" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <Button id="btnBorrow" fx:id="btnBorrow" layoutX="98.0" layoutY="409.0" mnemonicParsing="false" onAction="#borrowBtn" text="Borrow now" AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="98.0" />
+      <Button id="btnBack" fx:id="btnBack" layoutX="29.0" layoutY="504.0" mnemonicParsing="false" onAction="#Back" text="Back" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="504.0" />
+      <Button id="btnExit" fx:id="btnExit" layoutX="243.0" layoutY="504.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="243.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="504.0" />
+      <Label id="lblsubscriberidmsg" fx:id="lblsubscriberidmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="125.0" prefHeight="138.0" prefWidth="325.0" textAlignment="CENTER" textFill="#086f03" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnLoadBook" layoutX="94.0" layoutY="329.0" mnemonicParsing="false" onAction="#loadCopyofBookBtn" text="Display Book Details" AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="98.0" />
+      <TextField id="txtbookBarcode" fx:id="txtbookBarcode" layoutX="140.0" layoutY="289.0" AnchorPane.rightAnchor="15.0" />
+      <Label id="lblbookInstruction" fx:id="lblbookInstruction" alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="266.0" prefHeight="17.0" prefWidth="288.0" text="Please Enter the details of the book" textAlignment="CENTER" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <Label id="lblbookDetails" fx:id="lblbookDetails" layoutX="20.0" layoutY="293.0" text="Book barcode:" AnchorPane.leftAnchor="15.0" />
+      <Label id="lblbookDetailsmsg" fx:id="lblbookDetailsmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="361.0" prefHeight="48.0" prefWidth="274.0" textAlignment="CENTER" textFill="#b13030" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label id="lblborrowmsg" fx:id="lblborrowmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="444.0" prefHeight="48.0" prefWidth="274.0" textAlignment="CENTER" textFill="#b13030" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="lblborrowPageTitle" fx:id="lblborrowPageTitle" alignment="CENTER" layoutX="18.0" layoutY="5.0" prefHeight="17.0" prefWidth="159.0" text="Welcome to the borrowing a book page" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

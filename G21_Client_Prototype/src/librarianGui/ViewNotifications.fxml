@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="486.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.ViewNotificationsController">
+   <children>
+      <Label layoutX="300.0" layoutY="14.0" text="System Notifications" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      
+      <Button fx:id="btnExit" layoutX="647.0" layoutY="424.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
+      <Button fx:id="btnBack" layoutX="148.0" layoutY="424.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      
+      <TableView fx:id="notificationsTable" layoutX="17.0" layoutY="60.0" prefHeight="340.0" prefWidth="800.0">
+        <columns>
+          <TableColumn fx:id="serialColumn" prefWidth="80.0" text="Serial No." />
+          <TableColumn fx:id="messageColumn" prefWidth="340.0" text="Message" />
+          <TableColumn fx:id="subscriberIdColumn" prefWidth="120.0" text="Subscriber ID" />
+          <TableColumn fx:id="dateColumn" prefWidth="130.0" text="Date" />
+          <TableColumn fx:id="borrowNumberColumn" prefWidth="130.0" text="Borrow Number" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

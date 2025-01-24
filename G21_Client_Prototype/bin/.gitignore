@@ -1,5 +1,9 @@
 /client/
 /common/
-/controllers/
 /entity/
-/gui/
+/librarianControllers/
+/librarianGui/
+/mainControllers/
+/mainGui/
+/subscriberControllers/
+/subscriberGui/

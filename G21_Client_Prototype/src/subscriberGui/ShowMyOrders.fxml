@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="486.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="subscriberControllers.ShowMyOrdersController">
+   <children>
+      <Button id="btnExit" fx:id="btnExit" layoutX="647.0" layoutY="424.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
+      <Button id="btnBack" fx:id="btnBack" layoutX="148.0" layoutY="424.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      <TextField id="txtOrderNumber" fx:id="txtOrderNumber" layoutX="154.0" layoutY="285.0" promptText="Enter order number" />
+      <Label id="lblOrderNum" fx:id="lblOrderNum" layoutX="21.0" layoutY="289.0" text="Enter Order number:" />
+      <TableView id="ordersTable" fx:id="ordersTable" layoutX="17.0" layoutY="32.0" prefHeight="211.0" prefWidth="800.0">
+        <columns>
+          <TableColumn id="orderNumberColumn" fx:id="orderNumberColumn" prefWidth="89.0" text="Order Number" />
+          <TableColumn id="bookBarcodeColumn" fx:id="bookBarcodeColumn" prefWidth="98.0" text="Book Barcode" />
+          <TableColumn id="bookNameColumn" fx:id="bookNameColumn" prefWidth="154.0" text="Book Name" />
+          <TableColumn id="requestedDateColumn" fx:id="requestedDateColumn" prefWidth="128.0" text="Requested Date" />
+          <TableColumn id="statusColumn" fx:id="statusColumn" prefWidth="200.0" text="Status" />
+          <TableColumn id="arrivedDateColumn" fx:id="arrivedDateColumn" prefWidth="131.0" text="Book Arrival Date" />
+        </columns>
+      </TableView>
+      <Button id="btnLoadOrder" fx:id="btnLoadOrder" layoutX="32.0" layoutY="318.0" mnemonicParsing="false" onAction="#LoadOrderBtn" text="Load Order" />
+      <Label id="lblBookName" fx:id="lblBookName" layoutX="444.0" layoutY="277.0" prefHeight="17.0" prefWidth="248.0" text="Book Name: " />
+      <Label id="lblStatus" fx:id="lblStatus" layoutX="444.0" layoutY="313.0" prefHeight="17.0" prefWidth="228.0" text="Status: " />
+      <Button id="btnCancelOrder" fx:id="btnCancelOrder" layoutX="444.0" layoutY="352.0" mnemonicParsing="false" onAction="#CancelOrderBtn" text="Cancel Order" />
+      <Label id="lblError" fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" layoutX="229.0" layoutY="383.0" prefHeight="84.0" prefWidth="401.0" textAlignment="CENTER" textFill="#47cc7c" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+   </children>
+</AnchorPane>
