@@ -29,8 +29,16 @@ public class queriesForReminders {
 			stmt.setDate(5, date);
 			stmt.setInt(6, actionNum);
 
-			int CreatedReminderNum = stmt.executeUpdate();
-			return CreatedReminderNum;
+			stmt.executeUpdate();
+			
+			int generatedKey = -1;
+			// Retrieve the generated key
+			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+			    if (generatedKeys.next()) {
+			        generatedKey = generatedKeys.getInt(1);
+			    }
+			}
+			return generatedKey;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;

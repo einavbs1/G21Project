@@ -30,6 +30,8 @@ public enum UserSelect {
 	AddNewSubscriber("Add New Subscriber"),
 	GetSubscriberDetails("Get Subscriber Details"),
 	UpdateSubscriber("Update Subscriber"),
+	//added by amir 19.01
+	getMonthlySubscriberStats("Get Monthly Subscriber Stats"),
 	///////-----Author: Yuval.-----///////
 	AddNewLibrarian("Add New Librarian"),
 	GetLibrarianDetails("Get Librarian Details"),
@@ -38,6 +40,8 @@ public enum UserSelect {
 	AddNewBorrow("Add New Borrow"),
 	GetBorrowRecord("Get Borrow Record"),
 	UpdateBorrowDetails("Update Borrow Details"),
+	//added by amir 18.1.2025
+	GetMonthlyBorrowedStats("Get Monthly Borrowed Stats"),
 	///////-----Author: Amir.-----///////
 	AddNewLogActivity("Add New Log Activity"),
 	LoadActivityById("Load Activities By ID"), 
@@ -55,7 +59,11 @@ public enum UserSelect {
     ShowSubscriberActiveOrders("Show Subscriber Active Orders"),
     GetActiveOrdersCount("Get Active Orders Count"),
     GetAllNotifications("Get All Notifications"),
-    ShowAllNotifications("Show All Notifications");
+    ShowAllNotifications("Show All Notifications"),
+    GetStatusReport("Get Status Report"),
+    GetBorrowsReport("Get Borrows Report"),
+    GetBookBarcodesAndTitles("Get Book Barcodes And Titles"),
+    GetBorrowsOfBookInSpecificDate("Get Borrows Of Book In Specific Date");
 
 	
     private final String displayName;

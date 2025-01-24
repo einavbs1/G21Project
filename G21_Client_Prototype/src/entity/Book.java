@@ -171,6 +171,17 @@ public class Book {
 		return closestDate;
 
 	}
+	
+	public static List<String> getBookBarcodesAndTitles(){
+		
+		HashMap<String, String> requestHashMap = new HashMap<String, String>();
+		requestHashMap.put("GetBookBarcodesAndTitles","");
+		ClientUI.chat.accept(requestHashMap);
+		List<String> myRes = ChatClient.getListfromServer();
+		return myRes;
+		
+	}
+	
 
 	@Override
 	public String toString() {

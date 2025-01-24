@@ -107,8 +107,16 @@ public class queriesForActivityLogs {
 			stmt.setObject(5, bookcopyCopyNo);
 			stmt.setDate(6, activityDate);
 
-			int CreatedActivityLog = stmt.executeUpdate();
-			return CreatedActivityLog;
+			stmt.executeUpdate();
+			
+			int generatedKey = -1;
+			// Retrieve the generated key
+			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+			    if (generatedKeys.next()) {
+			        generatedKey = generatedKeys.getInt(1);
+			    }
+			}
+			return generatedKey;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;

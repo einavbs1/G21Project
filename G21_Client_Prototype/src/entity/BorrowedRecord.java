@@ -179,7 +179,27 @@ public class BorrowedRecord {
 		}
 	}
 	
-
+	
+	/**Author: Amir 18.1.2025 monthlyStatsMap
+	 * Static method to get monthly borrowed books statistics
+	 * Used for generating monthly reports
+	 * @return List of borrowed books with loan duration details for the current month
+	 */	
+	public static List<String> getMonthlyBorrowedBooksStats() {
+	    HashMap<String, String> monthlyStatsMap = new HashMap<>();
+	    monthlyStatsMap.put("GetMonthlyBorrowedStats", "");
+	    ClientUI.chat.accept(monthlyStatsMap);
+	    return ChatClient.getListfromServer();
+	}
+	
+	public static String getBookBorrowsInSpecificDate(String barcode,int month, int year) {
+		HashMap<String, String> requestMap = new HashMap<>();
+		requestMap.put("GetBorrowsOfBookInSpecificDate", barcode+", "+month+", "+year);
+	    ClientUI.chat.accept(requestMap);
+	    return ChatClient.getStringfromServer();
+	}
+	
+	
 	@Override
 	public String toString() {
 		return borrowNumber + ", " + subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "

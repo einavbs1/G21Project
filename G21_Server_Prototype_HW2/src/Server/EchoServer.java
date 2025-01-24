@@ -44,9 +44,9 @@ public class EchoServer extends AbstractServer {
 
 		HashMap<String, String> infoFromUser = (HashMap<String, String>) msg;
 		String menuChoiceString = (infoFromUser.keySet().iterator().next());
-		
+
 		UserSelect x = UserSelect.getSelectionFromEnumName(menuChoiceString);
-		//System.out.println("You selected: "+ x);
+		// System.out.println("You selected: "+ x);
 		switch (x) {
 
 		// This case is getting the table from the SQL and sending to the client
@@ -100,6 +100,47 @@ public class EchoServer extends AbstractServer {
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Einavs adding ///////////////////////
 
+		case GetStatusReport:
+			String statusSubscriberReport[] = infoFromUser.get(menuChoiceString).split(", ");
+			String statusReport = queriesForStatusReport.GetStatusReport(
+					Integer.parseInt(statusSubscriberReport[0]), Integer.parseInt(statusSubscriberReport[1]));
+
+			if (statusReport.contains(",")) {
+				this.sendToAllClients(statusReport);
+			} else {
+				this.sendToAllClients(queriesForStatusReport.addNewReportToDB(
+						Integer.parseInt(statusSubscriberReport[0]), Integer.parseInt(statusSubscriberReport[1])));
+			}
+			flag++;
+			break;
+			
+		case GetBorrowsReport:
+			String borrowsReportdata[] = infoFromUser.get(menuChoiceString).split(", ");
+			String borrowReport = queriesForBorrowsReport.GetStatusReport(
+					Integer.parseInt(borrowsReportdata[0]), Integer.parseInt(borrowsReportdata[1]));
+			if (borrowReport.contains(",")) {
+				this.sendToAllClients(borrowReport);
+			} else {
+				this.sendToAllClients(queriesForBorrowsReport.addNewReportToDB(
+						Integer.parseInt(borrowsReportdata[0]), Integer.parseInt(borrowsReportdata[1])));
+			}
+			flag++;
+			break;
+			
+		case GetBookBarcodesAndTitles:
+			List<String> AllBooksinfoFromDB = queriesForBooks.getBookBarcodesAndTitles();
+			this.sendToAllClients(AllBooksinfoFromDB);
+			flag++;
+			break;
+			
+		case GetBorrowsOfBookInSpecificDate:
+			String specificBookDateBorrows[] = infoFromUser.get(menuChoiceString).split(", ");
+			String specificBookDateBorrowsReport = queriesForBorrows.getBorrowsOfBookInSpecificDate(specificBookDateBorrows[0],
+					Integer.parseInt(specificBookDateBorrows[1]), Integer.parseInt(specificBookDateBorrows[2]));
+			this.sendToAllClients(specificBookDateBorrowsReport);
+			flag++;
+			break;
+
 		// This case is adding the book to the DB.
 		case CreateBook:
 			String NewBookDetails[] = infoFromUser.get(menuChoiceString).split(", ");
@@ -127,17 +168,17 @@ public class EchoServer extends AbstractServer {
 			String UpdateBookDetailes[] = infoFromUser.get(menuChoiceString).split(", ");
 			int len = UpdateBookDetailes.length;
 			StringBuilder descriptionBuilder = new StringBuilder();
-		    for (int i = 3; i < len - 5; i++) {
-		        descriptionBuilder.append(UpdateBookDetailes[i]);
-		        if (i != len - 6) {
-		            descriptionBuilder.append(", ");
-		        }
-		    }
-		    
+			for (int i = 3; i < len - 5; i++) {
+				descriptionBuilder.append(UpdateBookDetailes[i]);
+				if (i != len - 6) {
+					descriptionBuilder.append(", ");
+				}
+			}
+
 			boolean UpdateBookSucc = queriesForBooks.updateBookDetails(UpdateBookDetailes[0], UpdateBookDetailes[1],
-					UpdateBookDetailes[2], descriptionBuilder.toString(), Integer.parseInt(UpdateBookDetailes[len-5]),
-					Integer.parseInt(UpdateBookDetailes[len-4]), Integer.parseInt(UpdateBookDetailes[len-3]),
-					Integer.parseInt(UpdateBookDetailes[len-2]), UpdateBookDetailes[len-1]);
+					UpdateBookDetailes[2], descriptionBuilder.toString(), Integer.parseInt(UpdateBookDetailes[len - 5]),
+					Integer.parseInt(UpdateBookDetailes[len - 4]), Integer.parseInt(UpdateBookDetailes[len - 3]),
+					Integer.parseInt(UpdateBookDetailes[len - 2]), UpdateBookDetailes[len - 1]);
 			if (UpdateBookSucc) {
 				this.sendToAllClients("book has been updated");
 			} else {
@@ -176,8 +217,9 @@ public class EchoServer extends AbstractServer {
 			String UpdateBookCopyDetailes[] = infoFromUser.get(menuChoiceString).split(", ");
 			boolean UpdateBookCopySucc = queriesForBookCopy.updateBookCopyDetails(UpdateBookCopyDetailes[0],
 					Integer.parseInt(UpdateBookCopyDetailes[1]), Integer.parseInt(UpdateBookCopyDetailes[2]),
-					Integer.parseInt(UpdateBookCopyDetailes[3]), UpdateBookCopyDetailes[4].equals("null") ? null : java.sql.Date.valueOf(UpdateBookCopyDetailes[4]),
-							UpdateBookCopyDetailes[5].equals("null") ? null : Integer.parseInt(UpdateBookCopyDetailes[5]));
+					Integer.parseInt(UpdateBookCopyDetailes[3]),
+					UpdateBookCopyDetailes[4].equals("null") ? null : java.sql.Date.valueOf(UpdateBookCopyDetailes[4]),
+					UpdateBookCopyDetailes[5].equals("null") ? null : Integer.parseInt(UpdateBookCopyDetailes[5]));
 			if (UpdateBookCopySucc) {
 				this.sendToAllClients("bookCopy has been updated");
 			} else {
@@ -185,15 +227,15 @@ public class EchoServer extends AbstractServer {
 			}
 			flag++;
 			break;
-		
+
 		//
 		case GetAllMyCopies:
 			String bookBarcodeNeedsCopies = infoFromUser.get(menuChoiceString);
-			List <String> allMycopies = queriesForBooks.GetAllMyCopies(bookBarcodeNeedsCopies);
+			List<String> allMycopies = queriesForBooks.GetAllMyCopies(bookBarcodeNeedsCopies);
 			this.sendToAllClients(allMycopies);
 			flag++;
 			break;
-			
+
 		case CreateNotification:
 			String NewNotificationDetails[] = infoFromUser.get(menuChoiceString).split(", ");
 			int NotificationCreateNumber = queriesForNotifications.addNewNotificationToDB(NewNotificationDetails[0],
@@ -260,7 +302,6 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients(allBooksByDescription);
 			flag++;
 			break;
-
 
 		////////////////////// END of Einavs adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
@@ -491,9 +532,8 @@ public class EchoServer extends AbstractServer {
 		case UpdateOrderDetails:
 			String[] orderData = infoFromUser.get(menuChoiceString).split(", ");
 			boolean success = queriesForOrders.updateOrderDetails(Integer.parseInt(orderData[0]),
-					Integer.parseInt(orderData[1]), orderData[2],
-					Date.valueOf(orderData[3]), Integer.parseInt(orderData[4]),
-					orderData[5].equals("null") ? null : Date.valueOf(orderData[5]));
+					Integer.parseInt(orderData[1]), orderData[2], Date.valueOf(orderData[3]),
+					Integer.parseInt(orderData[4]), orderData[5].equals("null") ? null : Date.valueOf(orderData[5]));
 			if (success) {
 				this.sendToAllClients("Updated");
 			} else {
@@ -505,35 +545,34 @@ public class EchoServer extends AbstractServer {
 		// Get all existing orders for specific Book. - Matan
 		case GetAllOrdersofaBook:
 			String bookBarcodeNeedsOrders = infoFromUser.get(menuChoiceString);
-			List <String> allMyOrders = queriesForOrders.GetAllMyOrders(bookBarcodeNeedsOrders);
+			List<String> allMyOrders = queriesForOrders.GetAllMyOrders(bookBarcodeNeedsOrders);
 			this.sendToAllClients(allMyOrders);
 			flag++;
 			break;
 
-			
-			// This case Sends all active orders for specific subscriber (chen tsafir)
+		// This case Sends all active orders for specific subscriber (chen tsafir)
 		case ShowSubscriberActiveOrders:
-		   List<String> activeOrdersForSubscriber = queriesForOrders.GetOrdersBySubscriber(
-		       Integer.parseInt(infoFromUser.get(menuChoiceString))
-		   );
-		   this.sendToAllClients(activeOrdersForSubscriber);
-		   flag++;
-		   break;
-		   
-		   // This case ask the number of active order for specific book by barcode book (chen tsafir)
+			List<String> activeOrdersForSubscriber = queriesForOrders
+					.GetOrdersBySubscriber(Integer.parseInt(infoFromUser.get(menuChoiceString)));
+			this.sendToAllClients(activeOrdersForSubscriber);
+			flag++;
+			break;
+
+		// This case ask the number of active order for specific book by barcode book
+		// (chen tsafir)
 		case GetActiveOrdersCount:
-		    String bookBarcodeForCount = infoFromUser.get(menuChoiceString);
-		    int orderCount = queriesForOrders.getActiveOrdersCountForBook(bookBarcodeForCount);
-		    this.sendToAllClients(String.valueOf(orderCount));
-		    flag++;
-		    break;
-		    
-		    //This case retrieves all notifications from the database (chen tsafir)
+			String bookBarcodeForCount = infoFromUser.get(menuChoiceString);
+			int orderCount = queriesForOrders.getActiveOrdersCountForBook(bookBarcodeForCount);
+			this.sendToAllClients(String.valueOf(orderCount));
+			flag++;
+			break;
+
+		// This case retrieves all notifications from the database (chen tsafir)
 		case GetAllNotifications:
-		    List<String> notificationsTable = queriesForNotifications.GetAllNotifications();
-		    this.sendToAllClients(notificationsTable);
-		    flag++;
-		    break;
+			List<String> notificationsTable = queriesForNotifications.GetAllNotifications();
+			this.sendToAllClients(notificationsTable);
+			flag++;
+			break;
 		////////////////////// END of Chen adding ///////////////////////
 		////////////////////////////////////////////////////////////////////
 
@@ -565,6 +604,14 @@ public class EchoServer extends AbstractServer {
 			clientsstatusconnections.put(clientIp, offlineStatuString);
 			tableController.setconnection(popUpString);
 			this.sendToAllClients("Disconnected");
+			flag++;
+			break;
+
+		// added by amir 18.1
+		// This case is Showing the borrowed books right now.
+		case GetMonthlyBorrowedStats:
+			List<String> currentlyBorrowed = queriesForBorrows.getMonthlyBorrowedBooksStats();
+			this.sendToAllClients(currentlyBorrowed);
 			flag++;
 			break;
 

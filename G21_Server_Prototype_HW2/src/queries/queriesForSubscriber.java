@@ -5,7 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Server.mysqlConnection;
 
@@ -144,10 +146,80 @@ public class queriesForSubscriber {
 	    }
 	    return subscribers;
 	}
+	
+	
+	public static Map<String, Integer> GetSubscriberStatusCount() {
+	    Map<String, Integer> statusCounts = new HashMap<>();
+	    statusCounts.put("Active", 0);
+	    statusCounts.put("Frozen", 0);
+
+	    String query = "SELECT subscriber_status, COUNT(*) AS count FROM subscriber GROUP BY subscriber_status";
+
+	    try (Statement stmt = mysqlConnection.conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+	        while (rs.next()) {
+	            String status = rs.getString("subscriber_status");
+	            int count = rs.getInt("count");
+
+	            // Update the count in the map if the status is Active or Frozen
+	            if (statusCounts.containsKey(status)) {
+	                statusCounts.put(status, count);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return statusCounts;
+	}
+	
+	
 
 /////////////////////// END //////////////////////////////////
 ///////////////////// --- Avishag Subscriber Entity section
 /////////////////////// ---///////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
+
+	
+	
+/////////////////////// start amir 19.01.2025 //////////////////////////////////
+
+	
+	/**
+	 * Gets monthly subscriber status statistics
+	 * @return List of subscribers with their current status details
+	 */
+	public static List<String> getMonthlySubscriberStats() {
+	    ArrayList<String> subscriberStats = new ArrayList<>();
+	    
+	    String query = "SELECT DISTINCT s.subscriber_id, s.subscriber_name, s.status " +
+	                  "FROM subscriber s " +
+	                  "ORDER BY s.subscriber_id";
+
+	    try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query);
+	         ResultSet rs = stmt.executeQuery()) {
+	        
+	        while (rs.next()) {
+	            int subscriber_id = rs.getInt("subscriber_id");
+	            String subscriber_name = rs.getString("subscriber_name");
+	            String status = rs.getString("status");
+	            
+	            String subscriberRecord = String.format("%d, %s, %s",
+	                subscriber_id,
+	                subscriber_name,
+	                status
+	            );
+	            
+	            subscriberStats.add(subscriberRecord);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return subscriberStats;
+	}
 }
+
+
+/////////////////////// END amir 19.01.2025 //////////////////////////////////
+

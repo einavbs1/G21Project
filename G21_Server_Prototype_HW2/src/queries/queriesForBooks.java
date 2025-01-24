@@ -292,6 +292,27 @@ public class queriesForBooks {
 		}
 		return foundBooks;
 	}
+	
+	
+	public static List<String> getBookBarcodesAndTitles() {
+        List<String> bookList = new ArrayList<>();
+        String query = "SELECT CONCAT(book_barcode, ', ', book_title) AS book_info FROM books";
+
+        try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                // Retrieve the concatenated book info
+                String bookInfo = rs.getString("book_info");
+                bookList.add(bookInfo);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return bookList;
+    }
 
 /////////////////////// END //////////////////////////////////
 ///////////////////// --- Einavs books Entity section ---///////////////////////

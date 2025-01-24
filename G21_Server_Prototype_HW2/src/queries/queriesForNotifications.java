@@ -28,9 +28,17 @@ public static int addNewNotificationToDB(String message, int subID, Date date, i
 		stmt.setInt(2, subID);
 		stmt.setDate(3, date);
 		stmt.setInt(4, borrowNum);
-
-		int CreatedNotificationNum = stmt.executeUpdate();
-		return CreatedNotificationNum;
+		
+		stmt.executeUpdate();
+		
+		int generatedKey = -1;
+		// Retrieve the generated key
+		try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+		    if (generatedKeys.next()) {
+		        generatedKey = generatedKeys.getInt(1);
+		    }
+		}
+		return generatedKey;
 	} catch (SQLException e) {
 		e.printStackTrace();
 		return -1;

@@ -6,12 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Flow.Subscriber;
-
 import Server.mysqlConnection;
 
 public class queriesForBorrows {
-
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////// --- Matan Borrow Entity section---///////////////////////
@@ -37,7 +34,8 @@ public class queriesForBorrows {
 			int librarian_id, String librarian_name, int borrow_lostBook) {
 		PreparedStatement stmt;
 		try {
-			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO borrowedrecords VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			stmt = mysqlConnection.conn.prepareStatement(
+					"INSERT INTO borrowedrecords VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
 			stmt.setInt(1, subscriber_id);
@@ -121,7 +119,7 @@ public class queriesForBorrows {
 			Date borrow_actualReturnDate, int borrow_lostBook, int borrow_status) {
 		String query = "UPDATE borrowedrecords SET borrow_expectReturnDate = ?, borrow_actualReturnDate = ?, borrow_lostBook = ?, borrow_status = ?"
 				+ " WHERE  borrow_number = ?";
-		
+
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
 			stmt.setDate(1, borrow_expectReturnDate);
 			stmt.setDate(2, borrow_actualReturnDate);
@@ -143,41 +141,169 @@ public class queriesForBorrows {
 	///////////////////// --- Matan Borrow Entity section ---///////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
 
-	
 	/**
-	 * Author: Yuval.
-	 * This method is returning the list of active borrow records for a specific subscriber from the DB.
+	 * Author: Yuval. This method is returning the list of active borrow records for
+	 * a specific subscriber from the DB.
 	 * 
 	 * @param subscriber_id
 	 * @return List of active borrow records
 	 */
 	public static List<String> getAllSubscriberActiveBorrowRecordsFromDB(int subscriber_id) {
-		
-	    List<String> activeBorrowRecords = new ArrayList<>();
-	    String query = "SELECT * FROM BorrowedRecords WHERE subscriber_id = ? AND borrow_status = 1";
 
-	    try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
-	        stmt.setInt(1, subscriber_id);
+		List<String> activeBorrowRecords = new ArrayList<>();
+		String query = "SELECT * FROM BorrowedRecords WHERE subscriber_id = ? AND borrow_status = 1";
 
-	        try (ResultSet rs = stmt.executeQuery()) {
-	            while (rs.next()) {
-	                int borrow_number = rs.getInt("borrow_number");
-	                String book_barcode = rs.getString("book_barcode");
-	                String book_title = rs.getString("book_title");
-	                int bookcopy_copyNo = rs.getInt("bookcopy_copyNo");
-	                Date borrow_date = rs.getDate("borrow_date");
-	                Date borrow_expectReturnDate = rs.getDate("borrow_expectReturnDate");
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+			stmt.setInt(1, subscriber_id);
 
-	                String borrowRecord = borrow_number + ", " + book_barcode + ", " + book_title + ", "
-	                        + bookcopy_copyNo + ", " + borrow_date + ", " + borrow_expectReturnDate;
-	                activeBorrowRecords.add(borrowRecord);
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					int borrow_number = rs.getInt("borrow_number");
+					String book_barcode = rs.getString("book_barcode");
+					String book_title = rs.getString("book_title");
+					int bookcopy_copyNo = rs.getInt("bookcopy_copyNo");
+					Date borrow_date = rs.getDate("borrow_date");
+					Date borrow_expectReturnDate = rs.getDate("borrow_expectReturnDate");
+
+					String borrowRecord = borrow_number + ", " + book_barcode + ", " + book_title + ", "
+							+ bookcopy_copyNo + ", " + borrow_date + ", " + borrow_expectReturnDate;
+					activeBorrowRecords.add(borrowRecord);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return activeBorrowRecords;
+	}
+
+	public static String getBorrowsOfSpecificDate(int month, int year) {
+
+		String borrowsReportData = "Empty";
+
+		String query = "SELECT " + "COUNT(*) AS totalBorrows, "
+				+ "SUM(CASE WHEN borrow_actualReturnDate = borrow_expectReturnDate THEN 1 ELSE 0 END) AS returnInTime, "
+				+ "SUM(CASE WHEN borrow_actualReturnDate > borrow_expectReturnDate THEN 1 ELSE 0 END) AS lateReturn, "
+				+ "SUM(CASE WHEN borrow_actualReturnDate < borrow_expectReturnDate THEN 1 ELSE 0 END) AS returnBeforeTime, "
+				+ "SUM(CASE WHEN borrow_actualReturnDate IS NULL THEN 1 ELSE 0 END) AS notReturnedYet, "
+				+ "SUM(CASE WHEN borrow_lostBook = 1 THEN 1 ELSE 0 END) AS lostBooks "
+				+ "FROM borrowedrecords WHERE MONTH(borrow_date) = ? AND YEAR(borrow_date) = ?";
+
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+			stmt.setInt(1, month);
+			stmt.setInt(2, year);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					int totalBorrows = rs.getInt("totalBorrows");
+					int returnInTime = rs.getInt("returnInTime");
+					int lateReturn = rs.getInt("lateReturn");
+					int returnBeforeTime = rs.getInt("returnBeforeTime");
+					int notReturnedYet = rs.getInt("notReturnedYet");
+					int lostBooks = rs.getInt("lostBooks");
+
+					borrowsReportData = totalBorrows + ", " + returnInTime + ", " + lateReturn
+							+ ", " + returnBeforeTime + ", " + notReturnedYet + ", " + lostBooks;
+				} else {
+	                // No rows found for the given month and year
+	                borrowsReportData = "0, 0, 0, 0, 0, 0";
 	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-	    return activeBorrowRecords;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return borrowsReportData;
 	}
 	
+	
+	
+	public static String getBorrowsOfBookInSpecificDate(String barcode,int month, int year) {
+
+		String borrowsReportData = "Empty";
+
+		String query = "SELECT " + "COUNT(*) AS totalBorrows, "
+				+ "SUM(CASE WHEN borrow_actualReturnDate = borrow_expectReturnDate THEN 1 ELSE 0 END) AS returnInTime, "
+				+ "SUM(CASE WHEN borrow_actualReturnDate > borrow_expectReturnDate THEN 1 ELSE 0 END) AS lateReturn, "
+				+ "SUM(CASE WHEN borrow_actualReturnDate < borrow_expectReturnDate THEN 1 ELSE 0 END) AS returnBeforeTime, "
+				+ "SUM(CASE WHEN borrow_actualReturnDate IS NULL THEN 1 ELSE 0 END) AS notReturnedYet, "
+				+ "SUM(CASE WHEN borrow_lostBook = 1 THEN 1 ELSE 0 END) AS lostBooks "
+				+ "FROM borrowedrecords WHERE MONTH(borrow_date) = ? AND YEAR(borrow_date) = ? AND book_barcode = ?";
+
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+			stmt.setInt(1, month);
+			stmt.setInt(2, year);
+			stmt.setString(3, barcode);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					int totalBorrows = rs.getInt("totalBorrows");
+					int returnInTime = rs.getInt("returnInTime");
+					int lateReturn = rs.getInt("lateReturn");
+					int returnBeforeTime = rs.getInt("returnBeforeTime");
+					int notReturnedYet = rs.getInt("notReturnedYet");
+					int lostBooks = rs.getInt("lostBooks");
+
+					borrowsReportData = totalBorrows + ", " + returnInTime + ", " + lateReturn
+							+ ", " + returnBeforeTime + ", " + notReturnedYet + ", " + lostBooks;
+				} else {
+	                // No rows found for the given month and year
+	                borrowsReportData = "0, 0, 0, 0, 0, 0";
+	            }
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return borrowsReportData;
+	}
+
+	// added by amir 18.1
+
+	/**
+	 * Gets borrowed books statistics for the current month
+	 * 
+	 * @return List of borrowed books with loan duration details for the current
+	 *         month
+	 */
+	public static List<String> getMonthlyBorrowedBooksStats() {
+		ArrayList<String> monthlyBorrows = new ArrayList<>();
+
+		String query = "SELECT br.*, "
+				+ "DATEDIFF(COALESCE(br.borrow_actualReturnDate, CURRENT_DATE), br.borrow_date) as loan_duration, "
+				+ "CASE WHEN br.borrow_actualReturnDate IS NULL THEN "
+				+ "    DATEDIFF(CURRENT_DATE, br.borrow_expectReturnDate) " + "ELSE "
+				+ "    DATEDIFF(br.borrow_actualReturnDate, br.borrow_expectReturnDate) " + "END as delay_days "
+				+ "FROM borrowedrecords br " + "WHERE (YEAR(br.borrow_date) = YEAR(CURRENT_DATE) AND "
+				+ "       MONTH(br.borrow_date) = MONTH(CURRENT_DATE)) OR "
+				+ "      (br.borrow_actualReturnDate IS NULL) " + "ORDER BY loan_duration DESC";
+
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query);
+				ResultSet rs = stmt.executeQuery()) {
+
+			while (rs.next()) {
+				int borrow_number = rs.getInt("borrow_number");
+				int subscriber_id = rs.getInt("subscriber_id");
+				String book_barcode = rs.getString("book_barcode");
+				String book_title = rs.getString("book_title");
+				int bookcopy_copyNo = rs.getInt("bookcopy_copyNo");
+				String borrow_date = rs.getString("borrow_date");
+				String borrow_expectReturnDate = rs.getString("borrow_expectReturnDate");
+				String borrow_actualReturnDate = rs.getString("borrow_actualReturnDate");
+				int librarian_id = rs.getInt("librarian_id");
+				int loan_duration = rs.getInt("loan_duration");
+				int delay_days = rs.getInt("delay_days");
+
+				String borrowRecord = borrow_number + ", " + subscriber_id + ", " + book_barcode + ", " + book_title
+						+ ", " + bookcopy_copyNo + ", " + borrow_date + ", " + borrow_expectReturnDate + ", "
+						+ borrow_actualReturnDate + ", " + librarian_id + ", " + loan_duration + ", "
+						+ (delay_days > 0 ? delay_days : 0);
+
+				monthlyBorrows.add(borrowRecord);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return monthlyBorrows;
+	}
+
 }
