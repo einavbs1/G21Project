@@ -37,6 +37,7 @@ public class SpecificBookChartResultsController {
 	@FXML
 	private NumberAxis yAxis;
 
+	
 	@FXML
 	private ComboBox<String> comboBoxMonth;
 	@FXML
