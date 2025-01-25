@@ -44,6 +44,8 @@ public class UpdateMyDataController {
 	private Label lblPassword;
 	@FXML
 	private Label lblStatus;
+	@FXML
+	private Label lblFrozenUntil;
 
 	@FXML
 	private TextField txtId;
@@ -80,6 +82,9 @@ public class UpdateMyDataController {
 		txtEmail.setText(me.getEmail());
 		txtPassword.setText(me.getPassword());
 		txtStatus.setText(me.getStatus());
+		if (me.getStatus().equals("Frozen")) {
+			lblFrozenUntil.setText("Frozen until the date: " + me.getFrozenUntil());
+		}
 		txtId.setEditable(false);
 		txtName.setEditable(false);
 		txtStatus.setEditable(false);
@@ -129,13 +134,12 @@ public class UpdateMyDataController {
 	 * @param event - the click on the update button.
 	 */
 	public void UpdateBtn(ActionEvent event) {
-		if(VerifyInput()) {
+		if (VerifyInput()) {
 			me.setPhoneNumber(txtPhoneNumber.getText());
 			me.setEmail(txtEmail.getText());
 			me.setPassword(txtPassword.getText());
-			
-	
-			if(me.UpdateDetails()) {
+
+			if (me.UpdateDetails()) {
 				lblMessage.setText("Updated successfully.");
 				ChatClient.setCurrectSubscriber(me);
 			} else {
@@ -143,10 +147,9 @@ public class UpdateMyDataController {
 			}
 		}
 	}
-	
-	
+
 	private boolean VerifyInput() {
-		
+
 		if (txtPhoneNumber.getText().isEmpty() || txtEmail.getText().isEmpty() || txtPassword.getText().isEmpty()) {
 
 			changeString("Please fill all the fields to update your details.");
@@ -157,13 +160,12 @@ public class UpdateMyDataController {
 			changeString("Phone number must be 10 digits.");
 			return false;
 		}
-		
+
 		if (!txtEmail.getText().matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-		    changeString("Invalid email format. Please enter a valid email.");
-		    return false;
+			changeString("Invalid email format. Please enter a valid email.");
+			return false;
 		}
-		
-		
+
 		return true;
 	}
 

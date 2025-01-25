@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:librarianControllers="controllers.SpecificBookChartResultsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SpecificBookChartResultsController">
     <children>
          <Button fx:id="btnExit" layoutX="926.0" layoutY="710.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="0.0" prefWidth="52.0" styleClass="nav-button" text="Exit" />
          <Label alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" layoutY="14.0" prefHeight="35.0" prefWidth="295.0" text="Specific Book Report" textAlignment="CENTER" textFill="#2c3e50">

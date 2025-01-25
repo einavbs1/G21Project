@@ -1,7 +1,7 @@
 package librarianControllers;
 
 import java.io.IOException;
-
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,8 +41,6 @@ public class ViewAllSubscribersController {
 	@FXML
 	private TableColumn<String, String> nameColumn;
 	@FXML
-	private TableColumn<String, String> subscriptionDetailsColumn;
-	@FXML
 	private TableColumn<String, String> phoneColumn;
 	@FXML
 	private TableColumn<String, String> emailColumn;
@@ -50,6 +48,8 @@ public class ViewAllSubscribersController {
 	private TableColumn<String, String> passwordColumn;
 	@FXML
 	private TableColumn<String, String> statusColumn;
+	@FXML
+	private TableColumn<String, String> FrozenUntilColumn;
 
 	/*
 	 * Author: Avishag. initialize the GUI with the data to the table view.
@@ -106,6 +106,17 @@ public class ViewAllSubscribersController {
 					}
 				}
 			}
+		});
+		
+		FrozenUntilColumn.setCellValueFactory(cellData -> {
+			String[] parts = cellData.getValue().split(", ");
+			if(parts[7].equals("null")) {
+				return new javafx.beans.property.SimpleStringProperty(parts[7]);
+			}
+			else {
+				return new javafx.beans.property.SimpleStringProperty(String.valueOf(Date.valueOf(parts[7])));
+			}
+			
 		});
 	}
 

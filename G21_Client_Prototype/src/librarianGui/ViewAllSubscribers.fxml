@@ -13,13 +13,13 @@
       <Button id="btnBack" fx:id="btnBack" layoutX="56.0" layoutY="512.0" mnemonicParsing="false" onAction="#Back" text="Back" />
       <TableView id="SubscribersTable" fx:id="subscriberTable" layoutX="24.0" layoutY="74.0" prefHeight="358.0" prefWidth="1020.0">
         <columns>
-          <TableColumn fx:id="idColumn" prefWidth="119.0" text="subscriber_id" />
-          <TableColumn fx:id="nameColumn" prefWidth="118.0" text="subscriber_name" />
-            <TableColumn fx:id="subscriptionDetailsColumn" prefWidth="180.0" text="subscription_details" />
-            <TableColumn fx:id="phoneColumn" minWidth="0.0" prefWidth="191.0" text="subscriber_phone_number" />
-            <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="179.0" text="subscriber_email" />
-            <TableColumn fx:id="passwordColumn" prefWidth="150.0" text="subscriber_password" />
-            <TableColumn fx:id="statusColumn" prefWidth="82.0" text="status" />
+          <TableColumn fx:id="idColumn" prefWidth="97.0" text="subscriber_id" />
+          <TableColumn fx:id="nameColumn" prefWidth="134.0" text="subscriber_name" />
+            <TableColumn fx:id="phoneColumn" minWidth="0.0" prefWidth="170.0" text="subscriber_phone_number" />
+            <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="178.0" text="subscriber_email" />
+            <TableColumn fx:id="passwordColumn" prefWidth="186.0" text="subscriber_password" />
+            <TableColumn fx:id="statusColumn" prefWidth="100.0" text="status" />
+            <TableColumn fx:id="FrozenUntilColumn" prefWidth="154.0" text="Frozen Until" />
         </columns>
       </TableView>
       <Label fx:id="lblTitle" layoutX="428.0" layoutY="24.0" text="Subscriber Table View">

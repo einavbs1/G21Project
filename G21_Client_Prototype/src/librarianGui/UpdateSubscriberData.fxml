@@ -29,11 +29,11 @@
 
       <Label fx:id="lblStatus" layoutX="31.0" layoutY="353.0" text="Status:" />
 
-      <Button fx:id="btnUpdate" disable="true" layoutX="146.0" layoutY="395.0" mnemonicParsing="false" onAction="#UpdateBtn" text="Update" />
-      <Button fx:id="btnBack" layoutX="29.0" layoutY="514.0" mnemonicParsing="false" onAction="#Back" text="Back" />
-      <Button fx:id="btnExit" layoutX="292.0" layoutY="514.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
+      <Button fx:id="btnUpdate" disable="true" layoutX="133.0" layoutY="418.0" mnemonicParsing="false" onAction="#UpdateBtn" text="Update" />
+      <Button fx:id="btnBack" layoutX="29.0" layoutY="520.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      <Button fx:id="btnExit" layoutX="292.0" layoutY="520.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
 
-      <Label fx:id="lblMessage" layoutX="20.0" layoutY="430.0" prefHeight="68.0" prefWidth="320.0" text=" " textAlignment="CENTER" textFill="#086f03" wrapText="true">
+      <Label fx:id="lblMessage" layoutX="21.0" layoutY="447.0" prefHeight="68.0" prefWidth="320.0" text=" " textAlignment="CENTER" textFill="#086f03" wrapText="true">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -45,6 +45,8 @@
       </Label>
       <RadioButton fx:id="radioBtnActive" layoutX="160.0" layoutY="353.0" mnemonicParsing="false" text="Active" />
       <RadioButton fx:id="radioBtnFrozen" layoutX="252.0" layoutY="353.0" mnemonicParsing="false" text="Frozen" />
-      <Button fx:id="btnManageBorrows" disable="true" layoutX="122.0" layoutY="514.0" mnemonicParsing="false" onAction="#OpenCurrectBorrows" text="Manage Borrows" />
+      <Button fx:id="btnManageBorrows" disable="true" layoutX="122.0" layoutY="520.0" mnemonicParsing="false" onAction="#OpenCurrectBorrows" text="Manage Borrows" />
+      <Label id="lblFrozenUntil" fx:id="lblFrozenUntil" layoutX="35.0" layoutY="389.0" prefHeight="17.0" prefWidth="84.0" text="Frozen Until:" />
+      <TextField id="txtFrozenUntil" fx:id="txtFrozenUntil" layoutX="160.0" layoutY="385.0" />
    </children>
 </AnchorPane>

@@ -44,7 +44,7 @@ public class EchoServer extends AbstractServer {
 
 		HashMap<String, String> infoFromUser = (HashMap<String, String>) msg;
 		String menuChoiceString = (infoFromUser.keySet().iterator().next());
-
+		//String[] menuSplitString = menuChoiceString.split("+");
 		UserSelect x = UserSelect.getSelectionFromEnumName(menuChoiceString);
 		// System.out.println("You selected: "+ x);
 		switch (x) {
@@ -77,7 +77,7 @@ public class EchoServer extends AbstractServer {
 
 		// This case is getting the information to change from the user and saving in
 		// DB.
-
+/*
 		case UpdateEmailAddress:
 			String idNemail[] = infoFromUser.get(menuChoiceString).split(" ");
 			boolean succ2 = mysqlConnection.updatemail(Integer.parseInt(idNemail[0]), idNemail[1]);
@@ -96,7 +96,7 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients(RequestedID);
 			flag++;
 			break;
-
+*/
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Einavs adding ///////////////////////
 
@@ -315,7 +315,8 @@ public class EchoServer extends AbstractServer {
 		case UpdateSubscriber:
 			String idNinfo[] = infoFromUser.get(menuChoiceString).split(", ");
 			boolean succ3 = queriesForSubscriber.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1],
-					idNinfo[2], idNinfo[3], idNinfo[4], idNinfo[5]);
+					idNinfo[2], idNinfo[3], idNinfo[4], idNinfo[5], Date.valueOf(idNinfo[6]), idNinfo[7].equals("null") ? null : Date.valueOf(idNinfo[7]),
+							Date.valueOf(idNinfo[8]));
 			if (succ3) {
 				this.sendToAllClients("Updated");
 			} else {

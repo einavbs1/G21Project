@@ -1,7 +1,10 @@
 package librarianControllers;
 
 import java.io.IOException;
-
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import client.ClientUI;
 import javafx.animation.PauseTransition;
@@ -43,6 +46,8 @@ public class UpdateSubscriberDataController {
 	@FXML
 	private Label lblStatus;
 	@FXML
+	private Label lblFrozenUntil;
+	@FXML
 	private Label lblMessage;
 
 	@FXML
@@ -57,6 +62,8 @@ public class UpdateSubscriberDataController {
 	private TextField txtEmail;
 	@FXML
 	private TextField txtPassword;
+	@FXML
+	private TextField txtFrozenUntil;
 	
 	@FXML
 	private RadioButton radioBtnActive;
@@ -132,8 +139,10 @@ public class UpdateSubscriberDataController {
 			
 			if(radioBtnActive.isSelected()) {
 				subtoload.setStatus("Active");
+				subtoload.setFrozenUntil(null);
 			}else {
 				subtoload.setStatus("Frozen");
+				subtoload.setFrozenUntil(Date.valueOf(txtFrozenUntil.getText()));
 			}
 			if(subtoload.UpdateDetails()) {
 				changeString("Subscriber details has been updated successfully.", "#086f03");
@@ -184,8 +193,37 @@ public class UpdateSubscriberDataController {
 				return false;
 			}
 			if((radioBtnActive.isSelected() && radioBtnFrozen.isSelected())) {
-				changeString("You need to chose only one status.", "#bf3030");
+				changeString("You need to choose only one status.", "#bf3030");
 				return false;
+			}
+			if(radioBtnActive.isSelected() && !(txtFrozenUntil.getText().equals("null"))) {
+				changeString("If you select status: \"Active\" please leave the frozen until date: \"null\" .", "#bf3030");
+				return false;
+			}
+			if(radioBtnFrozen.isSelected()){
+				if(txtFrozenUntil.getText().equals("null")) {
+					changeString("You have to select date to froze in the formart: yyyy-MM-dd .", "#bf3030");
+					return false;
+				}
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		        try {
+		            LocalDate.parse(txtFrozenUntil.getText(), formatter);
+		            LocalDate today = LocalDate.now();
+					Date frozeUntil = Date.valueOf(txtFrozenUntil.getText());
+			        LocalDate frozeUntilLocalDate = frozeUntil.toLocalDate();
+			        
+					if(!today.isBefore(frozeUntilLocalDate)) {
+						changeString("You can set the date only with at least one day ahead. ", "#bf3030");
+						return false;
+					}
+					
+		            return true;
+		            
+		        } catch (DateTimeParseException e) {
+					changeString("You have to select date to froze in the formart: yyyy-MM-dd .", "#bf3030");
+		            return false;
+		        }
+				
 			}
 		}
 
@@ -204,7 +242,9 @@ public class UpdateSubscriberDataController {
 		});
 		PauseTransition pause = new PauseTransition(Duration.seconds(10));
 		pause.setOnFinished(event -> {
-			lblMessage.setText(" ");
+			if(lblMessage.getText().equals(s)) {
+				lblMessage.setText(" ");
+			}
 		});
 		pause.play();
 	}
@@ -233,7 +273,12 @@ public class UpdateSubscriberDataController {
 				radioBtnActive.setSelected(false);
 				radioBtnFrozen.setSelected(true);
 			}
-			
+			if(subtoload.getFrozenUntil() == null ) {
+				txtFrozenUntil.setText("null");
+			}else {
+				txtFrozenUntil.setText(String.valueOf(subtoload.getFrozenUntil()));
+			}
+			txtFrozenUntil.setEditable(true);
 			txtId.setEditable(false);
 			txtName.setEditable(true);
 			txtPhoneNumber.setEditable(true);

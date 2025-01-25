@@ -1,9 +1,11 @@
 package queries;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,15 +34,19 @@ public class queriesForSubscriber {
 	public static boolean addNewSubscriber(int id, String name, String phoneNumber,
 			String email, String password, String status) {
 		PreparedStatement stmt;
+		LocalDate today = LocalDate.now();
 		try {
-			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO subscriber VALUES (?, ?, ?, ?, ?, ?)");
-
+			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO subscriber VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			
 			stmt.setInt(1, id);
 			stmt.setString(2, name);
 			stmt.setString(3, phoneNumber);
 			stmt.setString(4, email);
 			stmt.setString(5, password);
 			stmt.setString(6, status);
+			stmt.setDate(7, Date.valueOf(today));
+			stmt.setDate(8, null);
+			stmt.setDate(9, Date.valueOf(today));
 
 			stmt.executeUpdate();
 			return true;
@@ -62,17 +68,23 @@ public class queriesForSubscriber {
 	 * @return True if success to save the changes
 	 */
 	public static boolean updateSubscriverDetails(int id, String name, String phoneNumber, String email,
-			String password, String status) {
+			String password, String status, Date registeredDate, Date frozenUntil, Date lastCheckedReminders) {
 
 		String query = "UPDATE subscriber SET subscriber_name = ?, subscriber_phonenumber = ?"
-				+ ", subscriber_email = ?, subscriber_password = ?" + ", subscriber_status = ? WHERE subscriber_id = ?";
+				+ ", subscriber_email = ?, subscriber_password = ?, subscriber_status = ?, subscriber_registeredDate = ?,"
+				+"subscriber_frozenUntil = ?, subscriber_lastCheckedReminders = ?"
+				+ " WHERE subscriber_id = ?";
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
 			stmt.setString(1, name);
 			stmt.setString(2, phoneNumber);
 			stmt.setString(3, email);
 			stmt.setString(4, password);
 			stmt.setString(5, status);
-			stmt.setInt(6, id);
+			stmt.setDate(6, registeredDate);
+			stmt.setDate(7, frozenUntil);
+			stmt.setDate(8, lastCheckedReminders);
+						
+			stmt.setInt(9, id);
 
 			stmt.executeUpdate();
 			return true;
@@ -102,10 +114,13 @@ public class queriesForSubscriber {
 					String email = rs.getString("subscriber_email");
 					String password = rs.getString("subscriber_password");
 					String status = rs.getString("subscriber_status");
+					Date registeredDate = rs.getDate("subscriber_registeredDate");
+					Date frozenUntil = rs.getDate("subscriber_frozenUntil");
+					Date lastCheckedReminders = rs.getDate("subscriber_lastCheckedReminders");
 
 					// Create a formatted string with the subscriber's information
 					subscriberData = id + ", " + name + ", " + phoneNumber + ", " + email + ", " + password + ", "
-							+ status;
+							+ status + ", " + registeredDate + ", " + frozenUntil + ", " + lastCheckedReminders;
 					return subscriberData;
 				}
 			}
@@ -133,10 +148,14 @@ public class queriesForSubscriber {
 	            String phoneNumber = rs.getString("subscriber_phonenumber");
 	            String email = rs.getString("subscriber_email");
 	            String password = rs.getString("subscriber_password");
-	            String status = rs.getString("subscriber_status"); // Updated field
+	            String status = rs.getString("subscriber_status");
+				Date registeredDate = rs.getDate("subscriber_registeredDate");
+				Date frozenUntil = rs.getDate("subscriber_frozenUntil");
+				Date lastCheckedReminders = rs.getDate("subscriber_lastCheckedReminders");
 
 	            // Create a formatted string with the subscriber's information
-	            String subscriberData = id + ", " + name + ", " + phoneNumber + ", " + email + ", " + password + ", " + status;
+	            String subscriberData = id + ", " + name + ", " + phoneNumber + ", " + email + ", " + password + ", "
+						+ status + ", " + registeredDate + ", " + frozenUntil + ", " + lastCheckedReminders;
 
 	            // Add the formatted string to the list
 	            subscribers.add(subscriberData);
