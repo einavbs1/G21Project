@@ -30,6 +30,7 @@ public class BorrowBookController {
 	public static final int AVAILABLE = 1;
 	public static final int NotAVAILABLE = 0;
 
+	
 	@FXML
 	private Label lblborrowPageTitle;
 	@FXML
