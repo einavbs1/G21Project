@@ -11,16 +11,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:librarianControllers="controllers.SpecificBookChartResultsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SpecificBookChartResultsController">
     <children>
-         <Button fx:id="btnExit" layoutX="926.0" layoutY="710.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="0.0" prefWidth="52.0" styleClass="nav-button" text="Exit" />
-         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" layoutY="14.0" prefHeight="35.0" prefWidth="295.0" text="Specific Book Report" textAlignment="CENTER" textFill="#2c3e50">
+         <Button fx:id="btnExit" layoutX="1000.0" layoutY="655.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+         <Label alignment="CENTER" contentDisplay="CENTER" layoutY="14.0" prefHeight="35.0" prefWidth="1099.0" text="Specific Book Report" textAlignment="CENTER">
              <font>
-                 <Font name="System Bold" size="24.0" />
+                 <Font name="System Bold" size="30.0" />
              </font>
          </Label>
          
-            <BarChart id="specificBorrowsChart" fx:id="specificBorrowsChart" layoutX="67.0" layoutY="102.0" prefHeight="450.0" prefWidth="879.0">
+            <BarChart id="specificBorrowsChart" fx:id="specificBorrowsChart" layoutX="157.0" layoutY="120.0" prefHeight="373.0" prefWidth="786.0">
              <xAxis>
                  <CategoryAxis side="BOTTOM" fx:id="xAxis" />
              </xAxis>
@@ -28,11 +31,17 @@
                  <NumberAxis fx:id="yAxis" side="LEFT" />
              </yAxis>
          </BarChart>
-         <Button fx:id="btnBack" layoutX="22.0" layoutY="710.0" mnemonicParsing="false" onAction="#Back" prefHeight="3.0" prefWidth="52.0" styleClass="nav-button" text="Back" />
-      <ComboBox id="comboBoxMonth" fx:id="comboBoxMonth" layoutX="350.0" layoutY="66.0" prefHeight="25.0" prefWidth="113.0" />
-      <ComboBox id="comboBoxYear" fx:id="comboBoxYear" layoutX="471.0" layoutY="66.0" prefHeight="25.0" prefWidth="113.0" />
-      <Button id="btnRefresh" fx:id="btnRefresh" layoutX="611.0" layoutY="66.0" mnemonicParsing="false" onAction="#refreshBtn" text="Refresh" />
-      <TableView id="tableSpecificBookBorrowsReport1" fx:id="tableSpecificBookBorrowsReport1" layoutX="21.0" layoutY="583.0" prefHeight="65.0" prefWidth="958.0">
+         <Button fx:id="btnBack" layoutX="50.0" layoutY="655.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Back" textFill="#262d71">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <ComboBox id="comboBoxMonth" fx:id="comboBoxMonth" layoutX="477.0" layoutY="76.0" prefHeight="30.0" prefWidth="120.0" />
+      <ComboBox id="comboBoxYear" fx:id="comboBoxYear" layoutX="610.0" layoutY="76.0" prefHeight="30.0" prefWidth="120.0" />
+      <Button id="btnRefresh" fx:id="btnRefresh" layoutX="745.0" layoutY="76.0" mnemonicParsing="false" onAction="#refreshBtn" prefHeight="30.0" prefWidth="70.0" text="Refresh" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <TableView id="tableSpecificBookBorrowsReport1" fx:id="tableSpecificBookBorrowsReport1" layoutX="71.0" layoutY="511.0" prefHeight="65.0" prefWidth="958.0">
         <columns>
           <TableColumn id="columnTotalBorrows" fx:id="columnTotalBorrows" prefWidth="162.0" text="Total Borrows this month" />
           <TableColumn id="columnReturnedInTime" fx:id="columnReturnedInTime" prefWidth="181.0" text="Borrows that returned in time" />
@@ -42,11 +51,11 @@
             <TableColumn id="columnLostBook" fx:id="columnLostBook" prefWidth="99.0" text="Lost book" />
         </columns>
       </TableView>
-      <Label id="lblErrMsg" fx:id="lblErrMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="675.0" layoutY="40.0" prefHeight="78.0" prefWidth="287.0" textAlignment="CENTER" textFill="#b20404" wrapText="true">
+      <Label id="lblErrMsg" fx:id="lblErrMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="818.0" layoutY="53.0" prefHeight="78.0" prefWidth="279.0" textAlignment="CENTER" textFill="#b81212" wrapText="true">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <ComboBox id="comboBoxBooks" fx:id="comboBoxBooks" layoutX="93.0" layoutY="66.0" prefHeight="25.0" prefWidth="244.0" />
+      <ComboBox id="comboBoxBooks" fx:id="comboBoxBooks" layoutX="221.0" layoutY="76.0" prefHeight="30.0" prefWidth="244.0" />
     </children>
 </AnchorPane>

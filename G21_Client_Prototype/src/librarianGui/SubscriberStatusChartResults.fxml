@@ -11,16 +11,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SubscriberStatusChartResultsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SubscriberStatusChartResultsController">
     <children>
-         <Button fx:id="btnExit" layoutX="926.0" layoutY="710.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="0.0" prefWidth="52.0" styleClass="nav-button" text="Exit" />
-         <Label layoutX="331.0" layoutY="14.0" text="Subscriber Status Report" textFill="#2c3e50">
+         <Button fx:id="btnExit" layoutX="1002.0" layoutY="653.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="19.0" prefHeight="35.0" prefWidth="1099.0" text="Subscriber Status Report" textAlignment="CENTER" textFill="#2c3e50" textOverrun="CENTER_ELLIPSIS">
              <font>
-                 <Font name="System Bold" size="24.0" />
+                 <Font name="System Bold" size="30.0" />
              </font>
          </Label>
          
-            <BarChart fx:id="subscriberChart" layoutX="67.0" layoutY="97.0" prefHeight="450.0" prefWidth="879.0">
+            <BarChart fx:id="subscriberChart" layoutX="189.0" layoutY="119.0" prefHeight="320.0" prefWidth="730.0">
              <xAxis>
                  <CategoryAxis side="BOTTOM" fx:id="xAxis" />
              </xAxis>
@@ -28,27 +31,33 @@
                  <NumberAxis fx:id="yAxis" side="LEFT" />
              </yAxis>
          </BarChart>
-         <Button fx:id="btnBack" layoutX="22.0" layoutY="710.0" mnemonicParsing="false" onAction="#Back" prefHeight="3.0" prefWidth="52.0" styleClass="nav-button" text="Back" />
-      <ComboBox id="comboBoxMonth" fx:id="comboBoxMonth" layoutX="350.0" layoutY="66.0" prefHeight="25.0" prefWidth="113.0" />
-      <ComboBox id="comboBoxYear" fx:id="comboBoxYear" layoutX="471.0" layoutY="66.0" prefHeight="25.0" prefWidth="113.0" />
-      <Button id="btnRefresh" fx:id="btnRefresh" layoutX="611.0" layoutY="66.0" mnemonicParsing="false" onAction="#refreshBtn" text="Refresh" />
-      <TableView id="tableStatusReport1" fx:id="tableStatusReport1" layoutX="21.0" layoutY="563.0" prefHeight="65.0" prefWidth="958.0">
+         <Button fx:id="btnBack" layoutX="42.0" layoutY="652.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Back" textFill="#262d71">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <ComboBox id="comboBoxMonth" fx:id="comboBoxMonth" layoutX="356.0" layoutY="75.0" prefHeight="30.0" prefWidth="130.0" />
+      <ComboBox id="comboBoxYear" fx:id="comboBoxYear" layoutX="505.0" layoutY="75.0" prefHeight="30.0" prefWidth="130.0" />
+      <Button id="btnRefresh" fx:id="btnRefresh" layoutX="674.0" layoutY="75.0" mnemonicParsing="false" onAction="#refreshBtn" prefHeight="30.0" prefWidth="70.0" text="Refresh" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <TableView id="tableStatusReport1" fx:id="tableStatusReport1" layoutX="68.0" layoutY="445.0" prefHeight="65.0" prefWidth="958.0">
         <columns>
           <TableColumn id="columnTotalActive" fx:id="columnTotalActive" prefWidth="310.0" text="Total Subscribers that was Active this month" />
           <TableColumn id="columnTotalFrozen" fx:id="columnTotalFrozen" prefWidth="325.0" text="Total Subscriber that was Frozen this month" />
             <TableColumn id="columnFrozeNow" fx:id="columnFrozeNow" prefWidth="322.0" text="Total Subscribers that Froze this month" />
         </columns>
       </TableView>
-      <TableView id="tableStatusReport2" fx:id="tableStatusReport2" layoutX="21.0" layoutY="637.0" prefHeight="65.0" prefWidth="958.0">
+      <TableView id="tableStatusReport2" fx:id="tableStatusReport2" layoutX="68.0" layoutY="542.0" prefHeight="65.0" prefWidth="958.0">
         <columns>
             <TableColumn id="columnUnfrozedNow" fx:id="columnUnfrozedNow" prefWidth="310.0" text="Total Subscribers that unfroze this month" />
             <TableColumn id="columnNewRegisters" fx:id="columnNewRegisters" prefWidth="327.0" text="Total new registered subscribers this month" />
             <TableColumn id="columnTotalSubscribers" fx:id="columnTotalSubscribers" prefWidth="320.0" text="Total Subscribers this month" />
         </columns>
       </TableView>
-      <Label id="lblErrMsg" fx:id="lblErrMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="692.0" layoutY="40.0" prefHeight="78.0" prefWidth="254.0" textAlignment="CENTER" textFill="#b20404" wrapText="true">
+      <Label id="lblErrMsg" fx:id="lblErrMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="790.0" layoutY="61.0" prefHeight="78.0" prefWidth="254.0" textAlignment="CENTER" textFill="#b81212" wrapText="true">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font name="System Bold" size="13.0" />
          </font>
       </Label>
     </children>
