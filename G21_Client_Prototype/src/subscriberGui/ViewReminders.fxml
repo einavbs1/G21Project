@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="553.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="subscriberControllers.ViewRemindersController">
+   <children>
+      <Label layoutX="300.0" layoutY="11.0" text="System Reminders" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      
+      <Button fx:id="btnExit" layoutX="650.0" layoutY="502.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
+      <Button fx:id="btnBack" layoutX="151.0" layoutY="502.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      
+      <TableView fx:id="newNotificationsTable" layoutX="18.0" layoutY="73.0" prefHeight="158.0" prefWidth="800.0">
+        <columns>
+          <TableColumn fx:id="serialColumn" prefWidth="80.0" text="Serial No." />
+          <TableColumn fx:id="messageColumn" prefWidth="340.0" text="Message" />
+          <TableColumn fx:id="dateColumn" prefWidth="98.0" text="Sent on Date" />
+          <TableColumn id="sentToColumn" fx:id="sentToColumn" prefWidth="281.0" text="Sent to">
+               <columns>
+                <TableColumn id="phoneNumberColumn" fx:id="phoneNumberColumn" prefWidth="127.0" text="Phone Number" />
+                  <TableColumn id="emailColumn" fx:id="emailColumn" prefWidth="154.0" text="Email" />
+               </columns>
+            </TableColumn>
+        </columns>
+      </TableView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="330.0" layoutY="49.0" prefHeight="17.0" prefWidth="175.0" text="New Reminders:" textAlignment="CENTER" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="331.0" layoutY="237.0" prefHeight="17.0" prefWidth="175.0" text="Old Reminders:" textAlignment="CENTER" />
+      <Label id="lblLastCheckedDate" fx:id="lblLastCheckedDate" layoutX="18.0" layoutY="14.0" prefHeight="41.0" prefWidth="274.0" text="Last date checked Reminders:" />
+      <TableView fx:id="newNotificationsTable1" layoutX="19.0" layoutY="254.0" prefHeight="158.0" prefWidth="800.0">
+         <columns>
+            <TableColumn fx:id="serialColumn1" prefWidth="80.0" text="Serial No." />
+            <TableColumn fx:id="messageColumn1" prefWidth="340.0" text="Message" />
+            <TableColumn fx:id="dateColumn1" prefWidth="98.0" text="Sent on Date" />
+            <TableColumn id="sentToColumn1" fx:id="sentToColumn1" prefWidth="281.0" text="Sent to">
+               <columns>
+                  <TableColumn id="phoneNumberColumn1" fx:id="phoneNumberColumn1" prefWidth="127.0" text="Phone Number" />
+                  <TableColumn id="emailColumn1" fx:id="emailColumn1" prefWidth="154.0" text="Email" />
+               </columns>
+            </TableColumn>
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

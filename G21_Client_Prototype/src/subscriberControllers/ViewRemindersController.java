@@ -1,16 +1,12 @@
-package librarianControllers;
+package subscriberControllers;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import javax.management.Notification;
-
 import client.ChatClient;
-import client.ClientUI;
 import entity.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -27,12 +23,12 @@ import javafx.stage.Stage;
 import mainControllers.ConnectionSetupController;
 
 /**
- * This class handles the GUI for viewing notifications. It displays all
+ * This class handles the GUI for viewing reminders. It displays all
  * notifications in the system in a table format.
  * 
- * @author chen
+ * @author Einav
  */
-public class ViewNotificationsController {
+public class ViewRemindersController {
 
 	@FXML
 	private Button btnExit = null;
@@ -43,37 +39,41 @@ public class ViewNotificationsController {
 	private Label lblLastCheckedIn;
 
 	@FXML
-	private TableView<String> newNotificationsTable;
+	private TableView<String> newRemindersTable;
 	@FXML
 	private TableColumn<String, String> serialColumn;
 	@FXML
 	private TableColumn<String, String> messageColumn;
 	@FXML
-	private TableColumn<String, String> subscriberIdColumn;
-	@FXML
 	private TableColumn<String, String> dateColumn;
 	@FXML
-	private TableColumn<String, String> borrowNumberColumn;
+	private TableColumn<String, String> sentToColumn;
+	@FXML
+	private TableColumn<String, String> phoneNumberColumn;
+	@FXML
+	private TableColumn<String, String> emailColumn;
 
 	@FXML
-	private TableView<String> oldNotificationsTable;
+	private TableView<String> oldRemindersTable;
 	@FXML
 	private TableColumn<String, String> serialColumn1;
 	@FXML
 	private TableColumn<String, String> messageColumn1;
 	@FXML
-	private TableColumn<String, String> subscriberIdColumn1;
-	@FXML
 	private TableColumn<String, String> dateColumn1;
 	@FXML
-	private TableColumn<String, String> borrowNumberColumn1;
+	private TableColumn<String, String> sentToColumn1;
+	@FXML
+	private TableColumn<String, String> phoneNumberColumn1;
+	@FXML
+	private TableColumn<String, String> emailColumn1;
 
 	/**
 	 * Initializes the controller and sets up the table columns. This method is
 	 * automatically called after the FXML file has been loaded.
 	 */
 	public void initialize() {
-		lblLastCheckedIn.setText("Last date checked Notifications: " + ChatClient.getCurrectLibrarian().getLibrarian_lastCheckedNotifications());
+		lblLastCheckedIn.setText("Last date checked Reminders: " + ChatClient.getCurrectSubscriber().getLastCheckedReminders());
 		initNewTable();
 		initOldTable();
 		loadNotifications();
@@ -90,19 +90,19 @@ public class ViewNotificationsController {
 			return new javafx.beans.property.SimpleStringProperty(parts[2]);
 		});
 
-		subscriberIdColumn.setCellValueFactory(cellData -> {
+		dateColumn.setCellValueFactory(cellData -> {
+			String[] parts = cellData.getValue().split(", ");
+			return new javafx.beans.property.SimpleStringProperty(parts[5]);
+		});
+
+		phoneNumberColumn.setCellValueFactory(cellData -> {
 			String[] parts = cellData.getValue().split(", ");
 			return new javafx.beans.property.SimpleStringProperty(parts[3]);
 		});
 
-		dateColumn.setCellValueFactory(cellData -> {
+		emailColumn.setCellValueFactory(cellData -> {
 			String[] parts = cellData.getValue().split(", ");
 			return new javafx.beans.property.SimpleStringProperty(parts[4]);
-		});
-
-		borrowNumberColumn.setCellValueFactory(cellData -> {
-			String[] parts = cellData.getValue().split(", ");
-			return new javafx.beans.property.SimpleStringProperty(parts[5]);
 		});
 	}
 
@@ -117,44 +117,44 @@ public class ViewNotificationsController {
 			return new javafx.beans.property.SimpleStringProperty(parts[2]);
 		});
 
-		subscriberIdColumn1.setCellValueFactory(cellData -> {
+		dateColumn1.setCellValueFactory(cellData -> {
+			String[] parts = cellData.getValue().split(", ");
+			return new javafx.beans.property.SimpleStringProperty(parts[5]);
+		});
+
+		phoneNumberColumn1.setCellValueFactory(cellData -> {
 			String[] parts = cellData.getValue().split(", ");
 			return new javafx.beans.property.SimpleStringProperty(parts[3]);
 		});
 
-		dateColumn1.setCellValueFactory(cellData -> {
+		emailColumn1.setCellValueFactory(cellData -> {
 			String[] parts = cellData.getValue().split(", ");
 			return new javafx.beans.property.SimpleStringProperty(parts[4]);
-		});
-
-		borrowNumberColumn1.setCellValueFactory(cellData -> {
-			String[] parts = cellData.getValue().split(", ");
-			return new javafx.beans.property.SimpleStringProperty(parts[5]);
 		});
 
 	}
 
 	private void loadNotifications() {
-		List<String> notificationsList = Notifications
-				.getNewOldNotificationsFromDB(ChatClient.getCurrectLibrarian().getLibrarian_lastCheckedNotifications());
+		List<String> remindersList = Reminders
+				.getNewOldRemindersFromDB(ChatClient.getCurrectSubscriber().getLastCheckedReminders(), ChatClient.getCurrectSubscriber().getId());
 
-		List<String> newNotifications = new ArrayList<>();
-		List<String> oldNotifications = new ArrayList<>();
+		List<String> newReminders = new ArrayList<>();
+		List<String> oldReminders = new ArrayList<>();
 
-		for (String notification : notificationsList) {
-			if (notification.startsWith("new")) {
-				newNotifications.add(notification);
-			} else if (notification.startsWith("old")) {
-				oldNotifications.add(notification);
+		for (String reminder : remindersList) {
+			if (reminder.startsWith("new")) {
+				newReminders.add(reminder);
+			} else if (reminder.startsWith("old")) {
+				oldReminders.add(reminder);
 			}
 		}
-		newNotificationsTable.setItems(FXCollections.observableArrayList(newNotifications));
-		oldNotificationsTable.setItems(FXCollections.observableArrayList(oldNotifications));
+		newRemindersTable.setItems(FXCollections.observableArrayList(newReminders));
+		oldRemindersTable.setItems(FXCollections.observableArrayList(oldReminders));
 
-		if (ChatClient.getCurrectLibrarian().getLibrarian_lastCheckedNotifications().toLocalDate()
+		if (ChatClient.getCurrectSubscriber().getLastCheckedReminders().toLocalDate()
 				.isBefore(LocalDate.now())) {
-			ChatClient.getCurrectLibrarian().setLibrarian_lastCheckedNotifications(Date.valueOf(LocalDate.now()));
-			ChatClient.getCurrectLibrarian().UpdateLibrarianDetails();
+			ChatClient.getCurrectSubscriber().setLastCheckedReminders(Date.valueOf(LocalDate.now()));
+			ChatClient.getCurrectSubscriber().UpdateDetails();
 		}
 	}
 
@@ -166,13 +166,13 @@ public class ViewNotificationsController {
 	 */
 	@FXML
 	public void Back(ActionEvent event) throws IOException {
-		FXMLLoader Loader = new FXMLLoader(getClass().getResource("/librarianGui/LibrarianMenu.fxml"));
+		FXMLLoader Loader = new FXMLLoader(getClass().getResource("/subscriberGui/SubscriberMenu.fxml"));
 		Parent Root = Loader.load();
 		Stage Stage = new Stage();
 		Scene Scene = new Scene(Root);
-		Scene.getStylesheets().add(getClass().getResource("/librarianGui/LibrarianMenu.css").toExternalForm());
+		Scene.getStylesheets().add(getClass().getResource("/subscriberGui/SubscriberMenu.css").toExternalForm());
 		Stage.setScene(Scene);
-		Stage.setTitle("Librarian Menu");
+		Stage.setTitle("Subscriber Menu");
 		Stage.show();
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
@@ -185,7 +185,7 @@ public class ViewNotificationsController {
 	 * @throws Exception If there is an error during disconnect
 	 */
 	@FXML
-	public void getExitBtn(ActionEvent event) throws Exception {
+	public void getExitBtn(ActionEvent event) {
 		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}

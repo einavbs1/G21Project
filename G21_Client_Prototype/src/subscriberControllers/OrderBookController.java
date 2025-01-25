@@ -131,7 +131,7 @@ public class OrderBookController {
 				changeString("You need to load the book first.", "#bf3030", lblmsgMain);
 				return false;
 			}
-			if (bookToOrder.getOrdersNumber() >= (bookToOrder.getAllCopies() - bookToOrder.getLostNumber())) {
+			if(Orders.checkMyActiveOrders(bookToOrder.getBarcode()).size() >= (bookToOrder.getAllCopies() - bookToOrder.getLostNumber())) {
 				changeString(
 						"You can't order this book.\n You can try again in couple days or after the closest return date.",
 						"#bf3030", lblmsgMain);
@@ -155,6 +155,9 @@ public class OrderBookController {
 				bookToOrder = new Book(txtBookBarcode.getText());
 				String msg = "The book: " + bookToOrder.getTitle() + " (barcode: " + bookToOrder.getBarcode();
 				if (VerifyActions(myEnum.VerifyCanOrderThisBook)) {
+					//load again the book after changes in order list.
+					bookToOrder = new Book(txtBookBarcode.getText());
+					
 					lblmsgMain.setTextFill(Paint.valueOf("#086f03"));
 					msg = msg + ").\n Can be order.";
 					txtBookBarcode.setEditable(false);
@@ -198,7 +201,7 @@ public class OrderBookController {
 	public void orderBook(ActionEvent event) {
 		if (VerifyActions(myEnum.VerifyCanOrderThisBook)) {
 			try {
-				new Orders(currSubscriber.getId(), bookToOrder.getBarcode());
+				new Orders(currSubscriber.getId(), bookToOrder.getBarcode(), bookToOrder.getTitle() );
 				bookToOrder.addToOrdersNumber();
 				bookToOrder.UpdateDetails();
 				

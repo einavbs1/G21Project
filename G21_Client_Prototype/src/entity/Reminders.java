@@ -2,6 +2,7 @@ package entity;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
@@ -15,7 +16,6 @@ public class Reminders {
     private String subscriberPhone;
     private String subscriberEmail;
     private Date date;
-    private int action_number;
 	
     /**Author: Einav
 	 * Constractor that load reminder from DB if exist.
@@ -34,8 +34,8 @@ public class Reminders {
 	 * @param date
 	 * @param borrow_number
 	 */
-	public Reminders(String message, int subscriberID,String subscriberPhone, String subscriberEmail, Date date, int action_number) {
-		String newReminder = message + ", " + subscriberID + ", " + subscriberPhone + ", " + subscriberEmail + ", " + date + ", " + action_number;
+	public Reminders(String message, int subscriberID,String subscriberPhone, String subscriberEmail, Date date) {
+		String newReminder = message + ", " + subscriberID + ", " + subscriberPhone + ", " + subscriberEmail + ", " + date;
 		/// addBookToDB
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
 		requestHashMap.put("CreateReminder", newReminder);
@@ -60,7 +60,6 @@ public class Reminders {
 	    subscriberPhone = str[3];
 	    subscriberEmail = str[4];
 	    date = Date.valueOf(str[5]);
-	    action_number = Integer.parseInt(str[6]);
 	    
 	   
 	}
@@ -88,9 +87,21 @@ public class Reminders {
 	}
 	
 	
+	public static List<String> getNewOldRemindersFromDB(Date fromthisDate, int id) {
+		
+	       HashMap<String, String> showRemindersMap = new HashMap<>();
+	       showRemindersMap.put("GetNewOldReminders", String.valueOf(fromthisDate)+", "+id);
+	       
+	       ClientUI.chat.accept(showRemindersMap);
+	       List<String> remindersList = ChatClient.getListfromServer();
+	       
+	       return remindersList;
+	   }
+	
+	
 	@Override
 	public String toString() {
-		return serial + ", " + message + ", " + subscriberID + ", " + subscriberPhone + ", " + subscriberEmail + ", " + date + ", " + action_number;
+		return serial + ", " + message + ", " + subscriberID + ", " + subscriberPhone + ", " + subscriberEmail + ", " + date;
 	}
 
 	
@@ -129,10 +140,6 @@ public class Reminders {
 		return date;
 	}
 
-
-	public int getAction_number() {
-		return action_number;
-	}
 
 
 	

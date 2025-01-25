@@ -54,7 +54,7 @@ public enum UserSelect {
     ///////-----Author: Yuval New.-----///////
 	SubscriberActiveBorrows("Subscriber Active Borrows"),
 ///////-----Author: Matan New.-----///////
-    GetAllOrdersofaBook("Get All Orders for a Book"),
+	GetAllActiveOrdersofaBook("Get All Active Orders for a Book"),
     ///----Author: Chen New.--------//////
     ShowSubscriberActiveOrders("Show Subscriber Active Orders"),
     GetActiveOrdersCount("Get Active Orders Count"),
@@ -63,7 +63,9 @@ public enum UserSelect {
     GetStatusReport("Get Status Report"),
     GetBorrowsReport("Get Borrows Report"),
     GetBookBarcodesAndTitles("Get Book Barcodes And Titles"),
-    GetBorrowsOfBookInSpecificDate("Get Borrows Of Book In Specific Date");
+    GetBorrowsOfBookInSpecificDate("Get Borrows Of Book In Specific Date"),
+    GetNewOldReminders("Get New Old Reminders"),
+    GetNewOldNotifications("Get New Old Notifications");
 
 	
     private final String displayName;

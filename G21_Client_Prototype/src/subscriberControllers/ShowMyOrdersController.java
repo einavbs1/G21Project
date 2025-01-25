@@ -107,23 +107,22 @@ public class ShowMyOrdersController {
         });
         bookNameColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
-            Book bookname = new Book(parts[2]);
-            return new javafx.beans.property.SimpleStringProperty(bookname.getTitle());
+            return new javafx.beans.property.SimpleStringProperty(parts[3]);
         });
         requestedDateColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
-            return new javafx.beans.property.SimpleStringProperty(parts[3]);
+            return new javafx.beans.property.SimpleStringProperty(parts[4]);
         });
         statusColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
-            return new javafx.beans.property.SimpleStringProperty(setStatusText(Integer.parseInt(parts[4])));
+            return new javafx.beans.property.SimpleStringProperty(Orders.getStatusString(Integer.parseInt(parts[5])));
         });
         arrivedDateColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
             if(parts[5].equals("null")) {
             	return new javafx.beans.property.SimpleStringProperty("Didn't arrive yet.");
             }
-            return new javafx.beans.property.SimpleStringProperty(parts[5]);
+            return new javafx.beans.property.SimpleStringProperty(parts[6]);
         });
 	}
     
@@ -165,7 +164,7 @@ public class ShowMyOrdersController {
 
 			for (int i = 0; i < ordersTable.getItems().size(); i++) {
 				String borrowNumber = ordersTable.getColumns().get(0).getCellData(i).toString();
-				if (borrowNumber.equals(txtOrderNumber.getText()) && (ordersTable.getColumns().get(4).getCellData(i).toString()).contains("progress")) {
+				if (borrowNumber.equals(txtOrderNumber.getText()) && (ordersTable.getColumns().get(5).getCellData(i).toString()).contains("progress")) {
 					return true;
 				}
 			}
@@ -201,7 +200,7 @@ public class ShowMyOrdersController {
     		manageOrder = new Orders(Integer.parseInt(txtOrderNumber.getText()));
     		bookToCancel = new Book(manageOrder.getBookBarcode());
     		lblBookName.setText("BookName: \t" + (bookToCancel.getTitle()));
-    		lblStatus.setText("Status: \t" +setStatusText(1));
+    		lblStatus.setText("Status: \t" +Orders.getStatusString(manageOrder.getStatus()));
     		btnCancelOrder.setDisable(false);
     		btnLoadOrder.setDisable(true);
     		txtOrderNumber.setEditable(false);
@@ -226,7 +225,7 @@ public class ShowMyOrdersController {
 	    		bookToCancel.removeFromOrdersNumber();
 	    		bookToCancel.UpdateDetails();
 	    		lblError.setTextFill(Paint.valueOf("#086f03"));
-	    		lblError.setText("Order number: "+ manageOrder.getOrderNumber() +" for the book: "+bookToCancel.getTitle()+"\n has been cancelled.");
+	    		lblError.setText("Order number: "+ manageOrder.getOrderNumber() +" for the book: "+manageOrder.getBook_title()+"\n has been cancelled.");
 	    		initialize();
     		}catch (Exception e) {
 				changeString(e.getMessage(),"#bf3030",lblError);
@@ -235,20 +234,6 @@ public class ShowMyOrdersController {
     	}
     }
 
-    /**
-     * Converts numeric status to readable text.
-     * 
-     * @param status The numeric status code
-     * @return String representation of the status
-     */
-    private String setStatusText(int status) {
-        switch (status) {
-            case -1: return "Order cancelled";
-            case 1: return "Order in progress";
-            case 0: return "Order completed";
-            default: return "Unknown status";
-        }
-    }
 
     /**
      * Handles the back button action.
@@ -286,25 +271,6 @@ public class ShowMyOrdersController {
 }
 
 
-
-
-
-    
-    /*
-     * 
-			Subscriber chen = new Subscriber(Integer.parseInt(idnumber));
-			
-			txtName.setText(chen.getName());
-			
-			String newName = txtName.getText();
-			
-			chen.setName(newName);
-			chen.setEmail("chen@gmail.com");
-			
-			chen.UpdateDetails();
-			
-			/*
-     */
     
     
 

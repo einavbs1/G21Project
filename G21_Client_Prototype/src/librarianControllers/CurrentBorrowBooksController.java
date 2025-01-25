@@ -290,8 +290,9 @@ public class CurrentBorrowBooksController {
 			LocalDate newExpectReturnDate = expectReturnDate_Date.plusDays(Integer.parseInt(daysToExtend));
 
 			chosenRecord.setBorrowExpectReturnDate(Date.valueOf(newExpectReturnDate));
-			chosenRecord.setLibrarianId(ChatClient.getCurrectLibrarian().getId());
-			chosenRecord.setLibrarianName(ChatClient.getCurrectLibrarian().getName());
+			chosenRecord.setChangedBylibrarianId(ChatClient.getCurrectLibrarian().getId());
+			chosenRecord.setChangedBylibrarianName(ChatClient.getCurrectLibrarian().getName());
+			chosenRecord.setLastChange(Date.valueOf(LocalDate.now()));
 			if (chosenRecord.UpdateBorrowDetails()) {
 				initialize();
 				changeString("Borrow num: " + borrowNumberInput + " extended successfully with " + daysToExtend

@@ -1,6 +1,7 @@
 package entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -9,9 +10,18 @@ import client.ChatClient;
 import client.ClientUI;
 
 public class Orders {
+	
+	public final static int DIDNT_PICKEDUP = -2;
+	public final static int SUBSCRIBER_CANCELLD = -1;
+	public final static int ORDER_COMPLETED = 0;
+	public final static int CREATE_AN_ORDER = 1;
+	public final static int BOOK_HAS_ARRIVED = 2;
+	
+	
 	private int order_number;
 	private int subscriber_id;
 	private String book_barcode;
+	private String book_title;
 	private Date order_requestedDate;
 	private int order_status;
 	private Date order_bookArrivedDate;
@@ -35,9 +45,9 @@ public class Orders {
 	 * @param subscriberId the ID of the subscriber making the order.
 	 * @param bookBarcode  the barcode of the book being ordered.
 	 */
-	public Orders(int subscriberId, String bookBarcode) {
+	public Orders(int subscriberId, String bookBarcode, String bookTitle) {
 		HashMap<String, String> createOrderMap = new HashMap<>();
-		String newOrderDetails = subscriberId + ", " + bookBarcode;
+		String newOrderDetails = subscriberId + ", " + bookBarcode + ", " + bookTitle;
 		createOrderMap.put("CreateNewOrder", newOrderDetails);
 		ClientUI.chat.accept(createOrderMap);
 
@@ -62,9 +72,10 @@ public class Orders {
 		order_number = Integer.parseInt(str[0]);
 		subscriber_id = Integer.parseInt(str[1]);
 		book_barcode = str[2];
-		order_requestedDate = Date.valueOf(str[3]);
-		order_status = Integer.parseInt(str[4]);
-		order_bookArrivedDate = str[5].equals("null") ? null : Date.valueOf(str[5]);
+		book_title = str[3];
+		order_requestedDate = Date.valueOf(str[4]);
+		order_status = Integer.parseInt(str[5]);
+		order_bookArrivedDate = str[6].equals("null") ? null : Date.valueOf(str[5]);
 	}
 
 	/**
@@ -129,14 +140,50 @@ public class Orders {
 	 * @param barcode
 	 * @return list<String> of orders of the same book
 	 */
-	public static List<String> GetAllOrdersofaBook(String barcode) {
+	private static List<String> getAllActiveOrdersofaBook(String barcode) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetAllOrdersofaBook", barcode);
+		requestHashMap.put("GetAllActiveOrdersofaBook", barcode);
 		ClientUI.chat.accept(requestHashMap);
 		List<String> myOrders = ChatClient.getListfromServer();
 
 		return myOrders;
+	}
+	
+	
+	
+	public static List<String> checkMyActiveOrders(String bookBarcode){
+		int countActiveOrders = 0;
+		Book bookToCheck = new Book(bookBarcode);
+		int ordersOfBook = bookToCheck.getOrdersNumber();
+		List<String> myActiveOrders = getAllActiveOrdersofaBook(bookBarcode);
+		for (String activeOrder : myActiveOrders) {
+			String[] parts = activeOrder.split(", ");
+			if(!parts[6].equals("null")) {
+				LocalDate arrivedDate = Date.valueOf(parts[6]).toLocalDate();
+				if (arrivedDate.plusDays(2).isBefore(LocalDate.now())) {
+					Orders orderToCancel = new Orders(Integer.valueOf(parts[0]));
+					orderToCancel.setStatus(Orders.DIDNT_PICKEDUP);
+					orderToCancel.UpdateDetails();
+					try {
+					bookToCheck.removeFromOrdersNumber();
+					}catch (Exception e) {
+						return null;
+					}
+				} else {
+					countActiveOrders++;
+				}
+			} else {
+				countActiveOrders++;
+			}
+			
+		}
+		
+		if (ordersOfBook != countActiveOrders) {
+			bookToCheck.UpdateDetails();
+			return Orders.getAllActiveOrdersofaBook(bookBarcode);
+		}
+		return myActiveOrders;
 	}
 	
 	
@@ -156,6 +203,9 @@ public class Orders {
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Author: Matan.
 	 * find the first order that  from data that receive from DB
@@ -173,13 +223,32 @@ public class Orders {
 		}
 		return null;
 	}
+	
+	
+
+    /**
+     * Converts numeric status to readable text.
+     * 
+     * @param status The numeric status code
+     * @return String representation of the status
+     */
+    public static String getStatusString(int status) {
+        switch (status) {
+        	case -2: return "Order cancelled (Didn't picked up the book)";
+            case -1: return "Order cancelled (User request)";
+            case 0: return "Order completed";
+            case 1: return "Order in progress";
+            case 2: return "Book is arrived - needs to Pickup the book";
+            default: return "Unknown status";
+        }
+    }
 
 	/**
 	 * (chen tsafir) return string
 	 */
 	@Override
 	public String toString() {
-		return order_number + ", " + subscriber_id + ", " + book_barcode + ", " + order_requestedDate + ", "
+		return order_number + ", " + subscriber_id + ", " + book_barcode + ", " + book_title + ", " + order_requestedDate + ", "
 				+ order_status + ", " + ((order_bookArrivedDate == null)? "null" : order_bookArrivedDate);
 	}
 
@@ -197,6 +266,10 @@ public class Orders {
 
 	public String getBookBarcode() {
 		return book_barcode;
+	}
+	
+	public String getBook_title() {
+		return book_title;
 	}
 
 	public Date getRequestedDate() {

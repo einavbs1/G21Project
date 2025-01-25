@@ -55,7 +55,7 @@ public class EchoServer extends AbstractServer {
 			this.sendToAllClients(TheTable);
 			flag++;
 			break;
-
+/*
 		// This case is getting the information to change from the user and saving in
 		// DB.
 		// This case is getting the information to change from the user and saving in
@@ -77,7 +77,7 @@ public class EchoServer extends AbstractServer {
 
 		// This case is getting the information to change from the user and saving in
 		// DB.
-/*
+
 		case UpdateEmailAddress:
 			String idNemail[] = infoFromUser.get(menuChoiceString).split(" ");
 			boolean succ2 = mysqlConnection.updatemail(Integer.parseInt(idNemail[0]), idNemail[1]);
@@ -99,6 +99,16 @@ public class EchoServer extends AbstractServer {
 */
 		////////////////////////////////////////////////////////////////////
 		////////////////////// start of Einavs adding ///////////////////////
+			
+		case GetNewOldReminders:
+			String datatoReminder[] = infoFromUser.get(menuChoiceString).split(", ");
+			this.sendToAllClients(queriesForReminders.GetNewOldReminders(Date.valueOf(datatoReminder[0]),Integer.parseInt(datatoReminder[1])));
+			break;
+			
+		case GetNewOldNotifications:
+			Date newNotificationsFrom = Date.valueOf(infoFromUser.get(menuChoiceString));
+			this.sendToAllClients(queriesForNotifications.GetNewOldNotifications(newNotificationsFrom));
+			break;
 
 		case GetStatusReport:
 			String statusSubscriberReport[] = infoFromUser.get(menuChoiceString).split(", ");
@@ -360,7 +370,7 @@ public class EchoServer extends AbstractServer {
 		case UpdateLibrarian:
 			String idNlibinfo[] = infoFromUser.get(menuChoiceString).split(", ");
 			boolean succ5 = queriesForLibrarian.updateLibrarianDetails(Integer.parseInt(idNlibinfo[0]), idNlibinfo[1],
-					idNlibinfo[2]);
+					idNlibinfo[2],Date.valueOf(idNlibinfo[3]));
 			if (succ5) {
 				this.sendToAllClients("Updated");
 			} else {
@@ -425,12 +435,14 @@ public class EchoServer extends AbstractServer {
 		// client and sending to the DB.
 		case UpdateBorrowDetails:
 			String updateBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
-			Date actualReturnDate = updateBorrowRecordsdetails[7].equals("null") ? null
-					: Date.valueOf(updateBorrowRecordsdetails[7]);
+			
 			boolean borrowRecordUpdateSuccess = queriesForBorrows.UpdateBorrowedRecord(
-					Integer.parseInt(updateBorrowRecordsdetails[0]), Date.valueOf(updateBorrowRecordsdetails[6]),
-					actualReturnDate, Integer.parseInt(updateBorrowRecordsdetails[10]),
-					Integer.parseInt(updateBorrowRecordsdetails[11]));
+					Integer.parseInt(updateBorrowRecordsdetails[0]),Date.valueOf(updateBorrowRecordsdetails[6]),
+					updateBorrowRecordsdetails[7].equals("null") ? null : Date.valueOf(updateBorrowRecordsdetails[7]),
+					updateBorrowRecordsdetails[8].equals("null") ? null : Integer.valueOf(updateBorrowRecordsdetails[8]),
+					updateBorrowRecordsdetails[9].equals("null") ? null : String.valueOf(updateBorrowRecordsdetails[9]),
+					updateBorrowRecordsdetails[10].equals("null") ? null : Date.valueOf(updateBorrowRecordsdetails[10]),
+					Integer.parseInt(updateBorrowRecordsdetails[11]), Integer.parseInt(updateBorrowRecordsdetails[12]));
 
 			if (borrowRecordUpdateSuccess) {
 				this.sendToAllClients("Borrow record has been updated");
@@ -446,9 +458,7 @@ public class EchoServer extends AbstractServer {
 					Integer.parseInt(newBorrowRecordsdetails[0]), newBorrowRecordsdetails[1],
 					newBorrowRecordsdetails[2], Integer.parseInt(newBorrowRecordsdetails[3]),
 					java.sql.Date.valueOf(newBorrowRecordsdetails[4]),
-					java.sql.Date.valueOf(newBorrowRecordsdetails[5]),
-					java.sql.Date.valueOf(newBorrowRecordsdetails[6]), Integer.parseInt(newBorrowRecordsdetails[7]),
-					newBorrowRecordsdetails[8], Integer.parseInt(newBorrowRecordsdetails[9]));
+					java.sql.Date.valueOf(newBorrowRecordsdetails[5]));
 
 			if (newBorrowNumber > 0) {
 				this.sendToAllClients(String.valueOf(newBorrowNumber));
@@ -520,7 +530,7 @@ public class EchoServer extends AbstractServer {
 		// the order number to client. (chen tsafir)
 		case CreateNewOrder:
 			String[] orderDetails = infoFromUser.get(menuChoiceString).split(", ");
-			int newOrderNum = queriesForOrders.createOrder(Integer.parseInt(orderDetails[0]), orderDetails[1]);
+			int newOrderNum = queriesForOrders.createOrder(Integer.parseInt(orderDetails[0]), orderDetails[1], orderDetails[2]);
 			if (newOrderNum != -1) {
 				this.sendToAllClients("OrderCreated:" + newOrderNum);
 			} else {
@@ -533,8 +543,8 @@ public class EchoServer extends AbstractServer {
 		case UpdateOrderDetails:
 			String[] orderData = infoFromUser.get(menuChoiceString).split(", ");
 			boolean success = queriesForOrders.updateOrderDetails(Integer.parseInt(orderData[0]),
-					Integer.parseInt(orderData[1]), orderData[2], Date.valueOf(orderData[3]),
-					Integer.parseInt(orderData[4]), orderData[5].equals("null") ? null : Date.valueOf(orderData[5]));
+					Integer.parseInt(orderData[1]), orderData[2], orderData[3], Date.valueOf(orderData[4]),
+					Integer.parseInt(orderData[5]), orderData[6].equals("null") ? null : Date.valueOf(orderData[6]));
 			if (success) {
 				this.sendToAllClients("Updated");
 			} else {
@@ -544,9 +554,9 @@ public class EchoServer extends AbstractServer {
 			break;
 
 		// Get all existing orders for specific Book. - Matan
-		case GetAllOrdersofaBook:
+		case GetAllActiveOrdersofaBook:
 			String bookBarcodeNeedsOrders = infoFromUser.get(menuChoiceString);
-			List<String> allMyOrders = queriesForOrders.GetAllMyOrders(bookBarcodeNeedsOrders);
+			List<String> allMyOrders = queriesForOrders.GetAllMyActiveOrders(bookBarcodeNeedsOrders);
 			this.sendToAllClients(allMyOrders);
 			flag++;
 			break;

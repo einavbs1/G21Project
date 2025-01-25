@@ -77,6 +77,20 @@ public class ConnectionSetupController {
 		pause.play();
 	}
 
+	public static String startConnectionToServer() {
+		HashMap<String, String> connectionHash = new HashMap<>();
+		connectionHash.put("Connected", localIp);
+		ClientUI.chat.accept(connectionHash);
+		
+		return ChatClient.getStringfromServer();
+	}
+	
+	public static void stopConnectionToServer() {
+		HashMap<String, String> EndingConnections = new HashMap<>();
+	       EndingConnections.put("Disconnect", "");
+	       ClientUI.chat.accept(EndingConnections);		
+	}
+	
 	
 	/** This method is for the connect button, it starting the connection to the server 
 	 * and upload the next (menu) GUI
@@ -103,10 +117,7 @@ public class ConnectionSetupController {
 						if (!connected) {
 							changeString("Can't connect to this IP");
 						} else {
-							HashMap<String, String> connectionHash = new HashMap<>();
-							connectionHash.put("Connected", localIp);
-							ClientUI.chat.accept(connectionHash);
-							String string = ChatClient.getStringfromServer();
+							String string = startConnectionToServer();
 							if (!string.equals("Error!")) {
 								System.out.println("Connected to the server");
 								try {
@@ -187,8 +198,7 @@ public class ConnectionSetupController {
 	 * @param event - the click on the Exit btn.
 	 * @throws Exception
 	 */
-	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Exit Connection Setup Tool");
+	public void getExitBtn(ActionEvent event){
 		System.exit(0);
 	}
 

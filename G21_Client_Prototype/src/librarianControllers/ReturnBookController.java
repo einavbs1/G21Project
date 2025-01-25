@@ -273,6 +273,7 @@ public class ReturnBookController {
 				if (timeDifferenceDays > 6) {
 					
 				    subscriber.setStatus("Frozen");
+				    subscriber.setFrozenUntil(Date.valueOf(currentDate.plusDays(30)));
 					subscriber.UpdateDetails();
 					lblreturnmsg.setText("The book is returned late by " + timeDifferenceDays + " days.\n"
 							+ subscriber.getName() +"'s subscription has been frozen for a month.\n"
@@ -281,18 +282,18 @@ public class ReturnBookController {
 				} else {
 				    lblreturnmsg.setText("congratulations, The returning of " + bookCopyToReturn.getTitle() + " was successful");
 				    
-				}
-						/*		
+				}		
 				LogActivity returnLogActivity = new LogActivity(bookCopyToReturn.getSubscriberId(), "Return a Book", 
 						bookCopyToReturn.getBarcode(), bookCopyToReturn.getTitle(), bookCopyToReturn.getCopyNo());
 				
-				String ordertoNotifyString = Orders.theFirstOrderToNotifyArrivalOfBook(Orders.GetAllOrdersofaBook(bookCopyToReturn.getBarcode()));
+				String ordertoNotifyString = Orders.theFirstOrderToNotifyArrivalOfBook(Orders.checkMyActiveOrders(bookCopyToReturn.getBarcode()));
+				
 				if (ordertoNotifyString.contains(",")) {
 					String[] partStrings = ordertoNotifyString.split(", ");
 					Orders notifyThisOrder = new Orders(Integer.parseInt(partStrings[0]));				
 					notifyThisOrder.setBookArrivedDate(Date.valueOf(currentDate));
 					notifyThisOrder.UpdateDetails();
-				}*/
+				}
 				initialize();
 			} catch (Exception e) {
 				changeString(e.getMessage(),"#bf3030",lblbookDetailsmsg);

@@ -30,12 +30,11 @@ public class queriesForBorrows {
 	 * @return
 	 */
 	public static int createNewBorrowedRecord(int subscriber_id, String book_barcode, String book_title,
-			int bookcopy_copyNo, Date borrow_date, Date borrow_expectReturnDate, Date borrow_actualReturnDate,
-			int librarian_id, String librarian_name, int borrow_lostBook) {
+			int bookcopy_copyNo, Date borrow_date, Date borrow_expectReturnDate) {
 		PreparedStatement stmt;
 		try {
 			stmt = mysqlConnection.conn.prepareStatement(
-					"INSERT INTO borrowedrecords VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					"INSERT INTO borrowedrecords (subscriber_id, book_barcode, book_title, bookcopy_copyNo, borrow_date, borrow_expectReturnDate) VALUES (?, ?, ?, ?, ?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
 			stmt.setInt(1, subscriber_id);
@@ -45,13 +44,9 @@ public class queriesForBorrows {
 			stmt.setInt(4, bookcopy_copyNo);
 
 			stmt.setDate(5, borrow_date);
-			stmt.setDate(6, borrow_actualReturnDate);
-			stmt.setDate(7, borrow_expectReturnDate);
+			stmt.setDate(6, borrow_expectReturnDate);
 
-			stmt.setInt(8, librarian_id);
-			stmt.setString(9, librarian_name);
 
-			stmt.setInt(10, borrow_lostBook);
 
 			int CreatedborrowNumber = stmt.executeUpdate();
 			return CreatedborrowNumber;
@@ -85,15 +80,16 @@ public class queriesForBorrows {
 					Date borrow_date = rs.getDate("borrow_date");
 					Date borrow_expectReturnDate = rs.getDate("borrow_expectReturnDate");
 					Date borrow_actualReturnDate = rs.getDate("borrow_actualReturnDate");
-					Integer librarian_id = rs.getInt("librarian_id");
-					String librarian_name = rs.getString("librarian_name");
+					Integer librarian_id = rs.getInt("borrow_changedBylibrarian_id");
+					String librarian_name = rs.getString("borrow_changedBylibrarian_name");
+					Date lastChanges = rs.getDate("borrow_lastChange");
 					int borrow_lostBook = rs.getInt("borrow_lostBook");
 					int borrow_status = rs.getInt("borrow_status");
 
 					// Create a formatted string with the subscriber's information
 					borrowedRecords = borrow_number + ", " + subscriber_id + ", " + book_barcode + ", " + book_title
 							+ ", " + bookcopy_copyNo + ", " + borrow_date + ", " + borrow_expectReturnDate + ", "
-							+ borrow_actualReturnDate + ", " + librarian_id + ", " + librarian_name + ", "
+							+ borrow_actualReturnDate + ", " + librarian_id + ", " + librarian_name + ", " + lastChanges + ", "
 							+ borrow_lostBook + ", " + borrow_status;
 
 				}
@@ -116,16 +112,43 @@ public class queriesForBorrows {
 	 * @return
 	 */
 	public static boolean UpdateBorrowedRecord(int borrow_number, Date borrow_expectReturnDate,
-			Date borrow_actualReturnDate, int borrow_lostBook, int borrow_status) {
-		String query = "UPDATE borrowedrecords SET borrow_expectReturnDate = ?, borrow_actualReturnDate = ?, borrow_lostBook = ?, borrow_status = ?"
+			Date borrow_actualReturnDate, Integer librarianID, String librarianName, Date lastChange, int borrow_lostBook, int borrow_status) {
+		String query = "UPDATE borrowedrecords SET borrow_expectReturnDate = ?, borrow_actualReturnDate = ?, borrow_changedBylibrarian_id = ?,"
+				+ "borrow_changedBylibrarian_name = ?, borrow_lastChange = ?, borrow_lostBook = ?, borrow_status = ?"
 				+ " WHERE  borrow_number = ?";
 
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+			
 			stmt.setDate(1, borrow_expectReturnDate);
-			stmt.setDate(2, borrow_actualReturnDate);
-			stmt.setInt(3, borrow_lostBook);
-			stmt.setInt(4, borrow_status);
-			stmt.setInt(5, borrow_number);
+			
+			if(borrow_actualReturnDate == null) {
+				stmt.setNull(3, java.sql.Types.DATE);
+			}else {
+				stmt.setDate(2, borrow_actualReturnDate);
+			}
+			
+			if(librarianID == null) {
+				stmt.setNull(3, java.sql.Types.INTEGER);
+			}else {
+				stmt.setInt(3, librarianID);
+			}
+			
+			if(librarianName.equals("null")) {
+				stmt.setNull(4, java.sql.Types.VARCHAR);
+			}else {
+				stmt.setString(4, librarianName);
+			}
+			
+			if(lastChange == null) {
+				stmt.setNull(5, java.sql.Types.DATE);
+			}else {
+				stmt.setDate(5, lastChange);
+			}
+			
+			stmt.setInt(6, borrow_lostBook);
+			stmt.setInt(7, borrow_status);
+			
+			stmt.setInt(8, borrow_number);
 
 			stmt.executeUpdate();
 

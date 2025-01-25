@@ -101,6 +101,24 @@ public class Notifications {
 	       
 	       return notificationsList;
 	   }
+	   
+	   
+	   public static List<String> getNewOldNotificationsFromDB(Date fromthisDate) {
+	       // Create request HashMap
+	       HashMap<String, String> showNotificationsMap = new HashMap<>();
+	       showNotificationsMap.put("GetNewOldNotifications", String.valueOf(fromthisDate));
+	       
+	       // Send request to server
+	       ClientUI.chat.accept(showNotificationsMap);
+	       
+	       // Get response from server
+	       List<String> notificationsList = ChatClient.getListfromServer();
+	       
+	       return notificationsList;
+	   }
+	   
+	   
+	   
 	
 	
 	@Override

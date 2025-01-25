@@ -23,8 +23,9 @@ public class BorrowedRecord {
 	private Date borrowDate;
 	private Date borrowExpectReturnDate;
 	private Date borrowActualReturnDate;
-	private Integer librarianId;
-	private String librarianName;
+	private Integer changedBylibrarianId;
+	private String changedBylibrarianName;
+	private Date lastChange;
 	private int borrowLostBook;
 	private int borrowStatus;
 
@@ -63,7 +64,7 @@ public class BorrowedRecord {
         Date newReturnDate = new Date(calendar.getTimeInMillis());
         
 		String newBorrow = subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "
-				+ currentDate + ", " + newReturnDate + ", null, null, null, 0, 1";
+				+ currentDate + ", " + newReturnDate;
 
 		// change to DB format
 		HashMap<String, String> AddNewBorrowMap = new HashMap<>();
@@ -93,10 +94,11 @@ public class BorrowedRecord {
 		borrowDate = Date.valueOf(str[5]);
 		borrowExpectReturnDate = Date.valueOf(str[6]);
 		borrowActualReturnDate = ((str[7]).equals("null")) ? null : Date.valueOf(str[7]);
-		librarianId = Integer.parseInt(str[8]);
-		librarianName = str[9];
-		borrowLostBook = Integer.parseInt(str[10]);
-		borrowStatus = Integer.parseInt(str[11]);
+		changedBylibrarianId = str[8].equals("0") ? null : Integer.parseInt(str[8]);
+		changedBylibrarianName = str[9];
+		lastChange = str[10].equals("null") ? null : Date.valueOf((str[10]));
+		borrowLostBook = Integer.parseInt(str[11]);
+		borrowStatus = Integer.parseInt(str[12]);
 	}
 
 	/**
@@ -203,8 +205,8 @@ public class BorrowedRecord {
 	@Override
 	public String toString() {
 		return borrowNumber + ", " + subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "
-				+ borrowDate + ", " + borrowExpectReturnDate + ", " + borrowActualReturnDate + ", " + librarianId + ", "
-				+ librarianName + ", " + borrowLostBook + ", " + borrowStatus;
+				+ borrowDate + ", " + borrowExpectReturnDate + ", " + borrowActualReturnDate + ", " + changedBylibrarianId + ", "
+				+ changedBylibrarianName + ", " + lastChange + ", " + borrowLostBook + ", " + borrowStatus;
 	}
 
 	///////////////////////
@@ -243,12 +245,16 @@ public class BorrowedRecord {
 		return borrowExpectReturnDate;
 	}
 
-	public int getLibrarianId() {
-		return librarianId;
+	public Integer getChangedBylibrarianId() {
+		return changedBylibrarianId;
 	}
 
-	public String getLibrarianName() {
-		return librarianName;
+	public String getChangedBylibrarianName() {
+		return changedBylibrarianName;
+	}
+
+	public Date getLastChange() {
+		return lastChange;
 	}
 
 	public int getBorrowLostBook() {
@@ -282,12 +288,16 @@ public class BorrowedRecord {
 		this.borrowStatus = borrowStatus;
 	}
 	
-	public void setLibrarianId(Integer librarianId) {
-		this.librarianId = librarianId;
+	public void setChangedBylibrarianId(Integer changedBylibrarianId) {
+		this.changedBylibrarianId = changedBylibrarianId;
 	}
-	
-	public void setLibrarianName(String librarianName) {
-		this.librarianName = librarianName;
+
+	public void setChangedBylibrarianName(String changedBylibrarianName) {
+		this.changedBylibrarianName = changedBylibrarianName;
+	}
+
+	public void setLastChange(Date lastChange) {
+		this.lastChange = lastChange;
 	}
 	
 	public void setBorrowLostBook(int borrowLostBook) {

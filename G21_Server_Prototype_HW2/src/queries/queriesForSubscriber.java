@@ -104,6 +104,7 @@ public class queriesForSubscriber {
 
 		String query = "SELECT * FROM subscriber WHERE subscriber_id = ?";
 		String subscriberData = "Empty";
+		
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
 			stmt.setInt(1, idtoload);
 			try (ResultSet rs = stmt.executeQuery()) {
