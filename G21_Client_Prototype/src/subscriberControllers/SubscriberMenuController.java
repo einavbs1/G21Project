@@ -34,11 +34,20 @@ public class SubscriberMenuController {
 	@FXML
 	private Button btnLogOut = null;
 	@FXML
-	private Button btnSelect = null;
-
+	private Button btnSearchBooks = null;
 	@FXML
-	private ComboBox<String> comboBoxSubscriberOptions;
-	
+	private Button btnExtendBorrowRequest = null;
+	@FXML
+	private Button btnOrderBook = null;
+	@FXML
+	private Button btnViewReminders = null;
+	@FXML
+	private Button btnShowMyOrder = null;
+	@FXML
+	private Button btnUpdateMyData = null;
+	@FXML
+	private Button btnViewActionsHistory = null;
+
 
 	@FXML
 	private Label lblHello;
@@ -47,35 +56,47 @@ public class SubscriberMenuController {
 	@FXML
 	private Label lblinstructions;
 
-	/*
-	 * This method is setting the comboBox with the librarian options by
-	 * using the enum "SubscriberOptions".
-	 */
-	private void setComboBox() {
-		SubscriberOptions SelectOptions[] = SubscriberOptions.values();
-		for (int i = 0; i < SelectOptions.length; i++) {
-			comboBoxSubscriberOptions.getItems().add(SelectOptions[i].getDisplayName());
-		}
-		comboBoxSubscriberOptions.setValue(SubscriberOptions.UpdateMyData.getDisplayName()); // Default selected value
-	}
 
 	/*
 	 * initialize the gui with the combo box options and shows a welcome message to the subscriber.
 	 */
 	public void initialize() {
-		setComboBox();
 		lblHello.setText("Hello "+ChatClient.getCurrectSubscriber().getName()+" !");
 	}
 
-	/**
-	 * This method is returning the select from the comboBox as a string
-	 * 
-	 * @return String of the selection
-	 */
-	private String getSelection() {
-		return (String) comboBoxSubscriberOptions.getValue();
+	
+	public void openSearchBooks(ActionEvent event) throws Exception {
+		Select(SubscriberOptions.SearchBooks, event);
 	}
 
+	public void openExtendBorrowRequest(ActionEvent event) throws Exception {
+		Select(SubscriberOptions.ExtendBorrowRequest, event);
+	}
+	
+	public void openOrderBook(ActionEvent event) throws Exception {
+		Select(SubscriberOptions.OrderBook, event);
+	}
+	
+	public void openViewReminders(ActionEvent event) throws Exception {
+		Select(SubscriberOptions.ViewReminders, event);
+	}
+	
+	public void openShowMyOrders(ActionEvent event) throws Exception {
+		Select(SubscriberOptions.ShowMyOrders, event);
+	}
+	
+	public void openUpdateMyData(ActionEvent event) throws Exception {
+		Select(SubscriberOptions.UpdateMyData, event);
+	}
+	
+	public void openViewActionsHistory(ActionEvent event) throws Exception {
+		Select(SubscriberOptions.ViewActionsHistory, event);
+	}
+	
+	
+	
+	
+	
 	/**
 	 * This method is for the select option from the menu getting the event of
 	 * clicking on the btn and sending the selected option to the server and loading
@@ -84,14 +105,11 @@ public class SubscriberMenuController {
 	 * @param event - the btn click
 	 * @throws Exception - problem with upload gui.
 	 */
-	public void Select(ActionEvent event) throws Exception {
+	public void Select(SubscriberOptions x, ActionEvent event) throws Exception {
 		// getting the selection
-		String userselect = getSelection();
+		String userselect = x.getDisplayName();
 		userselect = userselect.replace(" ", "");
-		SubscriberOptions x = SubscriberOptions.getSelectionFromEnumName(userselect);
 
-		// uploading the gui of the selected option by the user
-		
 
 		/*
 		 * for each select we will send something else for the server and gets diffrent

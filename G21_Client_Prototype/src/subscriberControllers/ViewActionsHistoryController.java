@@ -85,6 +85,8 @@ public class ViewActionsHistoryController {
 					
 					if (item.toString().toLowerCase().contains("lost") || item.toString().toLowerCase().contains("late") ) {
 						setTextFill(javafx.scene.paint.Color.RED);
+					}else {
+						setTextFill(javafx.scene.paint.Color.BLACK);
 					}
 				}
 			}

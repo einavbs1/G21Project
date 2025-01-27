@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.LibrarianMenuController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.LibrarianMenuController">
    <children>
       <Button id="btnExit" fx:id="btnExit" layoutX="1003.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Label id="lblinstructions" fx:id="lblinstructions" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="226.0" prefHeight="18.0" prefWidth="1071.0" text="Please choose the action you wish to perform" textAlignment="CENTER">
+      <Label id="lblinstructions" fx:id="lblinstructions" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="155.0" prefHeight="18.0" prefWidth="1071.0" text="Please choose the action you wish to perform" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Button id="btnSelect" fx:id="btnSelect" layoutX="515.0" layoutY="393.0" mnemonicParsing="false" onAction="#Select" prefHeight="40.0" prefWidth="70.0" text="Select" textFill="#478150">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></Button>
-      <ComboBox id="comboBoxLibrarianOptions" fx:id="comboBoxLibrarianOptions" layoutX="426.0" layoutY="293.0" prefHeight="40.0" prefWidth="250.0" />
-      <Label id="lblHello" fx:id="lblHello" alignment="CENTER" layoutX="18.0" layoutY="151.0" prefHeight="35.0" prefWidth="1065.0" text="Hello Dear ______ ">
+      <Label id="lblHello" fx:id="lblHello" alignment="CENTER" layoutX="18.0" layoutY="108.0" prefHeight="35.0" prefWidth="1065.0" text="Hello Dear ______ ">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -35,5 +31,123 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <Button id="btnNewSubscriber" fx:id="btnNewSubscriber" contentDisplay="TOP" layoutX="165.0" layoutY="227.0" mnemonicParsing="false" onAction="#openRegisterNewSubscriber" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Register New Subscriber">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForLibrarianScreens/AddSubscriber.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnViewAllSubscribers" fx:id="btnViewAllSubscribers" contentDisplay="TOP" layoutX="461.0" layoutY="228.0" mnemonicParsing="false" onAction="#openViewAllSubscribers" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="View All Subscribers">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForLibrarianScreens/ViewAllSubs.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnUpdateSubscriberData" fx:id="btnUpdateSubscriberData" contentDisplay="TOP" layoutX="736.0" layoutY="229.0" mnemonicParsing="false" onAction="#openUpdateSubscriberData" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Update Subscriber Data">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForLibrarianScreens/UpdateSubData.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnBorrowBooks" fx:id="btnBorrowBooks" contentDisplay="TOP" layoutX="205.0" layoutY="374.0" mnemonicParsing="false" onAction="#openBorrowBook" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Borrow Books">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForLibrarianScreens/BorrowBook.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnShowCurrentBorrowBooks" fx:id="btnShowCurrentBorrowBooks" contentDisplay="TOP" layoutX="434.0" layoutY="373.0" mnemonicParsing="false" onAction="#openShowCurrentBooks" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Manage Subscriber Borrows">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForLibrarianScreens/CurrentBorrowBooks.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnReturnBook" fx:id="btnReturnBook" contentDisplay="TOP" layoutX="779.0" layoutY="373.0" mnemonicParsing="false" onAction="#openReturnBook" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Return Book">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForLibrarianScreens/ReturnBook.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnViewNotifications" fx:id="btnViewNotifications" contentDisplay="TOP" layoutX="185.0" layoutY="529.0" mnemonicParsing="false" onAction="#openViewNotifications" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="View Notifications">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForLibrarianScreens/ViewNotifications.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnGenerateReports" fx:id="btnGenerateReports" contentDisplay="TOP" layoutX="469.0" layoutY="528.0" mnemonicParsing="false" onAction="#openGenerateReports" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Generate Reports">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForLibrarianScreens/GenerateReports.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnSearchBooks" fx:id="btnSearchBooks" contentDisplay="TOP" layoutX="779.0" layoutY="528.0" mnemonicParsing="false" onAction="#openSearchBooks" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Search Books">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForLibrarianScreens/SearchBooks.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/iconsForLibrarianScreens/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="966.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/iconsForLibrarianScreens/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

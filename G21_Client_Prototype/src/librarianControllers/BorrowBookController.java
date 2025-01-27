@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import client.ClientUI;
+import common.Month;
 import entity.*;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -306,8 +307,7 @@ public class BorrowBookController {
 					}
 					 new LogActivity(availabeCopyToBorrow.getSubscriberId(), stringToActivityLogString,
 							  bookToBorrow.getBarcode(), bookToBorrow.getTitle(),
-							  availabeCopyToBorrow.getCopyNo());
-
+							  availabeCopyToBorrow.getCopyNo());					 
 						initialize();
 						changeString("congratulations, The borrowing of the book: \"" + availabeCopyToBorrow.getTitle()
 								+ "\" was successful.", "#086f03", lblborrowmsg);

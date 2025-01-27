@@ -29,11 +29,24 @@ public class LibrarianMenuController {
 	@FXML
 	private Button btnLogOut = null;
 	@FXML
-	private Button btnSelect = null;
-
+	private Button btnNewSubscriber = null;
 	@FXML
-	private ComboBox<String> comboBoxLibrarianOptions;
-	
+	private Button btnViewAllSubscribers = null;
+	@FXML
+	private Button btnUpdateSubscriberData = null;
+	@FXML
+	private Button btnBorrowBooks = null;
+	@FXML
+	private Button btnShowCurrentBorrowBooks = null;
+	@FXML
+	private Button btnReturnBook = null;
+	@FXML
+	private Button btnViewNotifications = null;
+	@FXML
+	private Button btnGenerateReports = null;
+	@FXML
+	private Button btnSearchBooks = null;
+
 
 	@FXML
 	private Label lblHello;
@@ -42,35 +55,55 @@ public class LibrarianMenuController {
 	@FXML
 	private Label lblinstructions;
 
-	/*
-	 * This method is setting the comboBox with the librarian options by
-	 * using the enum "LibrarianOptions".
-	 */
-	private void setComboBox() {
-		LibrarianOptions SelectOptions[] = LibrarianOptions.values();
-		for (int i = 0; i < SelectOptions.length; i++) {
-			comboBoxLibrarianOptions.getItems().add(SelectOptions[i].getDisplayName());
-		}
-		comboBoxLibrarianOptions.setValue(LibrarianOptions.RegisterNewSubscriber.getDisplayName()); // Default selected value
-	}
+
 
 	/*
 	 * initialize the gui with the combo box options and shows a welcome message to the librarian.
 	 */
 	public void initialize() {
-		setComboBox();
 		lblHello.setText("Hello "+ChatClient.getCurrectLibrarian().getName()+" !");
 	}
 
-	/**
-	 * This method is returning the select from the comboBox as a string
-	 * 
-	 * @return String of the selection
-	 */
-	private String getSelection() {
-		return (String) comboBoxLibrarianOptions.getValue();
-	}
 
+	public void openRegisterNewSubscriber(ActionEvent event) throws Exception {
+		Select(LibrarianOptions.RegisterNewSubscriber, event);
+	}
+	
+	public void openViewAllSubscribers(ActionEvent event) throws Exception {
+		Select(LibrarianOptions.ViewAllSubscribers, event);
+	}
+	
+	public void openUpdateSubscriberData(ActionEvent event) throws Exception {
+		Select(LibrarianOptions.UpdateSubscriberData, event);
+	}
+	
+	public void openBorrowBook(ActionEvent event) throws Exception {
+		Select(LibrarianOptions.BorrowBook, event);
+	}
+	
+	public void openShowCurrentBooks(ActionEvent event) throws Exception {
+		Select(LibrarianOptions.CurrentBorrowBooks, event);
+	}
+	
+	public void openReturnBook(ActionEvent event) throws Exception {
+		Select(LibrarianOptions.ReturnBook, event);
+	}
+	
+	public void openViewNotifications(ActionEvent event) throws Exception {
+		Select(LibrarianOptions.ViewNotifications, event);
+	}
+	
+	public void openGenerateReports(ActionEvent event) throws Exception {
+		Select(LibrarianOptions.GenerateReports, event);
+	}
+	
+	public void openSearchBooks(ActionEvent event) throws Exception {
+		Select(LibrarianOptions.SearchBooks, event);
+	}
+	
+	
+	
+	
 	/**
 	 * This method is for the select option from the menu getting the event of
 	 * clicking on the btn and sending the selected option to the server and loading
@@ -79,14 +112,14 @@ public class LibrarianMenuController {
 	 * @param event - the btn click
 	 * @throws Exception - problem with upload gui.
 	 */
-	public void Select(ActionEvent event) throws Exception {
+	private void Select(LibrarianOptions x, ActionEvent event) throws Exception {
 		// getting the selection
-		String selectedActionFromMenu = getSelection();
+		String selectedActionFromMenu = x.getDisplayName();
 		selectedActionFromMenu = selectedActionFromMenu.replace(" ", "");
 
 		// uploading the gui of the selected option by the user
 		
-		LibrarianOptions x = LibrarianOptions.getSelectionFromEnumName(selectedActionFromMenu);
+		//LibrarianOptions x = LibrarianOptions.getSelectionFromEnumName(selectedActionFromMenu);
 
 		/*
 		 * for each select we will send something else for the server and gets diffrent

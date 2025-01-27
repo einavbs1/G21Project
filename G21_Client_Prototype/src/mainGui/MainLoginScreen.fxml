@@ -2,35 +2,59 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainControllers.MainLoginScreenController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainControllers.MainLoginScreenController">
    <children>
       <Button id="btnExit" fx:id="btnExit" layoutX="1005.0" layoutY="655.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Label id="lblWelcome" fx:id="lblWelcome" alignment="CENTER" layoutX="16.0" layoutY="184.0" prefHeight="26.0" prefWidth="1070.0" text="G21 Library" textAlignment="CENTER">
+      <Label id="lblWelcome" fx:id="lblWelcome" alignment="CENTER" layoutX="16.0" layoutY="171.0" prefHeight="26.0" prefWidth="1070.0" text="G21 Library" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="36.0" />
          </font></Label>
-      <Button id="btnSubscriberLogin" fx:id="btnSubscriberLogin" layoutX="451.0" layoutY="314.0" mnemonicParsing="false" onAction="#SubscriberButton" prefHeight="40.0" prefWidth="200.0" text="Login as Subscriber">
+      <Button id="btnSubscriberLogin" fx:id="btnSubscriberLogin" contentDisplay="TOP" layoutX="692.0" layoutY="327.0" mnemonicParsing="false" onAction="#SubscriberButton" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Login as Subscriber">
          <font>
             <Font name="System Bold" size="18.0" />
-         </font></Button>
-      <Button id="btnLibrarianLogin" fx:id="btnLibrarianLogin" layoutX="203.0" layoutY="313.0" mnemonicParsing="false" onAction="#LibrarianButton" prefHeight="40.0" prefWidth="200.0" text="Login as Librarian">
+         </font>
+         <graphic>
+            <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForMainScreen/subscribers.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button id="btnLibrarianLogin" fx:id="btnLibrarianLogin" contentDisplay="TOP" graphicTextGap="5.0" layoutX="203.0" layoutY="325.0" mnemonicParsing="false" onAction="#LibrarianButton" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Login as Librarian">
          <font>
             <Font name="System Bold" size="18.0" />
-         </font></Button>
-      <Button id="btnGuestLogin" fx:id="btnGuestLogin" layoutX="697.0" layoutY="315.0" mnemonicParsing="false" onAction="#GuestButton" prefHeight="40.0" prefWidth="200.0" text="Continue as a guest">
+         </font>
+         <graphic>
+            <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForMainScreen/librarian.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button id="btnGuestLogin" fx:id="btnGuestLogin" contentDisplay="TOP" layoutX="451.0" layoutY="326.0" mnemonicParsing="false" onAction="#GuestButton" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Continue as a guest">
          <font>
             <Font name="System Bold" size="18.0" />
-         </font></Button>
-      <Label id="lblWelcome" fx:id="lblWelcome1" alignment="CENTER" layoutX="18.0" layoutY="89.0" prefHeight="26.0" prefWidth="1065.0" text="Welcome To B-Lib" textAlignment="CENTER">
+         </font>
+         <graphic>
+            <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForMainScreen/guest.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Label id="lblWelcome" fx:id="lblWelcome1" alignment="CENTER" layoutX="18.0" layoutY="70.0" prefHeight="26.0" prefWidth="1066.0" text="Welcome To B-Lib" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="64.0" />
          </font>
       </Label>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="118.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
