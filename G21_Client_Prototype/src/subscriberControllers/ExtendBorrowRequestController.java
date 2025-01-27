@@ -1,5 +1,6 @@
 package subscriberControllers;
 
+import java.awt.PrintGraphics;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -68,6 +69,8 @@ public class ExtendBorrowRequestController {
 	private TableColumn<String, String> colBorrowDate;
 	@FXML
 	private TableColumn<String, String> colExpectReturnDate;
+	@FXML
+	private TableColumn<String, String> colLost;
 
 	private Subscriber me = ChatClient.getCurrectSubscriber();
 
@@ -150,6 +153,32 @@ public class ExtendBorrowRequestController {
 			String[] parts = cellData.getValue().split(", ");
 			return new javafx.beans.property.SimpleStringProperty(parts[5]);
 		});
+		
+		colLost.setCellValueFactory(cellData -> {
+			String[] parts = cellData.getValue().split(", ");
+			if(Integer.parseInt(parts[6])==1) {
+				return new javafx.beans.property.SimpleStringProperty("Book Lost");
+			}
+			return new javafx.beans.property.SimpleStringProperty("");
+		});
+		
+		colLost.setCellFactory(column -> new javafx.scene.control.TableCell<>() {
+			@Override
+			protected void updateItem(String item, boolean empty) {
+				super.updateItem(item, empty);
+				if (item == null || empty) {
+					setText(null);
+					setStyle(""); // Clear style
+				} else {
+					setText(item);
+					if (item.toLowerCase().contains("lost")) {
+						setTextFill(javafx.scene.paint.Color.RED);
+					} else {
+						setTextFill(javafx.scene.paint.Color.BLACK);
+					}
+				}
+			}
+		});
 	}
 
 	/**
@@ -181,8 +210,13 @@ public class ExtendBorrowRequestController {
 
 		for (int i = 0; i < tableBorrows.getItems().size(); i++) {
 			String borrowNumber = tableBorrows.getColumns().get(0).getCellData(i).toString();
-			if (borrowNumber.equals(txtBorrowNumber.getText())) {
+			String bookIsLost = tableBorrows.getColumns().get(6).getCellData(i).toString();
+			if (borrowNumber.equals(txtBorrowNumber.getText()) && !bookIsLost.toLowerCase().contains("lost")) {
 				return true;
+			}
+			if(borrowNumber.equals(txtBorrowNumber.getText()) && !bookIsLost.toLowerCase().contains("lost")) {
+				changeString("You can't extend borrow of lost book.", lblErrMessage);
+				return false;
 			}
 		}
 		changeString("You must enter borrow id from the shown table.", lblErrMessage);
