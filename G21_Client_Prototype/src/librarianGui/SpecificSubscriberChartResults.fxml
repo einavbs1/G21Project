@@ -8,10 +8,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SpecificSubscriberChartResultsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SpecificSubscriberChartResultsController">
     <children>
          <Button fx:id="btnExit" layoutX="1000.0" layoutY="655.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Exit" textFill="#b81212">
          <font>
@@ -49,11 +51,21 @@
             <TableColumn id="columnTotalDaysInSelectedMonth" fx:id="columnTotalDaysInSelectedMonth" prefWidth="197.0" text="Total Days In Selected Month" />
         </columns>
       </TableView>
-      <Label id="lblErrMsg" fx:id="lblErrMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="818.0" layoutY="53.0" prefHeight="78.0" prefWidth="279.0" textAlignment="CENTER" textFill="#b81212" wrapText="true">
+      <Label id="lblErrMsg" fx:id="lblErrMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="818.0" layoutY="62.0" prefHeight="78.0" prefWidth="279.0" textAlignment="CENTER" textFill="#b81212" wrapText="true">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <ComboBox id="comboBoxSubscriber" fx:id="comboBoxSubscriber" layoutX="221.0" layoutY="76.0" prefHeight="30.0" prefWidth="244.0" />
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="5.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="967.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

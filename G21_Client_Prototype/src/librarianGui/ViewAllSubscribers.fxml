@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -17,7 +19,7 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <TableView id="SubscribersTable" fx:id="subscriberTable" layoutX="40.0" layoutY="89.0" prefHeight="525.0" prefWidth="1020.0">
+      <TableView id="SubscribersTable" fx:id="subscriberTable" layoutX="40.0" layoutY="104.0" prefHeight="525.0" prefWidth="1020.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="130.13329696655273" text="subscriber_id" />
           <TableColumn fx:id="nameColumn" prefWidth="149.86660766601562" text="subscriber_name" />
@@ -33,5 +35,15 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="967.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

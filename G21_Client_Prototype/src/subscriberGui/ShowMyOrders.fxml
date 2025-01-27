@@ -5,6 +5,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -18,12 +20,12 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <TextField id="txtOrderNumber" fx:id="txtOrderNumber" layoutX="458.0" layoutY="419.0" prefHeight="32.0" prefWidth="200.0" promptText="Enter order number" />
-      <Label id="lblOrderNum" fx:id="lblOrderNum" layoutX="258.0" layoutY="419.0" text="Enter Order number :">
+      <TextField id="txtOrderNumber" fx:id="txtOrderNumber" layoutX="458.0" layoutY="424.0" prefHeight="32.0" prefWidth="200.0" promptText="Enter order number" />
+      <Label id="lblOrderNum" fx:id="lblOrderNum" layoutX="258.0" layoutY="424.0" text="Enter Order number :">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <TableView id="ordersTable" fx:id="ordersTable" layoutX="95.0" layoutY="88.0" prefHeight="305.0" prefWidth="913.0">
+      <TableView id="ordersTable" fx:id="ordersTable" layoutX="95.0" layoutY="93.0" prefHeight="305.0" prefWidth="913.0">
         <columns>
           <TableColumn id="orderNumberColumn" fx:id="orderNumberColumn" prefWidth="149.60005950927734" text="Order Number" />
           <TableColumn id="bookBarcodeColumn" fx:id="bookBarcodeColumn" prefWidth="160.79995727539062" text="Book Barcode" />
@@ -33,23 +35,23 @@
           <TableColumn id="arrivedDateColumn" fx:id="arrivedDateColumn" prefWidth="137.86663818359375" text="Book Arrival Date" />
         </columns>
       </TableView>
-      <Button id="btnLoadOrder" fx:id="btnLoadOrder" layoutX="683.0" layoutY="420.0" mnemonicParsing="false" onAction="#LoadOrderBtn" prefHeight="30.0" prefWidth="112.0" text="Load Order" textFill="#478150">
+      <Button id="btnLoadOrder" fx:id="btnLoadOrder" layoutX="683.0" layoutY="425.0" mnemonicParsing="false" onAction="#LoadOrderBtn" prefHeight="30.0" prefWidth="112.0" text="Load Order" textFill="#478150">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Label id="lblBookName" fx:id="lblBookName" layoutX="430.0" layoutY="475.0" prefHeight="27.0" prefWidth="248.0" text="Book Name: ">
+      <Label id="lblBookName" fx:id="lblBookName" layoutX="430.0" layoutY="480.0" prefHeight="27.0" prefWidth="248.0" text="Book Name: ">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label id="lblStatus" fx:id="lblStatus" layoutX="430.0" layoutY="511.0" prefHeight="27.0" prefWidth="248.0" text="Status: ">
+      <Label id="lblStatus" fx:id="lblStatus" layoutX="430.0" layoutY="516.0" prefHeight="27.0" prefWidth="248.0" text="Status: ">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button id="btnCancelOrder" fx:id="btnCancelOrder" layoutX="493.0" layoutY="548.0" mnemonicParsing="false" onAction="#CancelOrderBtn" prefHeight="30.0" prefWidth="112.0" text="Cancel Order" textFill="#b81212">
+      <Button id="btnCancelOrder" fx:id="btnCancelOrder" layoutX="493.0" layoutY="553.0" mnemonicParsing="false" onAction="#CancelOrderBtn" prefHeight="30.0" prefWidth="112.0" text="Cancel Order" textFill="#b81212">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Label id="lblError" fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" layoutX="349.0" layoutY="588.0" prefHeight="84.0" prefWidth="401.0" textAlignment="CENTER" textFill="#47cc7c" wrapText="true">
+      <Label id="lblError" fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" layoutX="349.0" layoutY="593.0" prefHeight="84.0" prefWidth="401.0" textAlignment="CENTER" textFill="#478150" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
@@ -58,5 +60,15 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="5.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="967.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

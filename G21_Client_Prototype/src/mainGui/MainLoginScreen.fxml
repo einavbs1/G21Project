@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainControllers.MainLoginScreenController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainControllers.MainLoginScreenController">
    <children>
       <Button id="btnExit" fx:id="btnExit" layoutX="1005.0" layoutY="655.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
          <font>
@@ -17,7 +17,7 @@
          <font>
             <Font name="System Bold" size="36.0" />
          </font></Label>
-      <Button id="btnSubscriberLogin" fx:id="btnSubscriberLogin" contentDisplay="TOP" layoutX="692.0" layoutY="327.0" mnemonicParsing="false" onAction="#SubscriberButton" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Login as Subscriber">
+      <Button id="btnSubscriberLogin" fx:id="btnSubscriberLogin" contentDisplay="TOP" layoutX="692.0" layoutY="327.0" mnemonicParsing="false" onAction="#SubscriberButton" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Login As Subscriber">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -28,7 +28,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button id="btnLibrarianLogin" fx:id="btnLibrarianLogin" contentDisplay="TOP" graphicTextGap="5.0" layoutX="203.0" layoutY="325.0" mnemonicParsing="false" onAction="#LibrarianButton" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Login as Librarian">
+      <Button id="btnLibrarianLogin" fx:id="btnLibrarianLogin" contentDisplay="TOP" graphicTextGap="5.0" layoutX="203.0" layoutY="325.0" mnemonicParsing="false" onAction="#LibrarianButton" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Login As Librarian">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -39,7 +39,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button id="btnGuestLogin" fx:id="btnGuestLogin" contentDisplay="TOP" layoutX="451.0" layoutY="326.0" mnemonicParsing="false" onAction="#GuestButton" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Continue as a guest">
+      <Button id="btnGuestLogin" fx:id="btnGuestLogin" contentDisplay="TOP" layoutX="451.0" layoutY="326.0" mnemonicParsing="false" onAction="#GuestButton" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Continue As Guest">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -56,5 +56,15 @@
          </font>
       </Label>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="118.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="3.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="965.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

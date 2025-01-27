@@ -4,6 +4,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
@@ -47,7 +49,7 @@
          </font></Button>
       <Label id="lblerrmsg" fx:id="lblerrmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="400.0" layoutY="548.0" prefHeight="50.0" prefWidth="300.0" textAlignment="CENTER" textFill="#b81212" wrapText="true">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <FlowPane id="flowPaneDescriptionTags" fx:id="flowPaneDescriptionTags" layoutX="399.0" layoutY="357.0" prefHeight="125.0" prefWidth="303.0" />
@@ -59,5 +61,15 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="966.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

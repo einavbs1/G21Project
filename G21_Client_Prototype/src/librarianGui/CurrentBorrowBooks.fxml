@@ -5,10 +5,12 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.CurrentBorrowBooksController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.CurrentBorrowBooksController">
    <children>
       <!-- Labels for Subscriber ID and Borrow Number -->
       <Label id="lblId" fx:id="lblId" layoutX="303.0" layoutY="136.0" text="Subscriber ID:">
@@ -47,7 +49,7 @@
       </TableView>
       <Label id="lblMessage" fx:id="lblMessage" layoutX="382.0" layoutY="589.0" prefHeight="87.0" prefWidth="505.0" textFill="#478150" wrapText="true">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font></Label>
 
       <!-- Buttons for Back and Exit -->
@@ -83,14 +85,24 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label id="lblSelectedBorrowDetails" fx:id="lblSelectedBorrowDetails" layoutX="570.0" layoutY="465.0" prefHeight="109.0" prefWidth="387.0" wrapText="true">
+      <Label id="lblSelectedBorrowDetails" fx:id="lblSelectedBorrowDetails" layoutX="570.0" layoutY="465.0" prefHeight="109.0" prefWidth="387.0" textOverrun="CENTER_ELLIPSIS" wrapText="true">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font></Label>
       <Button id="btnLostBook" fx:id="btnLostBook" alignment="CENTER" contentDisplay="CENTER" layoutX="969.0" layoutY="517.0" mnemonicParsing="false" onAction="#btnLostTheBook" prefHeight="30.0" prefWidth="116.0" text="Lost the book" textAlignment="CENTER" textFill="#b81212" wrapText="true">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="5.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="967.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

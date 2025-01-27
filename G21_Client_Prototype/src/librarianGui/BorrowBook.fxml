@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -33,9 +35,9 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Label id="lblsubscriberidmsg" fx:id="lblsubscriberidmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="209.0" prefHeight="138.0" prefWidth="325.0" textAlignment="CENTER" textFill="#478150" wrapText="true" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="14.400000000000091">
+      <Label id="lblsubscriberidmsg" fx:id="lblsubscriberidmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="209.0" prefHeight="138.0" prefWidth="325.0" textAlignment="CENTER" textFill="#478150" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="14.400000000000091">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <Button fx:id="btnLoadBook" layoutX="454.4" layoutY="455.0" mnemonicParsing="false" onAction="#loadCopyofBookBtn" prefHeight="40.0" prefWidth="200.0" text="Display Book Details" textFill="#478150" AnchorPane.leftAnchor="454.4" AnchorPane.rightAnchor="447.20000000000005">
@@ -51,14 +53,14 @@
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label id="lblbookDetailsmsg" fx:id="lblbookDetailsmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="15.2" layoutY="501.0" prefHeight="48.0" prefWidth="274.0" textAlignment="CENTER" textFill="#b81212" wrapText="true" AnchorPane.leftAnchor="15.2" AnchorPane.rightAnchor="15.200000000000045">
+      <Label id="lblbookDetailsmsg" fx:id="lblbookDetailsmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="15.2" layoutY="501.0" prefHeight="48.0" prefWidth="274.0" textAlignment="CENTER" textFill="#b81212" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.leftAnchor="15.2" AnchorPane.rightAnchor="15.200000000000045">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label id="lblborrowmsg" fx:id="lblborrowmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="15.2" layoutY="592.0" prefHeight="59.0" prefWidth="1070.0" textAlignment="CENTER" textFill="#b81212" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+      <Label id="lblborrowmsg" fx:id="lblborrowmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="15.2" layoutY="592.0" prefHeight="59.0" prefWidth="1070.0" textAlignment="CENTER" textFill="#b81212" textOverrun="CENTER_ELLIPSIS" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <Label id="lblborrowPageTitle" fx:id="lblborrowPageTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="15.2" layoutY="14.0" prefHeight="17.0" prefWidth="159.0" text="Book Borrowing" textOverrun="CENTER_ELLIPSIS" AnchorPane.leftAnchor="15.2" AnchorPane.rightAnchor="15.200000000000045">
@@ -66,5 +68,15 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="967.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -50,9 +52,19 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label id="lblLastCheckedDate" fx:id="lblLastCheckedDate" layoutX="18.0" layoutY="60.0" prefHeight="42.0" prefWidth="399.0" text="Last date checked Reminders :">
+      <Label id="lblLastCheckedDate" fx:id="lblLastCheckedDate" layoutX="89.0" layoutY="60.0" prefHeight="42.0" prefWidth="399.0" text="Last date checked Reminders :">
          <font>
             <Font size="18.0" />
          </font></Label>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="967.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.LibrarianMenuController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.LibrarianMenuController">
    <children>
       <Button id="btnExit" fx:id="btnExit" layoutX="1003.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
          <font>
@@ -139,14 +139,14 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Icons/iconsForLibrarianScreens/G21Blib.png" />
+            <Image url="@../../Icons/G21Blib.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="966.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Icons/iconsForLibrarianScreens/BraudeSemel.png" />
+            <Image url="@../../Icons/BraudeSemel.png" />
          </image>
       </ImageView>
    </children>

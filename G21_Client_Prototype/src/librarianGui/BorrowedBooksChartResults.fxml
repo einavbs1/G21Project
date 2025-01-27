@@ -8,6 +8,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -51,14 +53,24 @@
             <TableColumn id="columnLostBook" fx:id="columnLostBook" prefWidth="99.0" text="Lost book" />
         </columns>
       </TableView>
-      <Label id="lblErrMsg" fx:id="lblErrMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="756.0" layoutY="53.0" prefHeight="78.0" prefWidth="287.0" textAlignment="CENTER" textFill="#b81212" wrapText="true">
+      <Label id="lblErrMsg" fx:id="lblErrMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="750.0" layoutY="60.0" prefHeight="78.0" prefWidth="287.0" textAlignment="CENTER" textFill="#b81212" wrapText="true">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <Button id="btnSpecificBookReport" fx:id="btnSpecificBookReport" layoutX="463.0" layoutY="636.0" mnemonicParsing="false" onAction="#goToSpecificBookScreen" prefHeight="40.0" prefWidth="169.0" text="Specific book report" textFill="#478150">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="966.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -26,16 +28,26 @@
          </font></Button>
       <Label id="lblShowconnection" fx:id="lblShowconnection" alignment="CENTER" layoutX="374.0" layoutY="90.0" prefHeight="54.0" prefWidth="354.0">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font></Label>
       <Label id="lblNewConnection" fx:id="lblNewConnection" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="542.0" prefHeight="90.0" prefWidth="480.0" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="15.0" />
          </font></Label>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="16.0" prefHeight="41.0" prefWidth="1068.0" text="Client Connection Status" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../G21_Client_Prototype/Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="966.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../G21_Client_Prototype/Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

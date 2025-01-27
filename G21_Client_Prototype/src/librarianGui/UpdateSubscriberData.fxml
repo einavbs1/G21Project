@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -68,7 +70,7 @@
 
       <Label fx:id="lblMessage" layoutX="22.0" layoutY="543.0" prefHeight="68.0" prefWidth="1062.0" text=" " textAlignment="CENTER" textFill="#086f03" wrapText="true">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <Label fx:id="lblTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="14.0" prefHeight="32.0" prefWidth="1066.0" text="Update Subscriber Data" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
@@ -93,5 +95,15 @@
             <Font size="16.0" />
          </font></Label>
       <TextField id="txtFrozenUntil" fx:id="txtFrozenUntil" layoutX="525.0" layoutY="458.0" prefHeight="30.0" prefWidth="200.0" />
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="5.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="967.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
