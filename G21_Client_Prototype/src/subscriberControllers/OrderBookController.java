@@ -25,7 +25,8 @@ import javafx.util.Duration;
 import mainControllers.ConnectionSetupController;
 
 /**
- * This class handles the GUI for ordering books. It allows subscribers to order
+ * This class handles the GUI for ordering books. 
+ * It allows subscribers to order
  * books by entering their barcode.
  * 
  * @author Chen
@@ -85,6 +86,17 @@ public class OrderBookController {
 		bookToOrder = null;
 	}
 
+	
+	
+	/**
+	 * Updates the text and color of a label on the JavaFX application thread.  
+	 * The label's text is changed to the provided string with the specified color.  
+	 * After 10 seconds, if the text has not changed, it is cleared automatically.
+	 *  
+	 * @param s The text to display in the label.
+	 * @param color The color of the text.
+	 * @param lbl The label to update.
+	 */
 	private void changeString(String s, String color, Label lbl) {
 		Platform.runLater(() -> {
 			lbl.setText(s);
@@ -104,6 +116,14 @@ public class OrderBookController {
 
 	}
 
+	/**
+	 * Verifies various actions based on the provided enum value.  
+	 * Checks subscriber status, book barcode validity, and whether a book can be ordered.  
+	 * Displays relevant error messages for invalid cases.
+	 *  
+	 * @param action The action to verify.
+	 * @return true if the action passes verification, otherwise false.
+	 */
 	private boolean VerifyActions(myEnum action) {
 
 		switch (action) {
@@ -155,8 +175,17 @@ public class OrderBookController {
 		return true;
 
 	}
+	
 
-	public void loadBook(ActionEvent event) {
+	/**
+	 * Handles the action of loading a book based on the entered barcode.  
+	 * Verifies the barcode and checks if the book can be ordered.  
+	 * Updates UI elements accordingly and displays relevant messages.  
+	 * If an exception occurs, an error message is shown.
+	 *  
+	 * @param event The action event triggered by the user.
+	 */
+	public void loa‍dBook(ActionEvent event){
 		lblmsgOrder.setText("");
 		if (VerifyActions(myEnum.VerifyBookBarcode)) {
 			try {
@@ -190,6 +219,15 @@ public class OrderBookController {
 		}
 	}
 	
+	
+	/**
+	 * Opens the Search Books screen in a new window.  
+	 * Loads the FXML file, applies the stylesheet, and sets the scene.  
+	 * Hides the current window after opening the new one.
+	 *  
+	 * @param event The action event triggered by the user.
+	 * @throws IOException If there is an issue loading the FXML file.
+	 */
 	public void openSearchBookScreen(ActionEvent event) throws IOException {
 		FXMLLoader Loader = new FXMLLoader(getClass().getResource("/mainGui/SearchBooks.fxml"));
         Parent Root = Loader.load();

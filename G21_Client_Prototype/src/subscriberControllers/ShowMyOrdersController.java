@@ -93,10 +93,18 @@ public class ShowMyOrdersController {
         orderNumberColumn.setSortType(TableColumn.SortType.ASCENDING);
     }
     
+    /**
+     * Retrieves the active orders for the current subscriber and displays them in the orders table.
+     */
     public void getMyOrders() {
     	ordersTable.setItems(FXCollections.observableArrayList(Orders.getMyActiveOrdersSubscriber(currSubscriber.getId())));
     }
     
+    /**
+     * Initializes the table by setting up cell value factories for each column.  
+     * The data is split from a comma-separated string and displayed in the corresponding columns.  
+     * The status column shows a formatted status based on an integer value, and the arrived date column displays a default message if the book hasn't arrived yet.
+     */
     private void initTheTable() {
     	orderNumberColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
@@ -127,6 +135,15 @@ public class ShowMyOrdersController {
         });
 	}
     
+    /**
+     * Updates the text and color of a label on the JavaFX application thread.  
+     * The label's text is changed to the provided string with the specified color.  
+     * After 10 seconds, if the text hasn't changed, it is cleared automatically.
+     *  
+     * @param s The text to display in the label.
+     * @param color The color of the text.
+     * @param lbl The label to update.
+     */
 	private void changeString(String s, String color, Label lbl) {
 		Platform.runLater(() -> {
 			lbl.setText(s);
@@ -146,6 +163,15 @@ public class ShowMyOrdersController {
 		VerifyBook;
 	}
 
+	/**
+	 * Verifies user input based on the specified action.  
+	 * Ensures orders exist, checks the validity of the order number,  
+	 * and verifies that an order is loaded for management.  
+	 * Displays appropriate error messages for invalid cases.
+	 *  
+	 * @param action The action to verify.
+	 * @return true if the input is valid, otherwise false.
+	 */
     private boolean VerifyInput(myEnum action) {
 		if(ordersTable.getItems().size() == 0) {
 			changeString("You don't have borrows to extend.","#bf3030",lblError);
@@ -183,10 +209,8 @@ public class ShowMyOrdersController {
 			default:
 				return false;
 		}
-		
-		
-
 	}
+    
     
     /**
      * Handles the Load Order button click event.

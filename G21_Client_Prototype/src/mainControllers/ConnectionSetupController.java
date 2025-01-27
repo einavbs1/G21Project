@@ -63,7 +63,8 @@ public class ConnectionSetupController {
 		return porttxt.getText();
 	}
 
-	/** This method is changing the message on the String to 10 seconds
+	/** 
+	 * This method is changing the message on the String to 10 seconds
 	 * @param s - the message we want to see on the GUI
 	 */
 	private void changeString(String s) {
@@ -92,7 +93,8 @@ public class ConnectionSetupController {
 	}
 	
 	
-	/** This method is for the connect button, it starting the connection to the server 
+	/** 
+	 * This method is for the connect button, it starting the connection to the server 
 	 * and upload the next (menu) GUI
 	 * @param event			- the button action
 	 */
@@ -158,7 +160,8 @@ public class ConnectionSetupController {
 	}
 
 	
-	/**Constructor of this class, starting the GUI
+	/**
+	 * Constructor of this class, starting the GUI
 	 * @param primaryStage	-Stage of this GUI to upload all the data.
 	 */
 	public void start(Stage primaryStage){
@@ -177,9 +180,9 @@ public class ConnectionSetupController {
 	}
 
 	
-	/** init starting automaticly when the GUI is up.
+	/** 
+	 * This method initialize starting automatic when the GUI is up.
 	 * showing the local ip in the GUI.
-	 * 
 	 */
 	public void initialize() {
 		porttxt.setText("12345");
@@ -194,7 +197,8 @@ public class ConnectionSetupController {
 	}
 
 	
-	/**This constructor close this system.
+	/**
+	 * This method is for the exit button.
 	 * @param event - the click on the Exit btn.
 	 * @throws Exception
 	 */

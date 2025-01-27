@@ -78,7 +78,7 @@ public class SearchBookResultsController {
 
     
     /**
-     * this private method is setting the available book in the first table view.
+     * This private method is setting the available book in the first table view.
      * shows the books and location in the library.
      */
     private void initAvailableBooks() {
@@ -109,7 +109,7 @@ public class SearchBookResultsController {
     }
     
     /**
-     * this private method is setting the unavailable book in the second table view.
+     * This private method is setting the unavailable book in the second table view.
      * shows the books if can order them and what is the closest return date.
      */
     private void initUnavailableBooks() {
@@ -156,7 +156,8 @@ public class SearchBookResultsController {
     }
     
     
-    /** This method is for the back button closing the current GUI and uploading the Search books GUI.
+    /** 
+     * This method is for the back button closing the current GUI and uploading the Search books GUI.
      * @param event - click on the back button.
      * @throws IOException
      */
@@ -192,7 +193,8 @@ public class SearchBookResultsController {
 
     
     
-    /**This method is setting the books in the tables.
+    /**
+     * This method is setting the books in the tables.
      */
     public void loadBooks() {
     	tableViewAvailableBooks.setItems(FXCollections.observableArrayList(SearchBooksController.getAvailableBooks()));
@@ -219,10 +221,12 @@ public class SearchBookResultsController {
 
 	}
     
- 
-	/*
+
+	/**
 	 * This method is for the exit button sending a message to the server that now we are disconnecting,
 	 * closing the GUI and the connection for the server.
+	 * @param event
+	 * @throws Exception
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
 		ConnectionSetupController.stopConnectionToServer();
