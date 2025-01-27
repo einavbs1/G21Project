@@ -158,6 +158,21 @@ public class RegisterNewSubscriberController {
 
 		return true;
 	}
+	
+	/**
+	 * This method is starting automaticly when this menu gui is up.
+	 * 
+	 * @param primaryStage
+	 * @throws Exception
+	 */
+	public void start(Stage primaryStage) throws Exception {
+		Parent root = FXMLLoader.load(getClass().getResource("/librarianGui/RegisterNewSubscriber.fxml"));
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/librarianGui/RegisterNewSubscriber.css").toExternalForm());
+		primaryStage.setTitle("Register New Subscriber");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
 
 	/*
 	 * Author: Avishag. This method is for the exit button sending a message to the

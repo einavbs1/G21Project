@@ -117,45 +117,29 @@ public class SubscriberMenuController {
 		 */
 		switch (x) {
 		case SearchBooks:
-			FXMLLoader loader = new FXMLLoader();
+			
+			FXMLLoader Loader = new FXMLLoader(getClass().getResource("/mainGui/" + SubscriberOptions.valueOf(userselect) + ".fxml"));
+			Parent Root = Loader.load();
+			Stage Stage = new Stage();
+			Scene Scene = new Scene(Root);
+			Scene.getStylesheets().add(getClass().getResource("/mainGui/" + SubscriberOptions.valueOf(userselect) + ".css").toExternalForm());
+			Stage.setScene(Scene);
+			Stage.setTitle(userselect + " Tool");
+			Stage.show();
 			((Node) event.getSource()).getScene().getWindow().hide();
-			Stage primaryStage = new Stage();
-			Pane root = loader
-			.load(getClass().getResource("/mainGui/" + SubscriberOptions.valueOf(userselect) + ".fxml").openStream());
-			Scene scene = new Scene(root);
-			scene.getStylesheets()
-					.add(getClass().getResource("/mainGui/" + SubscriberOptions.valueOf(userselect) + ".css").toExternalForm());
-			primaryStage.setTitle(userselect + " Tool");
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			//System.out.println("you selected " + userselect);
-			break;
-			/*
-		case UpdateMyData:
-			System.out.println("you selected " + userselect);
 			break;
 
-		case ExtendBorrowRequest:
-			System.out.println("you selected " + userselect);
-			break;
 			
-		case ShowMyOrders:
-			System.out.println("you selected " + userselect);
-			break;
-			*/
 		default:
-			FXMLLoader loader1 = new FXMLLoader();
+			FXMLLoader Loader1 = new FXMLLoader(getClass().getResource("/subscriberGui/" + SubscriberOptions.valueOf(userselect) + ".fxml"));
+			Parent Root1 = Loader1.load();
+			Stage Stage1 = new Stage();
+			Scene Scene1 = new Scene(Root1);
+			Scene1.getStylesheets().add(getClass().getResource("/subscriberGui/" + SubscriberOptions.valueOf(userselect) + ".css").toExternalForm());
+			Stage1.setScene(Scene1);
+			Stage1.setTitle(userselect + " Tool");
+			Stage1.show();
 			((Node) event.getSource()).getScene().getWindow().hide();
-			Stage primaryStage1 = new Stage();
-			Pane root1 = loader1
-					.load(getClass().getResource("/subscriberGui/" + SubscriberOptions.valueOf(userselect) + ".fxml").openStream());
-			// continue show the gui of the selected option by the user.
-			Scene scene1 = new Scene(root1);
-			scene1.getStylesheets()
-					.add(getClass().getResource("/subscriberGui/" + SubscriberOptions.valueOf(userselect) + ".css").toExternalForm());
-			primaryStage1.setTitle(userselect + " Tool");
-			primaryStage1.setScene(scene1);
-			primaryStage1.show();
 			break;
 		}
 		
