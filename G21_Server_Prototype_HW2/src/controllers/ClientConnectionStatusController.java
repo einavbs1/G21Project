@@ -1,4 +1,4 @@
-package gui;
+package controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

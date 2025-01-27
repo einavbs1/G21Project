@@ -1,4 +1,4 @@
-package gui;
+package controllers;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;

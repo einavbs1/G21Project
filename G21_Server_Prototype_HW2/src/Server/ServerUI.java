@@ -1,8 +1,8 @@
 package Server;
 
+import controllers.ServerPortFrameController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import gui.ServerPortFrameController;
 
 /*
  * This class is the server interface to the G21-prototype-server

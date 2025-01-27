@@ -2,7 +2,7 @@ package Server;
 
 import java.util.HashMap;
 import common.echoServerMenu;
-import gui.ClientConnectionStatusController;
+import controllers.ClientConnectionStatusController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ocsf.server.*;

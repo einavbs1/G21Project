@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerPortFrameController">
+<Pane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ServerPortFrameController">
    <children>
       <Button fx:id="btnDone" layoutX="502.0" layoutY="405.0" mnemonicParsing="false" onAction="#Connect" prefHeight="40.0" prefWidth="100.0" text="Connect" textFill="#478150">
          <font>
