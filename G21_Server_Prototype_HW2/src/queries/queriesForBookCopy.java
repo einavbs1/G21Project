@@ -57,31 +57,27 @@ public class queriesForBookCopy {
 	 */
 	public static String GetBookCopyFromDB(String barcode, int copyNo) {
 		String query = "SELECT * FROM BookCopy WHERE book_barcode = ? AND bookcopy_copyNo = ?";
-		String bookData = "Empty";
+		String bookcopyData = "Empty";
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
 			stmt.setString(1, barcode);
 			stmt.setInt(2, copyNo);
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
 					String book_barcode = rs.getString("book_barcode");
-					String book_title = rs.getString("book_title");
-					String book_subject = rs.getString("book_subject");
-					String book_description = rs.getString("book_description");
-					int book_allCopies = rs.getInt("book_allCopies");
-					int book_availableCopies = rs.getInt("book_availableCopies");
-					int book_ordersNumber = rs.getInt("book_ordersNumber");
-					int book_lostNumber = rs.getInt("book_lostNumber");
-					String book_location = rs.getString("book_location");
-					bookData = book_barcode + ", " + book_title + ", " + book_subject + ", " + book_description + ", "
-							+ book_allCopies + ", " + book_availableCopies + ", " + book_ordersNumber + ", "
-							+ book_lostNumber + ", " + book_location;
+					String bookcopy_copyNo = rs.getString("bookcopy_copyNo");
+					int bookCopy_isAvailable = rs.getInt("bookCopy_isAvailable");
+					int bookCopy_isLost = rs.getInt("bookCopy_isLost");
+					Date bookcopy_returnDate = rs.getDate("bookcopy_returnDate");
+					int subscriber_id = rs.getInt("subscriber_id");
+					bookcopyData = book_barcode + ", " + bookcopy_copyNo + ", " + bookCopy_isAvailable + ", " + bookCopy_isLost + ", "
+							+ bookcopy_returnDate + ", " + subscriber_id;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return bookData;
+		return bookcopyData;
 	}
 
 	/**
@@ -97,15 +93,25 @@ public class queriesForBookCopy {
 	 * @return
 	 */
 	public static boolean updateBookCopyDetails(String barcode, int copyNo, int isAvailable, int isLost,
-			Date returnDate, int subscriberID) {
+			Date returnDate, Integer subscriberID) {
 		String query = "UPDATE bookcopy SET bookCopy_isAvailable = ?, bookCopy_isLost = ?, bookcopy_returnDate = ?, "
 				+ "subscriber_id = ? WHERE book_barcode = ? AND bookcopy_copyNo = ?";
 
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
 			stmt.setInt(1, isAvailable);
 			stmt.setInt(2, isLost);
-			stmt.setDate(3, returnDate);
-			stmt.setInt(4, subscriberID);
+			if(returnDate == null) {
+				stmt.setNull(3, java.sql.Types.DATE);
+			}else {
+				stmt.setDate(3, returnDate);
+			}
+			if(subscriberID == null) {
+				stmt.setNull(4, java.sql.Types.INTEGER);
+			}else {
+				stmt.setInt(4, subscriberID);
+			}
+			
+			
 			stmt.setString(5, barcode);
 			stmt.setInt(6, copyNo);
 

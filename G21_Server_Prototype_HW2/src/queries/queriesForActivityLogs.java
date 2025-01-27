@@ -74,7 +74,7 @@ public class queriesForActivityLogs {
 					int serialid = rs.getInt("activity_serial");
 					int id = rs.getInt("subscriber_id");
 					String activityaction = rs.getString("activity_action");
-					int bookbarcode = rs.getInt("book_barcode");
+					String bookbarcode = rs.getString("book_barcode");
 					String booktitle = rs.getString("book_title");
 					String copynumber = rs.getString("bookcopy_copyNo");
 					Date date = rs.getDate("activity_date");
@@ -94,21 +94,33 @@ public class queriesForActivityLogs {
 
 	/* ADDED BY AMIR */
 	public static int AddNewLogActivity(int subscriberId, String activityAction, String bookBarcode, String bookTitle,
-			int bookcopyCopyNo, Date activityDate) {
+			Integer bookcopyCopyNo, Date activityDate) {
 		PreparedStatement stmt;
 		try {
-			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO activitylog VALUES (?, ?, ?, ?, ?, ?)",
+			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO activitylog (subscriber_id, activity_action, book_barcode, book_title, bookcopy_copyNo, activity_date) VALUES (?, ?, ?, ?, ?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
 			stmt.setInt(1, subscriberId);
 			stmt.setString(2, activityAction);
 			stmt.setString(3, bookBarcode);
 			stmt.setString(4, bookTitle);
-			stmt.setObject(5, bookcopyCopyNo);
+			if (bookcopyCopyNo == null) {
+	            stmt.setNull(5, java.sql.Types.INTEGER);
+	        } else {
+	            stmt.setInt(5, bookcopyCopyNo);
+	        }
 			stmt.setDate(6, activityDate);
 
-			int CreatedActivityLog = stmt.executeUpdate();
-			return CreatedActivityLog;
+			stmt.executeUpdate();
+			
+			int generatedKey = -1;
+			// Retrieve the generated key
+			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+			    if (generatedKeys.next()) {
+			        generatedKey = generatedKeys.getInt(1);
+			    }
+			}
+			return generatedKey;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="subscriberControllers.UpdateMyDataController">
+   <children>
+      <Label fx:id="lblId" layoutX="366.0" layoutY="153.0" text="Subscriber ID :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField fx:id="txtId" editable="true" layoutX="564.0" layoutY="153.0" prefHeight="30.0" prefWidth="190.0" />
+
+      <Label fx:id="lblName" layoutX="368.0" layoutY="206.0" text="Name :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField fx:id="txtName" editable="false" layoutX="564.0" layoutY="207.0" prefHeight="30.0" prefWidth="190.0" />
+
+      <Label fx:id="lblPhoneNumber" layoutX="367.0" layoutY="256.0" text="Phone Number :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField fx:id="txtPhoneNumber" editable="true" layoutX="563.0" layoutY="255.0" prefHeight="30.0" prefWidth="190.0" />
+
+      <Label fx:id="lblEmail" layoutX="366.0" layoutY="306.0" text="Email Address :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField fx:id="txtEmail" editable="true" layoutX="562.0" layoutY="306.0" prefHeight="30.0" prefWidth="190.0" />
+
+      <Label fx:id="lblPassword" layoutX="368.0" layoutY="355.0" text="Password :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField fx:id="txtPassword" editable="true" layoutX="562.0" layoutY="353.0" prefHeight="30.0" prefWidth="190.0" />
+
+      <Label fx:id="lblStatus" layoutX="368.0" layoutY="403.0" text="Status :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField fx:id="txtStatus" editable="false" layoutX="562.0" layoutY="402.0" prefHeight="30.0" prefWidth="190.0" />
+
+      <Button fx:id="btnUpdate" layoutX="518.0" layoutY="512.0" mnemonicParsing="false" onAction="#UpdateBtn" prefHeight="30.0" text="Update" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="btnBack" layoutX="47.0" layoutY="654.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" text="Back" textFill="#262d71">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="btnExit" layoutX="1005.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+
+      <Label id="lblMessage" fx:id="lblMessage" alignment="CENTER" layoutX="392.0" layoutY="558.0" prefHeight="59.0" prefWidth="320.0" textAlignment="CENTER" textFill="#478150" wrapText="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label id="lblTitle" fx:id="lblTitle" alignment="CENTER" layoutX="18.0" layoutY="15.0" prefHeight="32.0" prefWidth="1066.0" text="Update My Data">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label id="lblErrMessage" fx:id="lblErrMessage" alignment="CENTER" layoutX="395.0" layoutY="558.0" prefHeight="59.0" prefWidth="320.0" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label id="lblFrozenUntil" fx:id="lblFrozenUntil" layoutX="360.0" layoutY="448.0" prefHeight="55.0" prefWidth="386.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+      <Label fx:id="lblId1" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="100.0" prefHeight="27.0" prefWidth="1066.0" text="Please fill in your details below" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="966.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

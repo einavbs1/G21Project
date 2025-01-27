@@ -1,0 +1,22 @@
+.chart-bar {
+    -fx-bar-fill: #3498db; /* Change bar color (blue in this case) */
+}
+
+.chart-legend-item-symbol {
+    -fx-background-color: #3498db; /* Ensure the legend matches the bar color */
+}
+
+
+/* Center-align all table cells */
+.table-view .table-cell {
+    -fx-alignment: CENTER;
+}
+
+/* Optional: Center-align table headers */
+.table-view .column-header {
+    -fx-alignment: CENTER;
+}
+/*Background color*/
+.root {
+	-fx-background-color: #c3d5db;
+}

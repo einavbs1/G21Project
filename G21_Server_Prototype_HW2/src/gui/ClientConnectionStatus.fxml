@@ -4,20 +4,50 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane prefHeight="341.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ClientConnectionStatusController">
+<Pane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientConnectionStatusController">
    <children>
-      <Button fx:id="btnExit" layoutX="453.0" layoutY="303.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
-      <TableView id="ClientConnectionsTable" fx:id="ClientConnectionsTable" layoutX="34.0" layoutY="34.0" prefHeight="200.0" prefWidth="437.0">
+      <Button fx:id="btnExit" layoutX="1002.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <TableView id="ClientConnectionsTable" fx:id="ClientConnectionsTable" layoutX="207.0" layoutY="153.0" prefHeight="303.0" prefWidth="693.0">
         <columns>
-          <TableColumn id="ClientIPColumn" fx:id="ClientIPColumn" prefWidth="168.0" text="Client IP" />
-          <TableColumn id="HostNameColumn" fx:id="HostNameColumn" prefWidth="161.0" text="HostName" />
-            <TableColumn id="StatusColumn" fx:id="StatusColumn" prefWidth="107.0" text="Status" />
+          <TableColumn id="ClientIPColumn" fx:id="ClientIPColumn" prefWidth="214.93338012695312" text="Client IP" />
+          <TableColumn id="HostNameColumn" fx:id="HostNameColumn" prefWidth="244.26669311523438" text="HostName" />
+            <TableColumn id="StatusColumn" fx:id="StatusColumn" prefWidth="234.93328857421875" text="Status" />
         </columns>
       </TableView>
-      <Button id="btnRefresh" fx:id="btnRefresh" layoutX="224.0" layoutY="243.0" mnemonicParsing="false" onAction="#Refreshmethod" text="Refresh" />
-      <Label id="lblShowconnection" fx:id="lblShowconnection" alignment="CENTER" layoutX="100.0" layoutY="8.0" prefHeight="17.0" prefWidth="302.0" />
-      <Label id="lblNewConnection" fx:id="lblNewConnection" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="278.0" prefHeight="17.0" prefWidth="480.0" textAlignment="CENTER" />
+      <Button id="btnRefresh" fx:id="btnRefresh" layoutX="502.0" layoutY="485.0" mnemonicParsing="false" onAction="#Refreshmethod" prefHeight="40.0" prefWidth="100.0" text="Refresh" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label id="lblShowconnection" fx:id="lblShowconnection" alignment="CENTER" layoutX="374.0" layoutY="90.0" prefHeight="54.0" prefWidth="354.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+      <Label id="lblNewConnection" fx:id="lblNewConnection" alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="542.0" prefHeight="90.0" prefWidth="576.0" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="16.0" prefHeight="41.0" prefWidth="1068.0" text="Client Connection Status" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../G21_Client_Prototype/Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="966.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../G21_Client_Prototype/Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

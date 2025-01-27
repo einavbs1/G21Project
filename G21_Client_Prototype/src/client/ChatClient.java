@@ -2,6 +2,8 @@ package client;
 
 import ocsf.client.*;
 import common.ChatIF;
+import entity.*;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,8 @@ public class ChatClient extends AbstractClient {
 	ChatIF clientUI;
 	private static List<String> listFromServer = new ArrayList<String>();
 	private static String fromserverString = new String();
+	private static Librarian currectLibrarian = null;
+	private static Subscriber currectSubscriber = null;
 	public static boolean awaitResponse = false;
 	
 
@@ -41,6 +45,21 @@ public class ChatClient extends AbstractClient {
 		List<String> toRet = listFromServer;
 		listFromServer = new ArrayList<String>();
 		return toRet;
+	}
+	
+	
+	public static Librarian getCurrectLibrarian() {
+		return currectLibrarian;
+	}
+	public static void setCurrectLibrarian(Librarian lib) {
+		currectLibrarian = lib;
+	}
+	
+	public static Subscriber getCurrectSubscriber() {
+		return currectSubscriber;
+	}
+	public static void setCurrectSubscriber(Subscriber sub) {
+		currectSubscriber = sub;
 	}
 	
 

@@ -5,12 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import mainControllers.ConnectionSetupController;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-
-import controllers.ConnectionSetupController;
 
 /**This class is starting the clientUI that we see
  * 
@@ -27,11 +26,11 @@ public class ClientUI extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/ConnectionSetup.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainGui/ConnectionSetup.fxml"));
 		Parent root = loader.load();
 		ConnectionSetupController controller = loader.getController();
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/gui/ConnectionSetup.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/mainGui/ConnectionSetup.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Connection Setup Tool");
 		primaryStage.show();

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.CurrentBorrowBooksController">
+   <children>
+      <!-- Labels for Subscriber ID and Borrow Number -->
+      <Label id="lblId" fx:id="lblId" layoutX="303.0" layoutY="136.0" text="Subscriber ID:">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <TextField id="txtSubscriberId" fx:id="txtSubscriberId" layoutX="434.0" layoutY="136.0" prefHeight="30.0" prefWidth="200.0" />
+      
+      <Label id="lblBorrowNum" fx:id="lblBorrowNum" layoutX="21.0" layoutY="489.0" text="Borrow Number:">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <TextField id="txtBorrowNumber" fx:id="txtBorrowNumber" editable="false" layoutX="166.0" layoutY="489.0" prefHeight="30.0" prefWidth="245.0" />
+      
+      <!-- Buttons for Show Borrows and Extend Borrow -->
+      <Button id="btnShowAllMyActiveBorrows" fx:id="btnShowAllMyActiveBorrows" layoutX="662.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnLoadAllMyActiveBorrows" prefHeight="30.0" text="Load Active Borrows" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button id="btnLoadOneBorrow" fx:id="btnLoadOneBorrow" disable="true" layoutX="449.0" layoutY="489.0" mnemonicParsing="false" onAction="#btnLoadOneBorrowToEdit" prefHeight="30.0" text="Load Borrow" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+
+      <!-- TableView for Borrow Records -->
+      <TableView fx:id="tableBorrows" layoutX="28.0" layoutY="203.0" prefHeight="211.0" prefWidth="1054.0">
+         <columns>
+            <TableColumn fx:id="colBorrowNumber" prefWidth="153.0666618347168" text="Borrow Number" />
+            <TableColumn fx:id="colBookBarcode" prefWidth="125.33335876464844" text="Book Barcode" />
+            <TableColumn fx:id="colBookTitle" prefWidth="199.46664428710938" text="Book Title" />
+            <TableColumn fx:id="colBookCopyNo" prefWidth="130.933349609375" text="Book Copy No" />
+            <TableColumn fx:id="colBorrowDate" prefWidth="174.1334228515625" text="Borrow Date" />
+            <TableColumn fx:id="colExpectReturnDate" prefWidth="183.46661376953125" text="Expected Return Date" />
+            <TableColumn id="colLostBook" fx:id="colLostBook" prefWidth="82.0" text="Lost Book" />
+         </columns>
+      </TableView>
+      <Label id="lblMessage" fx:id="lblMessage" layoutX="382.0" layoutY="589.0" prefHeight="87.0" prefWidth="505.0" textFill="#478150" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+
+      <!-- Buttons for Back and Exit -->
+      <Button id="btnBack" fx:id="btnBack" layoutX="52.0" layoutY="655.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" text="Back" textFill="#262d71">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button id="btnExit" fx:id="btnExit" layoutX="1002.0" layoutY="655.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      
+      <Label id="lblInstructions" fx:id="lblInstructions" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="97.0" prefHeight="26.0" prefWidth="1066.0" text="Please enter subscriber id to load his active borrows" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label id="lblTitle" fx:id="lblTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="14.0" prefHeight="32.0" prefWidth="1067.0" text="Subscriber Current Borrow Books" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      
+      <Label id="lblDaysExtend" fx:id="lblDaysExtend" layoutX="22.0" layoutY="534.0" text="Number of extension days for this book:">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <TextField id="txtDaysToExtend" fx:id="txtDaysToExtend" editable="false" layoutX="323.0" layoutY="534.0" prefHeight="30.0" prefWidth="88.0" />
+      <Button id="btnExtendSelectedBorrow" fx:id="btnExtendSelectedBorrow" disable="true" layoutX="449.0" layoutY="534.0" mnemonicParsing="false" onAction="#btnExtendBorrow" prefHeight="30.0" text="Extend Borrow" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label id="lblInstructions2" fx:id="lblInstructions2" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="443.0" prefHeight="27.0" prefWidth="543.0" text="To Extend Borrow please fill below" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label id="lblSelectedBorrowDetails" fx:id="lblSelectedBorrowDetails" layoutX="570.0" layoutY="465.0" prefHeight="109.0" prefWidth="387.0" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+      <Button id="btnLostBook" fx:id="btnLostBook" alignment="CENTER" contentDisplay="CENTER" layoutX="969.0" layoutY="517.0" mnemonicParsing="false" onAction="#btnLostTheBook" prefHeight="30.0" prefWidth="116.0" text="Lost the book" textAlignment="CENTER" textFill="#b81212" wrapText="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="5.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="967.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

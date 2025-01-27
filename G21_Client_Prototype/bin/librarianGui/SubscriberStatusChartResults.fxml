@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SubscriberStatusChartResultsController">
+    <children>
+         <Button fx:id="btnExit" layoutX="1002.0" layoutY="653.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="19.0" prefHeight="35.0" prefWidth="1099.0" text="Subscriber Status Report" textAlignment="CENTER" textFill="#2c3e50" textOverrun="CENTER_ELLIPSIS">
+             <font>
+                 <Font name="System Bold" size="30.0" />
+             </font>
+         </Label>
+         
+            <BarChart fx:id="subscriberChart" layoutX="189.0" layoutY="119.0" prefHeight="320.0" prefWidth="730.0">
+             <xAxis>
+                 <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+             </xAxis>
+             <yAxis>
+                 <NumberAxis fx:id="yAxis" side="LEFT" />
+             </yAxis>
+         </BarChart>
+         <Button fx:id="btnBack" layoutX="42.0" layoutY="652.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Back" textFill="#262d71">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <ComboBox id="comboBoxMonth" fx:id="comboBoxMonth" layoutX="356.0" layoutY="75.0" prefHeight="30.0" prefWidth="130.0" />
+      <ComboBox id="comboBoxYear" fx:id="comboBoxYear" layoutX="505.0" layoutY="75.0" prefHeight="30.0" prefWidth="130.0" />
+      <Button id="btnRefresh" fx:id="btnRefresh" layoutX="674.0" layoutY="75.0" mnemonicParsing="false" onAction="#refreshBtn" prefHeight="30.0" prefWidth="70.0" text="Refresh" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <TableView id="tableStatusReport1" fx:id="tableStatusReport1" layoutX="68.0" layoutY="445.0" prefHeight="85.0" prefWidth="958.0">
+        <columns>
+          <TableColumn id="columnTotalActive" fx:id="columnTotalActive" prefWidth="310.0" text="Total Subscribers that was Active this month" />
+          <TableColumn id="columnTotalFrozen" fx:id="columnTotalFrozen" prefWidth="325.0" text="Total Subscriber that was Frozen this month" />
+            <TableColumn id="columnFrozeNow" fx:id="columnFrozeNow" prefWidth="322.0" text="Total Subscribers that Froze this month" />
+        </columns>
+      </TableView>
+      <TableView id="tableStatusReport2" fx:id="tableStatusReport2" layoutX="68.0" layoutY="551.0" prefHeight="85.0" prefWidth="958.0">
+        <columns>
+            <TableColumn id="columnUnfrozedNow" fx:id="columnUnfrozedNow" prefWidth="310.0" text="Total Subscribers that unfroze this month" />
+            <TableColumn id="columnNewRegisters" fx:id="columnNewRegisters" prefWidth="327.0" text="Total new registered subscribers this month" />
+            <TableColumn id="columnTotalSubscribers" fx:id="columnTotalSubscribers" prefWidth="320.0" text="Total Subscribers this month" />
+        </columns>
+      </TableView>
+      <Label id="lblErrMsg" fx:id="lblErrMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="790.0" layoutY="61.0" prefHeight="78.0" prefWidth="254.0" textAlignment="CENTER" textFill="#b81212" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button id="btnSpecificSubscriber" fx:id="btnSpecificSubscriber" layoutX="451.0" layoutY="652.0" mnemonicParsing="false" onAction="#openReportForSpecificSubscriber" prefHeight="30.0" prefWidth="195.0" text="Specific Subscriber Report" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="5.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="967.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

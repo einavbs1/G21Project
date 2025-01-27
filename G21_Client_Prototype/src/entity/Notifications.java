@@ -2,10 +2,12 @@ package entity;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
 import client.ClientUI;
+import javafx.collections.FXCollections;
 
 public class Notifications {
 	
@@ -36,7 +38,7 @@ public class Notifications {
 		String newNotification = message + ", " + subscriberID + ", " + date + ", " + borrow_number;
 		/// addBookToDB
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("CreateNotification", newNotification);
+		requestHashMap.put("Notifications+CreateNotification", newNotification);
 		ClientUI.chat.accept(requestHashMap);		
 		// now load to this Book
 		String NewNotificationString = ChatClient.getStringfromServer();
@@ -68,7 +70,7 @@ public class Notifications {
 	private String[] getNotificationFromDB(int serial) throws NoSuchElementException {
 		String str = new String();
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetNotification", String.valueOf(serial));
+		requestHashMap.put("Notifications+GetNotification", String.valueOf(serial));
 		ClientUI.chat.accept(requestHashMap);
 		/// send request to DB to get the string.
 		str = ChatClient.getStringfromServer();
@@ -80,6 +82,43 @@ public class Notifications {
 					"We are not recognizing this notification: " + serial + ".");
 		}
 	}
+	
+	
+	 /**
+	    * Loads all notifications from the server and displays them in the table.
+	    * Sends request to server, receives notifications list and updates the table.
+	    */
+	   public static List<String> getAllNotificationsFromDB() {
+	       // Create request HashMap
+	       HashMap<String, String> showNotificationsMap = new HashMap<>();
+	       showNotificationsMap.put("Notifications+GetAllNotifications", "");
+	       
+	       // Send request to server
+	       ClientUI.chat.accept(showNotificationsMap);
+	       
+	       // Get response from server
+	       List<String> notificationsList = ChatClient.getListfromServer();
+	       
+	       return notificationsList;
+	   }
+	   
+	   
+	   public static List<String> getNewOldNotificationsFromDB(Date fromthisDate) {
+	       // Create request HashMap
+	       HashMap<String, String> showNotificationsMap = new HashMap<>();
+	       showNotificationsMap.put("Notifications+GetNewOldNotifications", String.valueOf(fromthisDate));
+	       
+	       // Send request to server
+	       ClientUI.chat.accept(showNotificationsMap);
+	       
+	       // Get response from server
+	       List<String> notificationsList = ChatClient.getListfromServer();
+	       
+	       return notificationsList;
+	   }
+	   
+	   
+	   
 	
 	
 	@Override

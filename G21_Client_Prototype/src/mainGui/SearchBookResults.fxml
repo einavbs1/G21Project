@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainControllers.SearchBookResultsController">
+   <children>
+      <Button id="btnExit" fx:id="btnExit" layoutX="1004.0" layoutY="653.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button id="btnBack" fx:id="btnBack" layoutX="49.0" layoutY="652.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" text="Back" textFill="#262d71">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <TableView id="tableViewAvailableBooks" fx:id="tableViewAvailableBooks" layoutX="64.0" layoutY="68.0" prefHeight="230.0" prefWidth="978.0">
+        <columns>
+          <TableColumn fx:id="columnBookBarcode1" prefWidth="111.4666748046875" text="book_barcode" />
+          <TableColumn fx:id="columnBookTitle1" prefWidth="98.93330383300781" text="book_title" />
+            <TableColumn fx:id="columnBookSubject1" prefWidth="114.66665649414062" text="book_subject" />
+            <TableColumn fx:id="columnBookDescription1" minWidth="0.0" prefWidth="387.73333740234375" text="book_description" />
+            <TableColumn fx:id="columnBookAvilableCopies1" minWidth="0.0" prefWidth="131.466552734375" text="book_availableCopies" />
+            <TableColumn fx:id="columnBookLocation1" prefWidth="135.7333984375" text="book_location" />
+        </columns>
+      </TableView>
+      <TableView id="tableViewUnavailableBooks" fx:id="tableViewUnavailableBooks" layoutX="60.0" layoutY="364.0" prefHeight="230.0" prefWidth="978.0">
+        <columns>
+            <TableColumn fx:id="columnBookBarcode2" prefWidth="113.60000991821289" text="book_barcode" />
+          <TableColumn fx:id="columnBookTitle2" prefWidth="102.39997863769531" text="book_title" />
+          <TableColumn fx:id="columnBookSubject2" prefWidth="112.80001831054688" text="book_subject" />
+            <TableColumn fx:id="columnBookDescription2" prefWidth="344.0000305175781" text="book_description" />
+            <TableColumn fx:id="columnBookCanOrder2" prefWidth="160.53338623046875" text="book_canOrder" />
+            <TableColumn fx:id="columnBookClosestReturnDate2" prefWidth="145.06671142578125" text="book_closestReturnDate" />
+        </columns>
+      </TableView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="18.0" prefHeight="30.0" prefWidth="1100.0" text="Available matches books" textAlignment="RIGHT" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="330.0" prefHeight="30.0" prefWidth="1103.0" text="Unavailable matches books" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="282.0" layoutY="303.0" prefHeight="17.0" prefWidth="545.0" text="You can find your book at the library with the location and borrow it with the librarian." />
+      <Label layoutX="182.0" layoutY="600.0" text="Books that matched your search description but not available to borrow. You can order the books if your book's column contains can order" />
+      <Label layoutX="368.0" layoutY="617.0" text="Don't forget to save the book's barcode to order the book you want." wrapText="true" />
+      <Button id="btnOrderBook" fx:id="btnOrderBook" layoutX="500.0" layoutY="649.0" mnemonicParsing="false" onAction="#OrderBook" prefHeight="40.0" prefWidth="100.0" text="Order Book" textFill="#478150" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="968.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -1,8 +1,10 @@
 package entity;
 
 import java.sql.Date;
+import java.time.chrono.ThaiBuddhistChronology;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import client.ChatClient;
@@ -12,6 +14,9 @@ import client.ClientUI;
  * Author: Matan
  */
 public class BorrowedRecord {
+	
+	public static int LOSTBOOK = 1;
+	public static int FOUNDBOOK = 0;
 
 	private int borrowNumber;
 	private int subscriberId;
@@ -21,9 +26,12 @@ public class BorrowedRecord {
 	private Date borrowDate;
 	private Date borrowExpectReturnDate;
 	private Date borrowActualReturnDate;
-	private int librarianId;
-	private String librarianName;
+	private Integer changedBylibrarianId;
+	private String changedBylibrarianName;
+	private Date lastChange;
 	private int borrowLostBook;
+	private int borrowStatus;
+	private int reminderSerial;
 
 
 	/**
@@ -52,8 +60,7 @@ public class BorrowedRecord {
 	 * @param librarianName
 	 * @param borrowLostBook
 	 */
-	public BorrowedRecord(int subscriberId, String bookBarcode, String bookTitle, int bookcopyNo, int librarianId,
-			String librarianName) {
+	public BorrowedRecord(int subscriberId, String bookBarcode, String bookTitle, int bookcopyNo, int reminderSerial) {
 		Date currentDate = new Date(System.currentTimeMillis());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
@@ -61,12 +68,11 @@ public class BorrowedRecord {
         Date newReturnDate = new Date(calendar.getTimeInMillis());
         
 		String newBorrow = subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "
-				+ currentDate + ", " + newReturnDate + ", null, " + librarianId + ", " + librarianName
-				+ ", 0";
+				+ currentDate + ", " + newReturnDate +  ", " + reminderSerial;
 
 		// change to DB format
 		HashMap<String, String> AddNewBorrowMap = new HashMap<>();
-		AddNewBorrowMap.put("AddNewBorrow", newBorrow);
+		AddNewBorrowMap.put("BorrowedRecord+AddNewBorrow", newBorrow);
 		ClientUI.chat.accept(AddNewBorrowMap);
 		
 		String ordernumString = ChatClient.getStringfromServer();
@@ -91,10 +97,13 @@ public class BorrowedRecord {
 		bookcopyNo = Integer.parseInt(str[4]);
 		borrowDate = Date.valueOf(str[5]);
 		borrowExpectReturnDate = Date.valueOf(str[6]);
-		borrowActualReturnDate = (str[7] == null || str[7].equals("")) ? null : Date.valueOf(str[7]);
-		librarianId = Integer.parseInt(str[8]);
-		librarianName = str[9];
-		borrowLostBook = Integer.parseInt(str[10]);
+		borrowActualReturnDate = ((str[7]).equals("null")) ? null : Date.valueOf(str[7]);
+		changedBylibrarianId = str[8].equals("0") ? null : Integer.parseInt(str[8]);
+		changedBylibrarianName = str[9];
+		lastChange = str[10].equals("null") ? null : Date.valueOf((str[10]));
+		borrowLostBook = Integer.parseInt(str[11]);
+		borrowStatus = Integer.parseInt(str[12]);
+		reminderSerial = Integer.parseInt(str[13]);
 	}
 
 	/**
@@ -107,12 +116,11 @@ public class BorrowedRecord {
 	private String[] getBorrowRecordFromDB(int borrowNumber) throws NoSuchElementException {
 		String borrowedRecord = new String();
 		HashMap<String, String> BorrowRecordHashMap = new HashMap<>();
-		BorrowRecordHashMap.put("GetBorrowRecord", String.valueOf(borrowNumber));
+		BorrowRecordHashMap.put("BorrowedRecord+GetBorrowRecord", String.valueOf(borrowNumber));
 
 		ClientUI.chat.accept(BorrowRecordHashMap); // send request to DB to get record
 
 		borrowedRecord = ChatClient.getStringfromServer();
-
 		if (borrowedRecord.contains(",")) {
 			String[] recordParts = borrowedRecord.split(", ");
 			return recordParts;
@@ -120,21 +128,46 @@ public class BorrowedRecord {
 			throw new NoSuchElementException("The borrowNumber: " + borrowNumber + " is not exists in the system.");
 		}
 	}
+	
+	
+	/** Author: Yuval.
+	 * @param id - subscriber's id to get his active borrows.
+	 */
+	public static List<String> getSubscriberActiveBorrowsFromDB(int subscriberId) throws NoSuchElementException {
+
+		
+		/// send request to DB to get the string
+		
+	    HashMap<String, String> request = new HashMap<>();
+	    request.put("BorrowedRecord+SubscriberActiveBorrows", String.valueOf(subscriberId));
+	    ClientUI.chat.accept(request);
+	    List<String> response = ChatClient.getListfromServer();
+	    
+		if(response.isEmpty()) {
+			throw new NoSuchElementException("There is no Active borrows for this id: " + subscriberId);
+		}
+		
+		return response;
+	}
 
 	
 	/**
 	 * Author: Matan.
 	 * Update new return time and send update request to DB.
 	 */
-	public void UpdateBorrowDetails() {
+	public boolean UpdateBorrowDetails() {
 		String updatedBorrowRecord = toString();
 
 		// Send the update record to the server
 		HashMap<String, String> updatedBorrowRecordMap = new HashMap<>();
-		updatedBorrowRecordMap.put("UpdateBorrowDetails", updatedBorrowRecord);
+		updatedBorrowRecordMap.put("BorrowedRecord+UpdateBorrowDetails", updatedBorrowRecord);
 
 		ClientUI.chat.accept(updatedBorrowRecordMap);
-
+		String str = ChatClient.getStringfromServer();
+		if(str.contains("Error")) {
+			return false;
+		}
+		return true;
 	}
 	
 	/** author: Einav
@@ -153,12 +186,20 @@ public class BorrowedRecord {
 		}
 	}
 	
-
+	
+	public static String getBookBorrowsInSpecificDate(String barcode,int month, int year) {
+		HashMap<String, String> requestMap = new HashMap<>();
+		requestMap.put("BorrowedRecord+GetBorrowsOfBookInSpecificDate", barcode+", "+month+", "+year);
+	    ClientUI.chat.accept(requestMap);
+	    return ChatClient.getStringfromServer();
+	}
+	
+	
 	@Override
 	public String toString() {
 		return borrowNumber + ", " + subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "
-				+ borrowDate + ", " + borrowExpectReturnDate + ", " + borrowActualReturnDate + ", " + librarianId + ", "
-				+ librarianName + ", " + borrowLostBook;
+				+ borrowDate + ", " + borrowExpectReturnDate + ", " + borrowActualReturnDate + ", " + changedBylibrarianId + ", "
+				+ changedBylibrarianName + ", " + lastChange + ", " + borrowLostBook + ", " + borrowStatus + ", " + reminderSerial;
 	}
 
 	///////////////////////
@@ -197,18 +238,29 @@ public class BorrowedRecord {
 		return borrowExpectReturnDate;
 	}
 
-	public int getLibrarianId() {
-		return librarianId;
+	public Integer getChangedBylibrarianId() {
+		return changedBylibrarianId;
 	}
 
-	public String getLibrarianName() {
-		return librarianName;
+	public String getChangedBylibrarianName() {
+		return changedBylibrarianName;
+	}
+
+	public Date getLastChange() {
+		return lastChange;
 	}
 
 	public int getBorrowLostBook() {
 		return borrowLostBook;
 	}
 
+	public int getBorrowStatus() {
+		return borrowStatus;
+	}
+	
+	public int getReminderSerial() {
+		return reminderSerial;
+	}
 
 	/////////////////////////////////////////////////
 	/// Setters
@@ -228,6 +280,31 @@ public class BorrowedRecord {
 	public void setBorrowExpectReturnDate(Date borrowExpectReturnDate) {
 		this.borrowExpectReturnDate = borrowExpectReturnDate;
 	}
+	
+	public void setBorrowStatus(int borrowStatus) {
+		this.borrowStatus = borrowStatus;
+	}
+	
+	public void setChangedBylibrarianId(Integer changedBylibrarianId) {
+		this.changedBylibrarianId = changedBylibrarianId;
+	}
+
+	public void setChangedBylibrarianName(String changedBylibrarianName) {
+		this.changedBylibrarianName = changedBylibrarianName;
+	}
+
+	public void setLastChange(Date lastChange) {
+		this.lastChange = lastChange;
+	}
+	
+	public void setBorrowLostBook(int borrowLostBook) {
+		this.borrowLostBook = borrowLostBook;
+	}
+	
+	public void setReminderSerial(int reminderSerial) {
+		this.reminderSerial = reminderSerial;
+	}
+	
 
 
 }
