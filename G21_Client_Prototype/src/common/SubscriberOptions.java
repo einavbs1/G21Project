@@ -7,7 +7,7 @@ public enum SubscriberOptions {
 	SearchBooks("Search Books"),
 	OrderBook("Order Book"),
 	ShowMyOrders("Show My Orders"),
-	ViewReminders("Show My Reminders");
+	ViewReminders("View Reminders");
 	
     private final String displayName;
 

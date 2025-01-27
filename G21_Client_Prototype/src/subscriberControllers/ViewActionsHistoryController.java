@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import entity.*;
+import client.ChatClient;
 import client.ClientUI;
 import entity.LogActivity;
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import mainControllers.ConnectionSetupController;
 
 /**
  * This class handles the GUI for showing subscriber activity log.
@@ -30,8 +32,6 @@ public class ViewActionsHistoryController {
     
     @FXML
     private TableColumn<String, String> activitySerialColumn;
-    @FXML
-    private TableColumn<String, String> subscriberIdColumn;
     @FXML
     private TableColumn<String, String> activityActionColumn;
     @FXML
@@ -49,7 +49,7 @@ public class ViewActionsHistoryController {
     private Button btnExit;
     
     private static List<String> subscriberActivities = new ArrayList<>();
-    private int subscriberId;
+    private Subscriber currSubscriber;
 
     /**
      * Initialize method to set up the table columns
@@ -57,6 +57,8 @@ public class ViewActionsHistoryController {
     @FXML
     public void initialize() {
         setupTableColumns();
+        currSubscriber = ChatClient.getCurrectSubscriber();
+        loadSubscriberActivities();
     }
 
     /**
@@ -67,14 +69,26 @@ public class ViewActionsHistoryController {
             String[] parts = cellData.getValue().split(", ");
             return new javafx.beans.property.SimpleStringProperty(parts[0]);
         });
-        subscriberIdColumn.setCellValueFactory(cellData -> {
-            String[] parts = cellData.getValue().split(", ");
-            return new javafx.beans.property.SimpleStringProperty(parts[1]);
-        });
         activityActionColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
             return new javafx.beans.property.SimpleStringProperty(parts[2]);
         });
+        activityActionColumn.setCellFactory(column -> new javafx.scene.control.TableCell<>() {
+			@Override
+			protected void updateItem(String item, boolean empty) {
+				super.updateItem(item, empty);
+				if (item == null || empty) {
+					setText(null);
+					setStyle("");
+				} else {
+					setText(item);
+					
+					if (item.toString().toLowerCase().contains("lost") || item.toString().toLowerCase().contains("late") ) {
+						setTextFill(javafx.scene.paint.Color.RED);
+					}
+				}
+			}
+		});
         bookBarcodeColumn.setCellValueFactory(cellData -> {
             String[] parts = cellData.getValue().split(", ");
             return new javafx.beans.property.SimpleStringProperty(parts[3]);
@@ -94,19 +108,10 @@ public class ViewActionsHistoryController {
     }
 
     /**
-     * Sets the subscriber ID and loads their activities automatically
-     * @param subscriberId The ID of the subscriber to show activities for
-     */
-    public void setSubscriber(int subscriberId) {
-        this.subscriberId = subscriberId;
-        loadSubscriberActivities();
-    }
-
-    /**
      * Loads and displays activities for the current subscriber
      */
     private void loadSubscriberActivities() {
-        subscriberActivities = LogActivity.loadActivitiesBySubscriberId(subscriberId);
+        subscriberActivities = LogActivity.loadActivitiesBySubscriberId(currSubscriber.getId());
         activityLogTable.setItems(FXCollections.observableArrayList(subscriberActivities));
     }
 
@@ -139,10 +144,7 @@ public class ViewActionsHistoryController {
      */
     @FXML
     public void getExitBtn(ActionEvent event) throws Exception {
-        System.out.println("Disconnecting from the Server and ending the program.");
-        HashMap<String, String> EndingConnections = new HashMap<String, String>();
-        EndingConnections.put("Disconnect", "");
-        ClientUI.chat.accept(EndingConnections);
-        System.exit(0);
-    }
+		ConnectionSetupController.stopConnectionToServer();
+		System.exit(0);
+	}
 }

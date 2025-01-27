@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mainControllers.ConnectionSetupController;
 import entity.*;
 
 /**
@@ -175,10 +176,7 @@ public class UpdateMyDataController {
 	 * the server.
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Disconnecting from the Server and ending the program.");
-		HashMap<String, String> EndingConnections = new HashMap<String, String>();
-		EndingConnections.put("Disconnect", "");
-		ClientUI.chat.accept(EndingConnections);
+		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}
 }

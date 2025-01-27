@@ -11,6 +11,9 @@ import client.ClientUI;
 
 public class Subscriber {
 
+	public static String ACTIVE = "Active";
+	public static String FROZEN = "Frozen";
+
 	private static int id;
 	private String name;
 	private String phoneNumber;
@@ -43,11 +46,11 @@ public class Subscriber {
 	 * @throws Exception
 	 */
 	public Subscriber(int id, String name, String phoneNumber, String email, String password) throws Exception {
-		String newsub = id + ", " + name + ", " + phoneNumber + ", " + email + ", " + password + ", Active";
+		String newsub = id + ", " + name + ", " + phoneNumber + ", " + email + ", " + password + ", " + ACTIVE;
 
 		/// addSubscriberToDB
 		HashMap<String, String> addSubscriberMap = new HashMap<>();
-		addSubscriberMap.put("AddNewSubscriber", newsub);
+		addSubscriberMap.put("Subscriber+AddNewSubscriber", newsub);
 		ClientUI.chat.accept(addSubscriberMap);
 		String res = ChatClient.getStringfromServer();
 		if (res.equals("Error")) {
@@ -74,29 +77,32 @@ public class Subscriber {
 		registeredDate = Date.valueOf(str[6]);
 		frozenUntil = (str[7].equals("null")) ? null : Date.valueOf(str[7]);
 		lastCheckedReminders = (str[8].equals("null")) ? null : Date.valueOf(str[8]);
-		
-		if(needToChangeFrozenStatus(str[7])) {
+
+		if (needToChangeFrozenStatus(str[7])) {
+			SubscribersStatusReport reportToUpdate = new SubscribersStatusReport(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+			reportToUpdate.addUnfrozed();
+			reportToUpdate.UpdateDetails();
 			frozenUntil = null;
 			status = "Active";
 			UpdateDetails();
 		}
-		
+
 	}
-	
+
 	private boolean needToChangeFrozenStatus(String date) {
-		if(date.equals("null")) {
+		if (date == null || date.equals("null")) {
 			return false;
 		}
 		LocalDate inputDate = LocalDate.parse(date);
 		LocalDate today = LocalDate.now();
 
 		if (inputDate.isBefore(today)) {
-			
+
 			return true;
 		}
-		
+
 		return false;
-		
+
 	}
 
 	/**
@@ -110,7 +116,7 @@ public class Subscriber {
 		/// send request to DB to get the string
 
 		HashMap<String, String> request = new HashMap<>();
-		request.put("GetSubscriberDetails", String.valueOf(id));
+		request.put("Subscriber+GetSubscriberDetails", String.valueOf(id));
 		ClientUI.chat.accept(request);
 		response = ChatClient.getStringfromServer();
 		if (response.contains(",")) {
@@ -130,7 +136,7 @@ public class Subscriber {
 		/// Send the update request to the server
 
 		HashMap<String, String> updateMap = new HashMap<>();
-		updateMap.put("UpdateSubscriber", newDetails);
+		updateMap.put("Subscriber+UpdateSubscriber", newDetails);
 
 		ClientUI.chat.accept(updateMap);
 		String str = ChatClient.getStringfromServer();
@@ -148,7 +154,7 @@ public class Subscriber {
 
 	public static List<String> showAllSubscribers() {
 		HashMap<String, String> requestMap = new HashMap<>();
-		requestMap.put("ShowAllSubscribers", "");
+		requestMap.put("Subscriber+ShowAllSubscribers", "");
 
 		ClientUI.chat.accept(requestMap);
 		List<String> res = ChatClient.getListfromServer();
@@ -157,17 +163,38 @@ public class Subscriber {
 
 	}
 
-	/**
-	 * Author: Amir 19.1.2025 Static method to get monthly subscriber statistics
-	 * Used for generating monthly subscriber status reports. Returns current
-	 * subscriber status including.
-	 * 
-	 * @return List of subscribers with their monthly status details
-	 */
-	public static List<String> getMonthlySubscriberStats() {
-		HashMap<String, String> monthlyStatsMap = new HashMap<>();
-		monthlyStatsMap.put("GetMonthlySubscriberStats", "");
-		ClientUI.chat.accept(monthlyStatsMap);
+	public static List<String> getIDsAndNames() {
+		HashMap<String, String> requestMap = new HashMap<>();
+		requestMap.put("Subscriber+GetSubscribersIDsAndNames", "");
+		ClientUI.chat.accept(requestMap);
+		return ChatClient.getListfromServer();
+	}
+
+	public static String addingNewRecordOfFrozen(int SubscriberID, Date start, Date end) {
+		HashMap<String, String> requestMap = new HashMap<>();
+		requestMap.put("Subscriber+AddingNewRecordOfFrozen", SubscriberID + ", " + start + ", " + end);
+		ClientUI.chat.accept(requestMap);
+		return ChatClient.getStringfromServer();
+	}
+	
+	public static String getSpecificFrozenRecord(int SubscriberID, Date end) {
+		HashMap<String, String> requestMap = new HashMap<>();
+		requestMap.put("Subscriber+GetSpecificFrozenRecord", SubscriberID + ", " + end);
+		ClientUI.chat.accept(requestMap);
+		return ChatClient.getStringfromServer();
+	}
+	
+	public static String updateRecordOfFrozen(int serial, Date start, Date end) {
+		HashMap<String, String> requestMap = new HashMap<>();
+		requestMap.put("Subscriber+UpdateRecordOfFrozen", serial + ", " + start + ", " + end);
+		ClientUI.chat.accept(requestMap);
+		return ChatClient.getStringfromServer();
+	}
+
+	public static List<String> GetFrozenReportForSubscriber(int SubscriberID, int month1, int year1) {
+		HashMap<String, String> requestMap = new HashMap<>();
+		requestMap.put("Subscriber+GetFrozenReportForSubscriber", SubscriberID + ", " + month1 + ", " + year1);
+		ClientUI.chat.accept(requestMap);
 		return ChatClient.getListfromServer();
 	}
 
@@ -205,7 +232,7 @@ public class Subscriber {
 	public String getStatus() {
 		return status;
 	}
-	
+
 	public Date getRegisteredDate() {
 		return registeredDate;
 	}

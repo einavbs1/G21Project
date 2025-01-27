@@ -74,7 +74,7 @@ public class queriesForActivityLogs {
 					int serialid = rs.getInt("activity_serial");
 					int id = rs.getInt("subscriber_id");
 					String activityaction = rs.getString("activity_action");
-					int bookbarcode = rs.getInt("book_barcode");
+					String bookbarcode = rs.getString("book_barcode");
 					String booktitle = rs.getString("book_title");
 					String copynumber = rs.getString("bookcopy_copyNo");
 					Date date = rs.getDate("activity_date");
@@ -97,7 +97,7 @@ public class queriesForActivityLogs {
 			int bookcopyCopyNo, Date activityDate) {
 		PreparedStatement stmt;
 		try {
-			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO activitylog VALUES (?, ?, ?, ?, ?, ?)",
+			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO activitylog (subscriber_id, activity_action, book_barcode, book_title, bookcopy_copyNo, activity_date) VALUES (?, ?, ?, ?, ?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
 			stmt.setInt(1, subscriberId);

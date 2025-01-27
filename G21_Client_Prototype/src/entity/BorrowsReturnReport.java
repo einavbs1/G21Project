@@ -57,7 +57,7 @@ public class BorrowsReturnReport {
 	private String[] getReportFromDB(int month, int year) throws NoSuchElementException {
 		String str = new String();
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetBorrowsReport", String.valueOf(month) + ", " + String.valueOf(year));
+		requestHashMap.put("BorrowedRecord+GetBorrowsReport", String.valueOf(month) + ", " + String.valueOf(year));
 		ClientUI.chat.accept(requestHashMap);
 		/// send request to DB to get the string.
 		str = ChatClient.getStringfromServer();

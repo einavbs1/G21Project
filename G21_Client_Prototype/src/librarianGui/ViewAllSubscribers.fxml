@@ -7,24 +7,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="578.0" prefWidth="1068.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.ViewAllSubscribersController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.ViewAllSubscribersController">
    <children>
-      <Button id="btnExit" fx:id="btnExit" layoutX="981.0" layoutY="512.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
-      <Button id="btnBack" fx:id="btnBack" layoutX="56.0" layoutY="512.0" mnemonicParsing="false" onAction="#Back" text="Back" />
-      <TableView id="SubscribersTable" fx:id="subscriberTable" layoutX="24.0" layoutY="74.0" prefHeight="358.0" prefWidth="1020.0">
+      <Button id="btnExit" fx:id="btnExit" layoutX="1006.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button id="btnBack" fx:id="btnBack" layoutX="47.0" layoutY="654.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" text="Back" textFill="#262d71">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <TableView id="SubscribersTable" fx:id="subscriberTable" layoutX="40.0" layoutY="89.0" prefHeight="525.0" prefWidth="1020.0">
         <columns>
-          <TableColumn fx:id="idColumn" prefWidth="97.0" text="subscriber_id" />
-          <TableColumn fx:id="nameColumn" prefWidth="134.0" text="subscriber_name" />
-            <TableColumn fx:id="phoneColumn" minWidth="0.0" prefWidth="170.0" text="subscriber_phone_number" />
-            <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="178.0" text="subscriber_email" />
-            <TableColumn fx:id="passwordColumn" prefWidth="186.0" text="subscriber_password" />
-            <TableColumn fx:id="statusColumn" prefWidth="100.0" text="status" />
-            <TableColumn fx:id="FrozenUntilColumn" prefWidth="154.0" text="Frozen Until" />
+          <TableColumn fx:id="idColumn" prefWidth="130.13329696655273" text="subscriber_id" />
+          <TableColumn fx:id="nameColumn" prefWidth="149.86660766601562" text="subscriber_name" />
+            <TableColumn fx:id="phoneColumn" minWidth="0.0" prefWidth="168.26666259765625" text="subscriber_phone_number" />
+            <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="217.33334350585938" text="subscriber_email" />
+            <TableColumn fx:id="passwordColumn" prefWidth="145.59991455078125" text="subscriber_password" />
+            <TableColumn fx:id="statusColumn" prefWidth="98.1334228515625" text="status" />
+            <TableColumn fx:id="FrozenUntilColumn" prefWidth="123.9998779296875" text="Frozen Until" />
         </columns>
       </TableView>
-      <Label fx:id="lblTitle" layoutX="428.0" layoutY="24.0" text="Subscriber Table View">
+      <Label fx:id="lblTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="16.0" prefHeight="32.0" prefWidth="1062.0" text="Subscriber Table View" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
          <font>
-            <Font size="22.0" />
+            <Font name="System Bold" size="30.0" />
          </font>
       </Label>
    </children>

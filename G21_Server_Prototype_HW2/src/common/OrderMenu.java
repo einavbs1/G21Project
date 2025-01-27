@@ -3,10 +3,11 @@ package common;
 public enum OrderMenu {
 
 	///////-----Author: Chen.-----///////
-    ShowAllOrders("Show All Orders"),
     CreateNewOrder("Create New Order"),
     LoadOrder("Load Order"),
-    UpdateOrderDetails("Update Order Details");
+    UpdateOrderDetails("Update Order Details"),
+	GetAllActiveOrdersofaBook("Get All Active Orders for a Book"),
+    ShowSubscriberActiveOrders("Show Subscriber Active Orders");
 
 	private final String displayName;
 

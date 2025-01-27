@@ -42,7 +42,7 @@ public class BookCopy extends Book {
 		String newBookCopy = barcode + ", " + newCopyNo + ", 1, 0, null, null";
 		/// addBookCopyToDB
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("CreateBookCopy", newBookCopy);
+		requestHashMap.put("BookCopy+CreateBookCopy", newBookCopy);
 		ClientUI.chat.accept(requestHashMap);
 		// after adding The bookCopy adding +1 to the book counter.
 		Book mybook = new Book(barcode);
@@ -79,7 +79,7 @@ public class BookCopy extends Book {
 	private String[] getBookCopyFromDB(String barcode, int copyNo) throws NoSuchElementException {
 		String str = new String();
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetBookCopy", barcode + ", " + String.valueOf(copyNo));
+		requestHashMap.put("BookCopy+GetBookCopy", barcode + ", " + String.valueOf(copyNo));
 		ClientUI.chat.accept(requestHashMap);
 		/// send request to DB to get the string.
 		str = ChatClient.getStringfromServer();
@@ -99,7 +99,7 @@ public class BookCopy extends Book {
 		String newDetails = toString();
 		// send request to DB to save all this data.
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("UpdateBookCopyDetails", newDetails);
+		requestHashMap.put("BookCopy+UpdateBookCopyDetails", newDetails);
 		ClientUI.chat.accept(requestHashMap);
 		String str = ChatClient.getStringfromServer();
 		if(str.toLowerCase().equals("error")) {

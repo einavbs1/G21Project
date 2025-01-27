@@ -40,7 +40,7 @@ public class ViewNotificationsController {
 	private Button btnBack = null;
 	
 	@FXML
-	private Label lblLastCheckedIn;
+	private Label lblLastCheckedDate;
 
 	@FXML
 	private TableView<String> newNotificationsTable;
@@ -73,7 +73,7 @@ public class ViewNotificationsController {
 	 * automatically called after the FXML file has been loaded.
 	 */
 	public void initialize() {
-		lblLastCheckedIn.setText("Last date checked Notifications: " + ChatClient.getCurrectLibrarian().getLibrarian_lastCheckedNotifications());
+		lblLastCheckedDate.setText("Last date checked Notifications: " + ChatClient.getCurrectLibrarian().getLibrarian_lastCheckedNotifications());
 		initNewTable();
 		initOldTable();
 		loadNotifications();

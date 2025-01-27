@@ -8,10 +8,10 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.BorrowBookController">
    <children>
-      <TextField id="txtSubscriberId" fx:id="txtSubscriberId" layoutX="599.2" layoutY="113.0" prefHeight="40.0" prefWidth="211.0" AnchorPane.rightAnchor="289.5999999999999" />
-      <Label id="lblsubscriberId" fx:id="lblsubscriberId" layoutX="347.2" layoutY="119.0" prefHeight="27.0" prefWidth="123.0" text="Subscriber ID :" AnchorPane.leftAnchor="347.0">
+      <TextField id="txtSubscriberId" fx:id="txtSubscriberId" layoutX="584.5999999999999" layoutY="113.0" prefHeight="40.0" prefWidth="211.0" AnchorPane.rightAnchor="304.20000000000005" />
+      <Label id="lblsubscriberId" fx:id="lblsubscriberId" layoutX="332.6" layoutY="119.0" prefHeight="27.0" prefWidth="123.0" text="Subscriber ID :" AnchorPane.leftAnchor="332.6">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font></Label>
       <Button id="btnLoadSubscriber" fx:id="btnLoadSubscriber" alignment="CENTER" layoutX="446.4" layoutY="166.0" mnemonicParsing="false" onAction="#loadSubscriberBtn" prefHeight="40.0" prefWidth="200.0" text="Display Subscriber Details" textFill="#478150" AnchorPane.leftAnchor="446.4" AnchorPane.rightAnchor="454.4">
          <font>
@@ -25,11 +25,11 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Button id="btnBack" fx:id="btnBack" layoutX="45.0" layoutY="657.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" text="Back" textFill="#262d71" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="1005.0" AnchorPane.topAnchor="657.0">
+      <Button id="btnBack" fx:id="btnBack" layoutX="44.8" layoutY="655.8" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" text="Back" textFill="#262d71" AnchorPane.bottomAnchor="15.399999999999977" AnchorPane.leftAnchor="44.8" AnchorPane.rightAnchor="1004.8" AnchorPane.topAnchor="655.8">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Button id="btnExit" fx:id="btnExit" layoutX="1003.2" layoutY="656.8" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textAlignment="CENTER" textFill="#b81212" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="1003.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="657.0">
+      <Button id="btnExit" fx:id="btnExit" layoutX="1003.2" layoutY="655.8" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textAlignment="CENTER" textFill="#b81212" AnchorPane.bottomAnchor="13.799999999999955" AnchorPane.leftAnchor="1003.2" AnchorPane.rightAnchor="47.200000000000045" AnchorPane.topAnchor="655.8">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
@@ -38,18 +38,18 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="btnLoadBook" layoutX="454.4" layoutY="458.0" mnemonicParsing="false" onAction="#loadCopyofBookBtn" prefHeight="40.0" prefWidth="200.0" text="Display Book Details" textFill="#478150" AnchorPane.leftAnchor="454.4" AnchorPane.rightAnchor="447.20000000000005">
+      <Button fx:id="btnLoadBook" layoutX="454.4" layoutY="455.0" mnemonicParsing="false" onAction="#loadCopyofBookBtn" prefHeight="40.0" prefWidth="200.0" text="Display Book Details" textFill="#478150" AnchorPane.leftAnchor="454.4" AnchorPane.rightAnchor="447.20000000000005">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <TextField id="txtbookBarcode" fx:id="txtbookBarcode" layoutX="599.2" layoutY="406.0" prefHeight="40.0" prefWidth="211.0" AnchorPane.rightAnchor="289.5999999999999" />
-      <Label id="lblbookInstruction" fx:id="lblbookInstruction" alignment="CENTER" contentDisplay="CENTER" layoutX="15.2" layoutY="362.0" prefHeight="17.0" prefWidth="288.0" text="Please Enter the book details" textAlignment="CENTER" AnchorPane.leftAnchor="15.2" AnchorPane.rightAnchor="15.200000000000045">
+      <TextField id="txtbookBarcode" fx:id="txtbookBarcode" layoutX="579.0" layoutY="400.0" prefHeight="40.0" prefWidth="211.0" AnchorPane.rightAnchor="309.79999999999995" />
+      <Label id="lblbookInstruction" fx:id="lblbookInstruction" alignment="CENTER" contentDisplay="CENTER" layoutX="15.2" layoutY="356.0" prefHeight="17.0" prefWidth="288.0" text="Please Enter the book details" textAlignment="CENTER" AnchorPane.leftAnchor="15.2" AnchorPane.rightAnchor="15.200000000000045">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label id="lblbookDetails" fx:id="lblbookDetails" layoutX="358.4" layoutY="405.0" prefHeight="27.0" prefWidth="123.0" text="Book barcode :" AnchorPane.leftAnchor="358.0">
+      <Label id="lblbookDetails" fx:id="lblbookDetails" layoutX="338.2" layoutY="399.0" prefHeight="27.0" prefWidth="123.0" text="Book barcode :" AnchorPane.leftAnchor="338.2">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font></Label>
       <Label id="lblbookDetailsmsg" fx:id="lblbookDetailsmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="15.2" layoutY="501.0" prefHeight="48.0" prefWidth="274.0" textAlignment="CENTER" textFill="#b81212" wrapText="true" AnchorPane.leftAnchor="15.2" AnchorPane.rightAnchor="15.200000000000045">
          <font>

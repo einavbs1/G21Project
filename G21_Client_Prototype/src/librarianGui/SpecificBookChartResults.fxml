@@ -11,10 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SpecificBookChartResultsController">
     <children>
-         <Button fx:id="btnExit" layoutX="1000.0" layoutY="655.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Exit" textFill="#b81212">
+         <Button fx:id="btnExit" layoutX="1001.0" layoutY="655.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Exit" textFill="#b81212">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
@@ -32,7 +31,7 @@
                  <NumberAxis fx:id="yAxis" side="LEFT" />
              </yAxis>
          </BarChart>
-         <Button fx:id="btnBack" layoutX="50.0" layoutY="655.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Back" textFill="#262d71">
+         <Button fx:id="btnBack" layoutX="46.0" layoutY="655.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Back" textFill="#262d71">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
@@ -42,7 +41,7 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <TableView id="tableSpecificBookBorrowsReport1" fx:id="tableSpecificBookBorrowsReport1" layoutX="71.0" layoutY="511.0" prefHeight="65.0" prefWidth="958.0">
+      <TableView id="tableSpecificBookBorrowsReport1" fx:id="tableSpecificBookBorrowsReport1" layoutX="76.0" layoutY="511.0" prefHeight="90.0" prefWidth="953.0">
         <columns>
           <TableColumn id="columnTotalBorrows" fx:id="columnTotalBorrows" prefWidth="162.0" text="Total Borrows this month" />
           <TableColumn id="columnReturnedInTime" fx:id="columnReturnedInTime" prefWidth="181.0" text="Borrows that returned in time" />

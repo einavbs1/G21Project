@@ -6,22 +6,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="267.0" prefWidth="319.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.LibrarianMenuController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.LibrarianMenuController">
    <children>
-      <Button id="btnExit" fx:id="btnExit" layoutX="28.0" layoutY="208.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
-      <Label id="lblinstructions" fx:id="lblinstructions" layoutX="66.0" layoutY="94.0" text="Select the action that you want to do:" />
-      <Button id="btnSelect" fx:id="btnSelect" layoutX="252.0" layoutY="208.0" mnemonicParsing="false" onAction="#Select" text="Select" />
-      <ComboBox id="comboBoxLibrarianOptions" fx:id="comboBoxLibrarianOptions" layoutX="51.0" layoutY="121.0" prefHeight="26.0" prefWidth="229.0" />
-      <Label id="lblConnected" fx:id="lblConnected" layoutX="91.0" layoutY="57.0" text="Connected to the Server" textAlignment="CENTER" textFill="#109c48" underline="true">
+      <Button id="btnExit" fx:id="btnExit" layoutX="1003.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label id="lblinstructions" fx:id="lblinstructions" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="226.0" prefHeight="18.0" prefWidth="1071.0" text="Please choose the action you wish to perform" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Button id="btnSelect" fx:id="btnSelect" layoutX="515.0" layoutY="393.0" mnemonicParsing="false" onAction="#Select" prefHeight="40.0" prefWidth="70.0" text="Select" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <ComboBox id="comboBoxLibrarianOptions" fx:id="comboBoxLibrarianOptions" layoutX="426.0" layoutY="293.0" prefHeight="40.0" prefWidth="250.0" />
+      <Label id="lblHello" fx:id="lblHello" alignment="CENTER" layoutX="18.0" layoutY="151.0" prefHeight="35.0" prefWidth="1065.0" text="Hello Dear ______ ">
+         <font>
+            <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label id="lblHello" fx:id="lblHello" alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="28.0" prefWidth="297.0" text="Hello ______ !">
+      <Button id="btnLogOut" fx:id="btnLogOut" layoutX="51.0" layoutY="655.0" mnemonicParsing="false" onAction="#LogOutBtn" prefHeight="30.0" prefWidth="80.0" text="Log Out" textFill="#b81212">
          <font>
-            <Font name="System Bold" size="19.0" />
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="15.0" prefHeight="41.0" prefWidth="1068.0" text="Librarian Menu" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Button id="btnLogOut" fx:id="btnLogOut" layoutX="132.0" layoutY="221.0" mnemonicParsing="false" onAction="#LogOutBtn" text="LogOut" />
    </children>
 </AnchorPane>

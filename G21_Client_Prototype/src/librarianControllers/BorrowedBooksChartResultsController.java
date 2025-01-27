@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import mainControllers.ConnectionSetupController;
 import client.ClientUI;
 import common.Month;
 
@@ -230,10 +231,7 @@ public class BorrowedBooksChartResultsController {
 
     @FXML
     public void getExitBtn(ActionEvent event) throws Exception {
-        System.out.println("Disconnecting from the Server and ending the program.");
-        HashMap<String, String> EndingConnections = new HashMap<>();
-        EndingConnections.put("Disconnect", "");
-        ClientUI.chat.accept(EndingConnections);
-        System.exit(0);
-    }
+		ConnectionSetupController.stopConnectionToServer();
+		System.exit(0);
+	}
 }

@@ -14,6 +14,9 @@ import client.ClientUI;
  * Author: Matan
  */
 public class BorrowedRecord {
+	
+	public static int LOSTBOOK = 1;
+	public static int FOUNDBOOK = 0;
 
 	private int borrowNumber;
 	private int subscriberId;
@@ -28,6 +31,7 @@ public class BorrowedRecord {
 	private Date lastChange;
 	private int borrowLostBook;
 	private int borrowStatus;
+	private int reminderSerial;
 
 
 	/**
@@ -56,7 +60,7 @@ public class BorrowedRecord {
 	 * @param librarianName
 	 * @param borrowLostBook
 	 */
-	public BorrowedRecord(int subscriberId, String bookBarcode, String bookTitle, int bookcopyNo) {
+	public BorrowedRecord(int subscriberId, String bookBarcode, String bookTitle, int bookcopyNo, int reminderSerial) {
 		Date currentDate = new Date(System.currentTimeMillis());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
@@ -64,11 +68,11 @@ public class BorrowedRecord {
         Date newReturnDate = new Date(calendar.getTimeInMillis());
         
 		String newBorrow = subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "
-				+ currentDate + ", " + newReturnDate;
+				+ currentDate + ", " + newReturnDate +  ", " + reminderSerial;
 
 		// change to DB format
 		HashMap<String, String> AddNewBorrowMap = new HashMap<>();
-		AddNewBorrowMap.put("AddNewBorrow", newBorrow);
+		AddNewBorrowMap.put("BorrowedRecord+AddNewBorrow", newBorrow);
 		ClientUI.chat.accept(AddNewBorrowMap);
 		
 		String ordernumString = ChatClient.getStringfromServer();
@@ -99,6 +103,7 @@ public class BorrowedRecord {
 		lastChange = str[10].equals("null") ? null : Date.valueOf((str[10]));
 		borrowLostBook = Integer.parseInt(str[11]);
 		borrowStatus = Integer.parseInt(str[12]);
+		reminderSerial = Integer.parseInt(str[13]);
 	}
 
 	/**
@@ -111,7 +116,7 @@ public class BorrowedRecord {
 	private String[] getBorrowRecordFromDB(int borrowNumber) throws NoSuchElementException {
 		String borrowedRecord = new String();
 		HashMap<String, String> BorrowRecordHashMap = new HashMap<>();
-		BorrowRecordHashMap.put("GetBorrowRecord", String.valueOf(borrowNumber));
+		BorrowRecordHashMap.put("BorrowedRecord+GetBorrowRecord", String.valueOf(borrowNumber));
 
 		ClientUI.chat.accept(BorrowRecordHashMap); // send request to DB to get record
 
@@ -134,7 +139,7 @@ public class BorrowedRecord {
 		/// send request to DB to get the string
 		
 	    HashMap<String, String> request = new HashMap<>();
-	    request.put("SubscriberActiveBorrows", String.valueOf(subscriberId));
+	    request.put("BorrowedRecord+SubscriberActiveBorrows", String.valueOf(subscriberId));
 	    ClientUI.chat.accept(request);
 	    List<String> response = ChatClient.getListfromServer();
 	    
@@ -155,7 +160,7 @@ public class BorrowedRecord {
 
 		// Send the update record to the server
 		HashMap<String, String> updatedBorrowRecordMap = new HashMap<>();
-		updatedBorrowRecordMap.put("UpdateBorrowDetails", updatedBorrowRecord);
+		updatedBorrowRecordMap.put("BorrowedRecord+UpdateBorrowDetails", updatedBorrowRecord);
 
 		ClientUI.chat.accept(updatedBorrowRecordMap);
 		String str = ChatClient.getStringfromServer();
@@ -182,21 +187,9 @@ public class BorrowedRecord {
 	}
 	
 	
-	/**Author: Amir 18.1.2025 monthlyStatsMap
-	 * Static method to get monthly borrowed books statistics
-	 * Used for generating monthly reports
-	 * @return List of borrowed books with loan duration details for the current month
-	 */	
-	public static List<String> getMonthlyBorrowedBooksStats() {
-	    HashMap<String, String> monthlyStatsMap = new HashMap<>();
-	    monthlyStatsMap.put("GetMonthlyBorrowedStats", "");
-	    ClientUI.chat.accept(monthlyStatsMap);
-	    return ChatClient.getListfromServer();
-	}
-	
 	public static String getBookBorrowsInSpecificDate(String barcode,int month, int year) {
 		HashMap<String, String> requestMap = new HashMap<>();
-		requestMap.put("GetBorrowsOfBookInSpecificDate", barcode+", "+month+", "+year);
+		requestMap.put("BorrowedRecord+GetBorrowsOfBookInSpecificDate", barcode+", "+month+", "+year);
 	    ClientUI.chat.accept(requestMap);
 	    return ChatClient.getStringfromServer();
 	}
@@ -206,7 +199,7 @@ public class BorrowedRecord {
 	public String toString() {
 		return borrowNumber + ", " + subscriberId + ", " + bookBarcode + ", " + bookTitle + ", " + bookcopyNo + ", "
 				+ borrowDate + ", " + borrowExpectReturnDate + ", " + borrowActualReturnDate + ", " + changedBylibrarianId + ", "
-				+ changedBylibrarianName + ", " + lastChange + ", " + borrowLostBook + ", " + borrowStatus;
+				+ changedBylibrarianName + ", " + lastChange + ", " + borrowLostBook + ", " + borrowStatus + ", " + reminderSerial;
 	}
 
 	///////////////////////
@@ -264,6 +257,10 @@ public class BorrowedRecord {
 	public int getBorrowStatus() {
 		return borrowStatus;
 	}
+	
+	public int getReminderSerial() {
+		return reminderSerial;
+	}
 
 	/////////////////////////////////////////////////
 	/// Setters
@@ -302,6 +299,10 @@ public class BorrowedRecord {
 	
 	public void setBorrowLostBook(int borrowLostBook) {
 		this.borrowLostBook = borrowLostBook;
+	}
+	
+	public void setReminderSerial(int reminderSerial) {
+		this.reminderSerial = reminderSerial;
 	}
 	
 

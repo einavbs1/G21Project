@@ -49,7 +49,7 @@ public class Book {
 		String newBook = barcode + ", " + title + ", " + subject + ", " + description + ", 0, 0, 0, 0, " + location;
 		/// addBookToDB
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("CreateBook", newBook);
+		requestHashMap.put("Book+CreateBook", newBook);
 		ClientUI.chat.accept(requestHashMap);
 		// now load to this Book
 		loadBook(getBookFromDB(barcode));
@@ -91,7 +91,7 @@ public class Book {
 	private String[] getBookFromDB(String barcode) throws NoSuchElementException {
 		String str = new String();
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetBook", barcode);
+		requestHashMap.put("Book+GetBook", barcode);
 		ClientUI.chat.accept(requestHashMap);
 		/// send request to DB to get the string.
 		str = ChatClient.getStringfromServer();
@@ -112,7 +112,7 @@ public class Book {
 		String newDetails = toString();
 		// send request to DB to save all this data.
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("UpdateBookDetails", newDetails);
+		requestHashMap.put("Book+UpdateBookDetails", newDetails);
 		ClientUI.chat.accept(requestHashMap);
 		// loading new information from DB. ------- was before update might delete.
 		loadBook(getBookFromDB(barcode));
@@ -122,7 +122,7 @@ public class Book {
 	public static List<String> SearchBookByName(String bookname) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("SearchBookByName", bookname);
+		requestHashMap.put("Book+SearchBookByName", bookname);
 		ClientUI.chat.accept(requestHashMap);
 		List<String> myRes = ChatClient.getListfromServer();
 
@@ -132,7 +132,7 @@ public class Book {
 	public static List<String> SearchBookBySubject(String subject) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("SearchBookBySubject", subject);
+		requestHashMap.put("Book+SearchBookBySubject", subject);
 		ClientUI.chat.accept(requestHashMap);
 		List<String> myRes = ChatClient.getListfromServer();
 
@@ -142,7 +142,7 @@ public class Book {
 	public static List<String> SearchBookByDescription(String tags) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("SearchBookByDescription", tags);
+		requestHashMap.put("Book+SearchBookByDescription", tags);
 		ClientUI.chat.accept(requestHashMap);
 		List<String> myRes = ChatClient.getListfromServer();
 		return myRes;
@@ -151,7 +151,7 @@ public class Book {
 	public static List<String> getAllmyCopies(String barcode) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetAllMyCopies", barcode);
+		requestHashMap.put("Book+GetAllMyCopies", barcode);
 		ClientUI.chat.accept(requestHashMap);
 		List<String> myCopies = ChatClient.getListfromServer();
 
@@ -175,7 +175,7 @@ public class Book {
 	public static List<String> getBookBarcodesAndTitles(){
 		
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetBookBarcodesAndTitles","");
+		requestHashMap.put("Book+GetBookBarcodesAndTitles","");
 		ClientUI.chat.accept(requestHashMap);
 		List<String> myRes = ChatClient.getListfromServer();
 		return myRes;

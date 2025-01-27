@@ -26,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mainControllers.ConnectionSetupController;
 import entity.*;
 
 /**
@@ -75,7 +76,8 @@ public class ExtendBorrowRequestController {
 		try {
 			root = FXMLLoader.load(getClass().getResource("/subscriberGui/ExtendBorrowRequest.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("/subscriberGui/ExtendBorrowRequest.css").toExternalForm());
+			scene.getStylesheets()
+					.add(getClass().getResource("/subscriberGui/ExtendBorrowRequest.css").toExternalForm());
 			primaryStage.setTitle("Extend Borrow Request");
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -94,7 +96,7 @@ public class ExtendBorrowRequestController {
 			loadactiveBorrowRecords(res);
 			initTheTable();
 		} catch (Exception e) {
-			changeString(e.getMessage(),lblErrMessage);
+			changeString(e.getMessage(), lblErrMessage);
 		}
 	}
 
@@ -159,18 +161,18 @@ public class ExtendBorrowRequestController {
 	}
 
 	private boolean VerifyInput() {
-		if(tableBorrows.getItems().size() == 0) {
-			changeString("You don't have borrows to extend",lblErrMessage);
+		if (tableBorrows.getItems().size() == 0) {
+			changeString("You don't have borrows to extend", lblErrMessage);
 			return false;
 		}
-		
+
 		if (txtBorrowNumber.getText().isEmpty()) {
-			changeString("You must enter the borrow number that you want to extend",lblErrMessage);
+			changeString("You must enter the borrow number that you want to extend", lblErrMessage);
 			return false;
 		}
-		
-		if(!txtBorrowNumber.getText().matches("\\d+")) {
-			changeString("borrow number can contain only digits.",lblErrMessage);
+
+		if (!txtBorrowNumber.getText().matches("\\d+")) {
+			changeString("borrow number can contain only digits.", lblErrMessage);
 			return false;
 		}
 
@@ -180,7 +182,7 @@ public class ExtendBorrowRequestController {
 				return true;
 			}
 		}
-		changeString("You must enter borrow id from the shown table.",lblErrMessage);
+		changeString("You must enter borrow id from the shown table.", lblErrMessage);
 		return false;
 
 	}
@@ -198,31 +200,68 @@ public class ExtendBorrowRequestController {
 				BorrowedRecord chosenBorrow = new BorrowedRecord(Integer.parseInt(txtBorrowNumber.getText()));
 				Book book = new Book(chosenBorrow.getBookBarcode());
 				if (book.getOrdersNumber() > 0) {
-					changeString("There are waiting orders for this book. Cannot extend borrow.",lblErrMessage);
+					changeString("There are waiting orders for this book. Cannot extend borrow.", lblErrMessage);
 				} else {
-					
-					LocalDate currentDate = LocalDate.now();
-					LocalDate expectReturnDate = chosenBorrow.getBorrowExpectReturnDate().toLocalDate(); // Assuming `chosenBorrow.getBorrowExpectReturnDate()` returns java.sql.Date
 
-					// Check if the extension is requested within one week from the expected return date
+					LocalDate currentDate = LocalDate.now();
+					LocalDate expectReturnDate = chosenBorrow.getBorrowExpectReturnDate().toLocalDate();
+
+					// Check if the extension is requested within one week from the expected return
+					// date
 					if (ChronoUnit.DAYS.between(currentDate, expectReturnDate) > 7) {
-					    changeString("Reject!! - You can only extend the borrow within one week of the expected return date.",lblErrMessage);
+						changeString(
+								"Reject!! - You can only extend the borrow within one week of the expected return date.",
+								lblErrMessage);
 					} else {
-					    LocalDate newExpectReturnDate = expectReturnDate.plusDays(7);
-					    chosenBorrow.setBorrowExpectReturnDate(Date.valueOf(newExpectReturnDate)); // Convert LocalDate to java.sql.Date
-						if(chosenBorrow.UpdateBorrowDetails()) {
-							changeString("Borrow extended successfully.",lblMessageStatus);
-							initialize();
+						LocalDate newExpectReturnDate = expectReturnDate.plusDays(7);
+
+						String msgToLib = "The system approved extend return date to the borrow:"
+								+ chosenBorrow.getBorrowNumber() + " of the subscriber: " + me.getId() + "to date: "+ newExpectReturnDate;
+						new Notifications(msgToLib, me.getId(), Date.valueOf(LocalDate.now()), chosenBorrow.getBorrowNumber());
+						
+						String activityMsg = "The system approved extend return date to the borrow:"
+								+ chosenBorrow.getBorrowNumber() + " with 7 days to date: "+ newExpectReturnDate;
+						new LogActivity(chosenBorrow.getSubscriberId(), activityMsg,
+								chosenBorrow.getBookBarcode(), chosenBorrow.getBookTitle(), chosenBorrow.getBookcopyNo());
+						
+						Reminders currReminder = new Reminders(chosenBorrow.getReminderSerial());
+
+						Date newDateReminder = Date.valueOf(expectReturnDate.plusDays(6));
+						String newMSG = "Reminder to return the book: \"" + chosenBorrow.getBookTitle()
+								+ "\" tommorow on the date: " + newExpectReturnDate + ".";
+
+						if (!Date.valueOf(LocalDate.now()).before(currReminder.getDate())) {
+							currReminder = new Reminders(newMSG, me.getId(), me.getPhoneNumber(), me.getEmail(),
+									newDateReminder);
+						} else {
+							currReminder.setMessage(newMSG);
+							currReminder.setSubscriberPhone(me.getPhoneNumber());
+							currReminder.setSubscriberEmail(me.getEmail());
+							currReminder.setDate(newDateReminder);
+							currReminder.UpdateDetails();
 						}
-						else {
-							changeString("Error while update the extend Date",lblErrMessage);
+						if (!Date.valueOf(LocalDate.now()).before(currReminder.getDate())) {
+							chosenBorrow.setReminderSerial(currReminder.getSerial());
 						}
 						
+						BookCopy bookCopyToUpdate = new BookCopy(chosenBorrow.getBookBarcode(), chosenBorrow.getBookcopyNo());
+						bookCopyToUpdate.setReturnDate(Date.valueOf(newExpectReturnDate));
+						bookCopyToUpdate.UpdateDetails();
+						
+						chosenBorrow.setBorrowExpectReturnDate(Date.valueOf(newExpectReturnDate));
+						
+						if (chosenBorrow.UpdateBorrowDetails()) {
+							changeString("Borrow extended successfully.", lblMessageStatus);
+							initialize();
+						} else {
+							changeString("Error while update the extend Date", lblErrMessage);
+						}
+
 					}
 
 				}
 			} catch (NoSuchElementException e) {
-				changeString(e.getMessage(),lblErrMessage);
+				changeString(e.getMessage(), lblErrMessage);
 			}
 		}
 	}
@@ -233,10 +272,7 @@ public class ExtendBorrowRequestController {
 	 * the server.
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Disconnecting from the Server and ending the program.");
-		HashMap<String, String> EndingConnections = new HashMap<String, String>();
-		EndingConnections.put("Disconnect", "");
-		ClientUI.chat.accept(EndingConnections);
+		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}
 

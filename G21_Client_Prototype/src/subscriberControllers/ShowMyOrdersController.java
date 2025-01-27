@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mainControllers.ConnectionSetupController;
 
 /**
  * This class handles the GUI for cancelling orders.
@@ -261,11 +262,8 @@ public class ShowMyOrdersController {
      * @param event The action event
      * @throws Exception If there is an error during disconnect
      */
-	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Disconnecting from the Server and ending the program.");
-		HashMap<String, String> EndingConnections = new HashMap<String, String>();
-		EndingConnections.put("Disconnect", "");
-		ClientUI.chat.accept(EndingConnections);
+    public void getExitBtn(ActionEvent event) throws Exception {
+		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}
 }

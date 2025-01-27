@@ -10,7 +10,8 @@ public enum BookMenu {
     SearchBookBySubject("Search Book By Subject"),
     SearchBookByDescription("Search Book By Description"),
     GetAllMyCopies("Get All My Copies"),
-    GetAllOrdersofaBook("Get All Orders of a Book");
+    GetBookBarcodesAndTitles("Get Book Barcodes And Titles"),
+    GetAllSubjects("Get All Subjects");
 
     private final String displayName;
 

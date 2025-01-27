@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SubscriberStatusChartResultsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.SubscriberStatusChartResultsController">
     <children>
          <Button fx:id="btnExit" layoutX="1002.0" layoutY="653.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" styleClass="nav-button" text="Exit" textFill="#b81212">
          <font>
@@ -41,14 +41,14 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <TableView id="tableStatusReport1" fx:id="tableStatusReport1" layoutX="68.0" layoutY="445.0" prefHeight="65.0" prefWidth="958.0">
+      <TableView id="tableStatusReport1" fx:id="tableStatusReport1" layoutX="68.0" layoutY="445.0" prefHeight="85.0" prefWidth="958.0">
         <columns>
           <TableColumn id="columnTotalActive" fx:id="columnTotalActive" prefWidth="310.0" text="Total Subscribers that was Active this month" />
           <TableColumn id="columnTotalFrozen" fx:id="columnTotalFrozen" prefWidth="325.0" text="Total Subscriber that was Frozen this month" />
             <TableColumn id="columnFrozeNow" fx:id="columnFrozeNow" prefWidth="322.0" text="Total Subscribers that Froze this month" />
         </columns>
       </TableView>
-      <TableView id="tableStatusReport2" fx:id="tableStatusReport2" layoutX="68.0" layoutY="542.0" prefHeight="65.0" prefWidth="958.0">
+      <TableView id="tableStatusReport2" fx:id="tableStatusReport2" layoutX="68.0" layoutY="551.0" prefHeight="85.0" prefWidth="958.0">
         <columns>
             <TableColumn id="columnUnfrozedNow" fx:id="columnUnfrozedNow" prefWidth="310.0" text="Total Subscribers that unfroze this month" />
             <TableColumn id="columnNewRegisters" fx:id="columnNewRegisters" prefWidth="327.0" text="Total new registered subscribers this month" />
@@ -60,5 +60,10 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
+      <Button id="btnSpecificSubscriber" fx:id="btnSpecificSubscriber" layoutX="473.0" layoutY="652.0" mnemonicParsing="false" onAction="#openReportForSpecificSubscriber" prefHeight="30.0" prefWidth="195.0" text="Specific Subscriber Report" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

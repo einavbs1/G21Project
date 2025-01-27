@@ -2,7 +2,7 @@ package common;
 
 public enum LibrarianMenu {
 
-///////-----Author: Yuval.-----///////
+///////-----Author: Yuval.-----////////
 	AddNewLibrarian("Add New Librarian"),
 	GetLibrarianDetails("Get Librarian Details"),
 	UpdateLibrarian("Update Librarian");

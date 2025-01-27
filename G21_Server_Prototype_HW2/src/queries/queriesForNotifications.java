@@ -19,7 +19,7 @@ public class queriesForNotifications {
 	public static int addNewNotificationToDB(String message, int subID, Date date, int borrowNum) {
 		PreparedStatement stmt;
 		try {
-			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO notifications VALUES (?, ?, ?, ?)",
+			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO notifications (notification_message, subscriber_id, notification_date, borrow_number) VALUES (?, ?, ?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
 			stmt.setString(1, message);

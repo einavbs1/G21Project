@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import mainControllers.ConnectionSetupController;
 
 /**
  * This class is controller of the subscriber menu (after subscriber has logged in).
@@ -181,10 +182,7 @@ public class SubscriberMenuController {
 	 * we are disconnecting, closing the GUI and the connection for the server.
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Disconnecting from the Server and ending the program.");
-		HashMap<String, String> EndingConnections = new HashMap<String, String>();
-		EndingConnections.put("Disconnect", "");
-		ClientUI.chat.accept(EndingConnections);
+		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}
 

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import client.ClientUI;
 import entity.*;
@@ -25,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mainControllers.ConnectionSetupController;
 
 public class BorrowBookController {
 
@@ -214,11 +214,11 @@ public class BorrowBookController {
 		if(VerifyInput(myEnum.VerifyBarcode)) {
 			String bookBarcode = txtbookBarcode.getText();
 			try {
-				
+				bookToBorrow = new Book(bookBarcode);
 				List<String> updatedOrdersOfBook = Orders.checkMyActiveOrders(bookBarcode);
 				int avaliableCopy = bookToBorrow.getAvailableCopies();
 				int subOrdeNum = thisSubscriberHasOrder(subscriber.getId(), updatedOrdersOfBook);
-				bookToBorrow = new Book(bookBarcode);
+				
 				
 				if( subOrdeNum > 0 ) {
 					subsOrders = new Orders(subOrdeNum);
@@ -238,6 +238,7 @@ public class BorrowBookController {
 				
 	
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				changeString(bookBarcode + "is not exist in the library","#bf3030",lblbookDetailsmsg);
 			}
 		}
@@ -255,26 +256,24 @@ public class BorrowBookController {
 
 			List<String> listOfBookCopies = new ArrayList<String>();
 			listOfBookCopies = Book.getAllmyCopies(bookToBorrow.getBarcode());
-
 			BookCopy availabeCopyToBorrow = BookCopy.whoIsAvailable(listOfBookCopies);
 			if (availabeCopyToBorrow != null) {
 
 				// update details in the specific copy for borrowing
-				Date currentDate = new Date(System.currentTimeMillis()); // Get the current date and time
-				Calendar calendar = Calendar.getInstance(); // Get the current calendar instance
-				calendar.setTime(currentDate); // Set the current time in the calendar
-				calendar.add(Calendar.DAY_OF_MONTH, 14); // Add 14 days to the calendar
-				Date returnDate = new Date(calendar.getTimeInMillis()); // Convert the updated calendar time back to a
-																		// Date
+				Date currentDate = new Date(System.currentTimeMillis());
+				Calendar calendar = Calendar.getInstance(); 
+				calendar.setTime(currentDate); 
+				calendar.add(Calendar.DAY_OF_MONTH, 14);
+				Date returnDate = new Date(calendar.getTimeInMillis());
 				
 				// taking this book to borrow
 				availabeCopyToBorrow.setisAvailableStatus(NotAVAILABLE);
 				availabeCopyToBorrow.setReturnDate(returnDate);
 				availabeCopyToBorrow.setSubscriberID(subscriber.getId());
 				availabeCopyToBorrow.UpdateDetails();
-
 				// update details in the Book for borrowing
 				try {
+					
 					//if has Order than close it as complete.
 					if(subsOrders != null) {
 						subsOrders.setStatus(Orders.ORDER_COMPLETED);
@@ -284,10 +283,17 @@ public class BorrowBookController {
 					//update books changed details
 					bookToBorrow.removeFromAvailableCopies();
 					bookToBorrow.UpdateDetails();
+
+					Date expectedReturnDate = Date.valueOf(LocalDate.now().plusDays(14));
+					Date dateToSendReminder = Date.valueOf(LocalDate.now().plusDays(13));
+					String messageToReminder = "Reminder to return the book: \""+bookToBorrow.getTitle()+"\" tommorow on the date: "+expectedReturnDate+".";
 					
+					Reminders reminderSerial = new Reminders(messageToReminder, subscriber.getId(), subscriber.getPhoneNumber(), subscriber.getEmail(), dateToSendReminder);
+
 					// create new record in the borrowed record table new
 					new BorrowedRecord(availabeCopyToBorrow.getSubscriberId(),bookToBorrow.getBarcode(),
-							bookToBorrow.getTitle(), availabeCopyToBorrow.getCopyNo());
+							bookToBorrow.getTitle(), availabeCopyToBorrow.getCopyNo(), reminderSerial.getSerial());
+
 					String stringToActivityLogString = "Borrowed the book: " +bookToBorrow.getTitle() +" barcode("+bookToBorrow.getBarcode()+").";
 					if(subsOrders != null) {
 						stringToActivityLogString += " That you ordered (Order number:" + subsOrders.getOrderNumber() +").";
@@ -295,10 +301,10 @@ public class BorrowBookController {
 					 new LogActivity(availabeCopyToBorrow.getSubscriberId(), stringToActivityLogString,
 							  bookToBorrow.getBarcode(), bookToBorrow.getTitle(),
 							  availabeCopyToBorrow.getCopyNo());
-					
+
 						initialize();
-						changeString("congratulations, The borrowing of " + availabeCopyToBorrow.getTitle()
-								+ " was successful.", "#086f03", lblborrowmsg);
+						changeString("congratulations, The borrowing of the book: \"" + availabeCopyToBorrow.getTitle()
+								+ "\" was successful.", "#086f03", lblborrowmsg);
 					} catch (Exception e) {
 						changeString(e.getMessage(), "#bf3030", lblborrowmsg);
 					}
@@ -315,10 +321,7 @@ public class BorrowBookController {
 	 * we are disconnecting, closing the GUI and the connection for the server.
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Disconnecting from the Server and ending the program.");
-		HashMap<String, String> EndingConnections = new HashMap<String, String>();
-		EndingConnections.put("Disconnect", "");
-		ClientUI.chat.accept(EndingConnections);
+		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}
 }

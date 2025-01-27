@@ -2,7 +2,7 @@ package common;
 
 public enum ActivityLogMenu {
 
-	///////-----Author: Amir.-----///////
+	///////-----Author: Amir.-----////////
 	AddNewLogActivity("Add New Log Activity"),
 	LoadActivityById("Load Activities By ID"), 
     LoadActivityBySerial("Load Activity By Serial");

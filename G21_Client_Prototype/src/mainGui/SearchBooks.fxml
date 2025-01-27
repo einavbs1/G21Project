@@ -8,26 +8,56 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="404.0" prefWidth="448.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainControllers.SearchBooksController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainControllers.SearchBooksController">
    <children>
-      <Button id="btnBack" fx:id="btnBack" layoutX="23.0" layoutY="350.0" mnemonicParsing="false" onAction="#BackToMainScreen" text="Back" />
-      <Label id="lblBookName" fx:id="lblBookName" layoutX="10.0" layoutY="61.0" prefHeight="17.0" prefWidth="74.0" text="BookName:" />
-      <TextField id="txtBookName" fx:id="txtBookName" layoutX="94.0" layoutY="57.0" />
-      <Label id="lblinstruction" fx:id="lblinstruction" alignment="CENTER" layoutX="129.0" layoutY="20.0" prefHeight="18.0" prefWidth="190.0" text="Search Books:" />
-      <Label id="lblBookSubject" fx:id="lblBookSubject" layoutX="12.0" layoutY="102.0" prefHeight="17.0" prefWidth="62.0" text="Subject :" />
-      <TextField id="txtKeyWord" fx:id="txtKeyWord" layoutX="95.0" layoutY="142.0" prefHeight="25.0" prefWidth="160.0" />
-      <Label id="lblBookDescription" fx:id="lblBookDescription" layoutX="12.0" layoutY="146.0" text="Description:" />
-      <ComboBox id="comboBoxSubjectSelect" fx:id="comboBoxSubjectSelect" layoutX="94.0" layoutY="98.0" prefWidth="150.0" />
-      <Button id="btnSearchName" fx:id="btnSearchName" layoutX="265.0" layoutY="57.0" mnemonicParsing="false" onAction="#SearchByName" text="Search book by the name" />
-      <Button id="btnSearchSubject" fx:id="btnSearchSubject" layoutX="276.0" layoutY="98.0" mnemonicParsing="false" onAction="#SearchBySubject" text="Show subject's books" />
-      <Button id="btnSearchDescription" fx:id="btnSearchDescription" layoutX="134.0" layoutY="309.0" mnemonicParsing="false" onAction="#SearchByDescription" text="Search books by description" />
-      <Label id="lblerrmsg" fx:id="lblerrmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="134.0" layoutY="342.0" prefHeight="46.0" prefWidth="167.0" textAlignment="CENTER" textFill="#b91b1b" wrapText="true">
+      <Button id="btnBack" fx:id="btnBack" layoutX="47.0" layoutY="655.0" mnemonicParsing="false" onAction="#BackToMainScreen" prefHeight="30.0" prefWidth="50.0" text="Back" textFill="#262d71">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label id="lblBookName" fx:id="lblBookName" layoutX="280.0" layoutY="132.0" prefHeight="27.0" prefWidth="112.0" text="Book Name :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField id="txtBookName" fx:id="txtBookName" layoutX="417.0" layoutY="132.0" prefHeight="30.0" prefWidth="200.0" />
+      <Label id="lblinstruction" fx:id="lblinstruction" alignment="CENTER" layoutX="15.0" layoutY="14.0" prefHeight="18.0" prefWidth="1070.0" text="Search Book">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font></Label>
+      <Label id="lblBookSubject" fx:id="lblBookSubject" layoutX="280.0" layoutY="217.0" prefHeight="27.0" prefWidth="111.0" text="Subject :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField id="txtKeyWord" fx:id="txtKeyWord" layoutX="417.0" layoutY="301.0" prefHeight="30.0" prefWidth="200.0" />
+      <Label id="lblBookDescription" fx:id="lblBookDescription" layoutX="281.0" layoutY="300.0" prefHeight="27.0" prefWidth="114.0" text="Description :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <ComboBox id="comboBoxSubjectSelect" fx:id="comboBoxSubjectSelect" layoutX="417.0" layoutY="213.0" prefHeight="30.0" prefWidth="200.0" />
+      <Button id="btnSearchName" fx:id="btnSearchName" layoutX="649.0" layoutY="132.0" mnemonicParsing="false" onAction="#SearchByName" prefHeight="30.0" prefWidth="190.0" text="Search book by the name" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button id="btnSearchSubject" fx:id="btnSearchSubject" layoutX="650.0" layoutY="214.0" mnemonicParsing="false" onAction="#SearchBySubject" prefHeight="30.0" prefWidth="190.0" text="Show subject's books" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button id="btnSearchDescription" fx:id="btnSearchDescription" layoutX="448.0" layoutY="501.0" mnemonicParsing="false" onAction="#SearchByDescription" prefHeight="30.0" text="Search books by description" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label id="lblerrmsg" fx:id="lblerrmsg" alignment="CENTER" contentDisplay="CENTER" layoutX="400.0" layoutY="548.0" prefHeight="50.0" prefWidth="300.0" textAlignment="CENTER" textFill="#b81212" wrapText="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <FlowPane id="flowPaneDescriptionTags" fx:id="flowPaneDescriptionTags" layoutX="64.0" layoutY="179.0" prefHeight="125.0" prefWidth="303.0" />
-      <Button id="btnAddKeyWord" fx:id="btnAddKeyWord" layoutX="276.0" layoutY="142.0" mnemonicParsing="false" onAction="#btnAddKeyWord" text="Add Key word" />
-      <Button id="btnExit" fx:id="btnExit" layoutX="381.0" layoutY="350.0" mnemonicParsing="false" text="Exit" />
+      <FlowPane id="flowPaneDescriptionTags" fx:id="flowPaneDescriptionTags" layoutX="399.0" layoutY="357.0" prefHeight="125.0" prefWidth="303.0" />
+      <Button id="btnAddKeyWord" fx:id="btnAddKeyWord" layoutX="650.0" layoutY="300.0" mnemonicParsing="false" onAction="#btnAddKeyWord" prefHeight="30.0" prefWidth="190.0" text="Add Key word" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button id="btnExit" fx:id="btnExit" layoutX="1005.0" layoutY="656.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
    </children>
 </AnchorPane>

@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mainControllers.ConnectionSetupController;
 import entity.*;
 
 /**
@@ -64,7 +65,7 @@ public class UpdateSubscriberDataController {
 	private TextField txtPassword;
 	@FXML
 	private TextField txtFrozenUntil;
-	
+
 	@FXML
 	private RadioButton radioBtnActive;
 	@FXML
@@ -80,15 +81,12 @@ public class UpdateSubscriberDataController {
 	private Button btnBack = null;
 	@FXML
 	private Button btnManageBorrows = null;
-	
 
 	private boolean needToLoad = true;
 	private boolean updated = false;
-	
+
 	private Subscriber subtoload = null;
 
-	
-	
 	/**
 	 * Author: Yuval. This method is for the back button closing the current GUI and
 	 * uploading the menu GUI.
@@ -107,9 +105,7 @@ public class UpdateSubscriberDataController {
 		Stage.show();
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
-	
-	
-	
+
 	public void OpenCurrectBorrows(ActionEvent event) throws IOException {
 		CurrentBorrowBooksController.mySubscriber = subtoload;
 		FXMLLoader Loader = new FXMLLoader(getClass().getResource("/librarianGui/CurrentBorrowBooks.fxml"));
@@ -123,7 +119,6 @@ public class UpdateSubscriberDataController {
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 
-	
 	/**
 	 * Author: Yuval. This method is for the update button, sending the information
 	 * to the server about which subscriber to update and what fields to change.
@@ -136,94 +131,117 @@ public class UpdateSubscriberDataController {
 			subtoload.setEmail(txtEmail.getText());
 			subtoload.setPhoneNumber(txtPhoneNumber.getText());
 			subtoload.setPassword(txtPassword.getText());
-			
-			if(radioBtnActive.isSelected()) {
-				subtoload.setStatus("Active");
+
+			if (radioBtnActive.isSelected()) {
+				if (subtoload.getFrozenUntil() != null) {
+					String recordToChnageString = Subscriber.getSpecificFrozenRecord(subtoload.getId(), subtoload.getFrozenUntil());
+					String[] parts = recordToChnageString.split(", ");
+					int recordTochange = Integer.parseInt(parts[0]);
+					Subscriber.updateRecordOfFrozen(recordTochange, Date.valueOf(parts[2]) ,Date.valueOf(LocalDate.now()));
+					SubscribersStatusReport reportToUpdate = new SubscribersStatusReport(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+					reportToUpdate.addUnfrozed();
+					reportToUpdate.UpdateDetails();
+				}
+				subtoload.setStatus(Subscriber.ACTIVE);
 				subtoload.setFrozenUntil(null);
-			}else {
-				subtoload.setStatus("Frozen");
+			} else {
+				if (subtoload.getFrozenUntil() != null) {
+					String recordToChnageString = Subscriber.getSpecificFrozenRecord(subtoload.getId(), subtoload.getFrozenUntil());
+					String[] parts = recordToChnageString.split(", ");
+					int recordTochange = Integer.parseInt(parts[0]);
+					Subscriber.updateRecordOfFrozen(recordTochange, Date.valueOf(parts[2]) ,Date.valueOf(txtFrozenUntil.getText()));
+				}else {
+					SubscribersStatusReport reportToUpdate = new SubscribersStatusReport(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+					reportToUpdate.addGotFroze();
+					reportToUpdate.UpdateDetails();
+					Subscriber.addingNewRecordOfFrozen(subtoload.getId(), Date.valueOf(LocalDate.now()),
+							Date.valueOf(txtFrozenUntil.getText()));
+				}
+				subtoload.setStatus(Subscriber.FROZEN);
 				subtoload.setFrozenUntil(Date.valueOf(txtFrozenUntil.getText()));
+				
 			}
-			if(subtoload.UpdateDetails()) {
+			if (subtoload.UpdateDetails()) {
 				changeString("Subscriber details has been updated successfully.", "#086f03");
-			}else {
+			} else {
 				changeString("Error while saving updating details", "#bf3030");
 			}
 			updated = true;
-			
-		}else if(updated) {
-			//lblMessageStatus.setText(" ");
+
+		} else if (updated) {
+			// lblMessageStatus.setText(" ");
 			changeString("To update new information you have to enter this screen again.", "#bf3030");
 		}
-		
+
 	}
 
 	private boolean VerifyInput() {
-		if(needToLoad) {
+		if (needToLoad) {
 			if (txtId.getText().isEmpty()) {
 				changeString("Please fill id before trying to load subscriber data.", "#bf3030");
 				return false;
 			}
-		}
-		else {
-			if (txtName.getText().isEmpty() || txtPhoneNumber.getText().isEmpty()
-					|| txtEmail.getText().isEmpty() || txtPassword.getText().isEmpty() || (!radioBtnActive.isSelected() && !radioBtnFrozen.isSelected()) ) {
-	
+		} else {
+			if (txtName.getText().isEmpty() || txtPhoneNumber.getText().isEmpty() || txtEmail.getText().isEmpty()
+					|| txtPassword.getText().isEmpty()
+					|| (!radioBtnActive.isSelected() && !radioBtnFrozen.isSelected())) {
+
 				changeString("Please fill all The fields.", "#bf3030");
 				return false;
 			}
-			
+
 			if (!txtId.getText().matches("\\d{9}")) {
 				changeString("ID must be 9 digits.", "#bf3030");
 				return false;
 			}
-	
+
 			if (!txtName.getText().matches("[a-zA-Z ]+")) {
 				changeString("Name must contain only letters.", "#bf3030");
 				return false;
 			}
-	
+
 			if (!txtPhoneNumber.getText().matches("\\d{10}")) {
 				changeString("Phone number must be 9-10 digits.", "#bf3030");
 				return false;
 			}
-	
+
 			if (!txtEmail.getText().matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
 				changeString("Invalid email format. Please enter a valid email.", "#bf3030");
 				return false;
 			}
-			if((radioBtnActive.isSelected() && radioBtnFrozen.isSelected())) {
+			if ((radioBtnActive.isSelected() && radioBtnFrozen.isSelected())) {
 				changeString("You need to choose only one status.", "#bf3030");
 				return false;
 			}
-			if(radioBtnActive.isSelected() && !(txtFrozenUntil.getText().equals("null"))) {
-				changeString("If you select status: \"Active\" please leave the frozen until date: \"null\" .", "#bf3030");
+			if (radioBtnActive.isSelected() && !(txtFrozenUntil.getText().equals("null"))) {
+				changeString("If you select status: \"Active\" please leave the frozen until date: \"null\" .",
+						"#bf3030");
 				return false;
 			}
-			if(radioBtnFrozen.isSelected()){
-				if(txtFrozenUntil.getText().equals("null")) {
+			if (radioBtnFrozen.isSelected()) {
+				if (txtFrozenUntil.getText().equals("null")) {
 					changeString("You have to select date to froze in the formart: yyyy-MM-dd .", "#bf3030");
 					return false;
 				}
-		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		        try {
-		            LocalDate.parse(txtFrozenUntil.getText(), formatter);
-		            LocalDate today = LocalDate.now();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				try {
+					LocalDate.parse(txtFrozenUntil.getText(), formatter);
+					LocalDate today = LocalDate.now();
 					Date frozeUntil = Date.valueOf(txtFrozenUntil.getText());
-			        LocalDate frozeUntilLocalDate = frozeUntil.toLocalDate();
-			        
-					if(!today.isBefore(frozeUntilLocalDate)) {
+					LocalDate frozeUntilLocalDate = frozeUntil.toLocalDate();
+
+					if (!today.isBefore(frozeUntilLocalDate)) {
 						changeString("You can set the date only with at least one day ahead. ", "#bf3030");
 						return false;
 					}
-					
-		            return true;
-		            
-		        } catch (DateTimeParseException e) {
+
+					return true;
+
+				} catch (DateTimeParseException e) {
 					changeString("You have to select date to froze in the formart: yyyy-MM-dd .", "#bf3030");
-		            return false;
-		        }
-				
+					return false;
+				}
+
 			}
 		}
 
@@ -242,7 +260,7 @@ public class UpdateSubscriberDataController {
 		});
 		PauseTransition pause = new PauseTransition(Duration.seconds(10));
 		pause.setOnFinished(event -> {
-			if(lblMessage.getText().equals(s)) {
+			if (lblMessage.getText().equals(s)) {
 				lblMessage.setText(" ");
 			}
 		});
@@ -260,39 +278,38 @@ public class UpdateSubscriberDataController {
 
 		if (needToLoad && VerifyInput()) {
 			try {
-			subtoload = new Subscriber(Integer.parseInt(txtId.getText()));
-			txtName.setText(subtoload.getName());
-			txtEmail.setText(subtoload.getEmail());
-			txtPhoneNumber.setText(subtoload.getPhoneNumber());
-			txtPassword.setText(subtoload.getPassword());
-			String status = subtoload.getStatus();
-			if(status.toLowerCase().equals("active")) {
-				radioBtnActive.setSelected(true);
-				radioBtnFrozen.setSelected(false);
-			}else {
-				radioBtnActive.setSelected(false);
-				radioBtnFrozen.setSelected(true);
-			}
-			if(subtoload.getFrozenUntil() == null ) {
-				txtFrozenUntil.setText("null");
-			}else {
-				txtFrozenUntil.setText(String.valueOf(subtoload.getFrozenUntil()));
-			}
-			txtFrozenUntil.setEditable(true);
-			txtId.setEditable(false);
-			txtName.setEditable(true);
-			txtPhoneNumber.setEditable(true);
-			txtEmail.setEditable(true);
-			txtPassword.setEditable(true);
-			needToLoad = false;
-			btnUpdate.setDisable(false);
-			btnManageBorrows.setDisable(false);
-			}catch (Exception e) {
+				subtoload = new Subscriber(Integer.parseInt(txtId.getText()));
+				txtName.setText(subtoload.getName());
+				txtEmail.setText(subtoload.getEmail());
+				txtPhoneNumber.setText(subtoload.getPhoneNumber());
+				txtPassword.setText(subtoload.getPassword());
+				String status = subtoload.getStatus();
+				if (status.toLowerCase().equals("active")) {
+					radioBtnActive.setSelected(true);
+					radioBtnFrozen.setSelected(false);
+				} else {
+					radioBtnActive.setSelected(false);
+					radioBtnFrozen.setSelected(true);
+				}
+				if (subtoload.getFrozenUntil() == null) {
+					txtFrozenUntil.setText("null");
+				} else {
+					txtFrozenUntil.setText(String.valueOf(subtoload.getFrozenUntil()));
+				}
+				txtFrozenUntil.setEditable(true);
+				txtId.setEditable(false);
+				txtName.setEditable(true);
+				txtPhoneNumber.setEditable(true);
+				txtEmail.setEditable(true);
+				txtPassword.setEditable(true);
+				needToLoad = false;
+				btnUpdate.setDisable(false);
+				btnManageBorrows.setDisable(false);
+			} catch (Exception e) {
 				changeString(e.getMessage(), "#bf3030");
 			}
 		}
 	}
-
 
 	/*
 	 * Author: Yuval. This method is for the exit button sending a message to the
@@ -300,10 +317,7 @@ public class UpdateSubscriberDataController {
 	 * the server.
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Disconnecting from the Server and ending the program.");
-		HashMap<String, String> EndingConnections = new HashMap<String, String>();
-		EndingConnections.put("Disconnect", "");
-		ClientUI.chat.accept(EndingConnections);
+		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}
 }

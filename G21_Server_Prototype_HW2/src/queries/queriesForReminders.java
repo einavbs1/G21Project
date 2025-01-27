@@ -12,17 +12,17 @@ import Server.mysqlConnection;
 
 public class queriesForReminders {
 
-
 	//////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////// --- Einav Reminders Entity  section---///////////////////////
+	///////////////////// --- Einav Reminders Entity
+	////////////////////////////////////////////////////////////////////////////////////////// section---///////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
 
-
-	public static int addNewReminderToDB(String message, int subID, String subPhone, String subEmail, Date date, int actionNum) {
+	public static int addNewReminderToDB(String message, int subID, String subPhone, String subEmail, Date date) {
 		PreparedStatement stmt;
 		try {
-			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO reminders VALUES (?, ?, ?, ?, ?)",
+			stmt = mysqlConnection.conn.prepareStatement(
+					"INSERT INTO reminders (reminder_message, subscriber_id, subscriber_phonenumber, subscriber_email, reminder_dateWillSend) VALUES (?, ?, ?, ?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
 			stmt.setString(1, message);
@@ -32,22 +32,21 @@ public class queriesForReminders {
 			stmt.setDate(5, date);
 
 			stmt.executeUpdate();
-			
+
 			int generatedKey = -1;
 			// Retrieve the generated key
 			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-			    if (generatedKeys.next()) {
-			        generatedKey = generatedKeys.getInt(1);
-			    }
+				if (generatedKeys.next()) {
+					generatedKey = generatedKeys.getInt(1);
+				}
 			}
 			return generatedKey;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
 		}
-		}
+	}
 
-	
 	public static String GetReminder(int serial) {
 		String query = "SELECT * FROM reminders WHERE reminder_serial = ? ";
 		String ReminderData = "Empty";
@@ -61,9 +60,9 @@ public class queriesForReminders {
 					String subscriber_phonenumber = rs.getString("subscriber_phonenumber");
 					String subscriber_email = rs.getString("subscriber_email");
 					Date reminder_date = rs.getDate("reminder_dateWillSend");
-					
-					ReminderData = reminder_serial + ", " + reminder_message + ", " + subscriber_id + ", " + subscriber_phonenumber + ", "
-							+ subscriber_email+ ", " + reminder_date;
+
+					ReminderData = reminder_serial + ", " + reminder_message + ", " + subscriber_id + ", "
+							+ subscriber_phonenumber + ", " + subscriber_email + ", " + reminder_date;
 				}
 			}
 		} catch (SQLException e) {
@@ -72,41 +71,67 @@ public class queriesForReminders {
 
 		return ReminderData;
 	}
-	
-	
-	public static List<String> GetNewOldReminders(Date fromThisDate, int subID) {
-	    List<String> notifications = new ArrayList<>();
-	    Date today = Date.valueOf(LocalDate.now());
-	    String query = "SELECT *, CASE WHEN reminder_dateWillSend >= ? AND reminder_dateWillSend =< ? THEN 'new' ELSE 'old' END AS reminder_type "
-	                 + "FROM reminders WHERE subscriber_id = ? "  // Add the condition for subscriber_id
-	                 + "ORDER BY reminder_date DESC";
 
-	    try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
-	        stmt.setDate(1, fromThisDate);
-	        stmt.setDate(2, today);
-	        stmt.setInt(3, subID);
-	        
-	        try (ResultSet rs = stmt.executeQuery()) {
-	            while (rs.next()) {
-	                String type = rs.getString("reminder_type");
-	                int serialNo = rs.getInt("reminder_serial");
-	                String message = rs.getString("reminder_message");
-	                String phone = rs.getString("subscriber_phonenumber");
-	                String email = rs.getString("subscriber_email");
-	                Date date = rs.getDate("reminder_dateWillSend");
-	                
-	                notifications.add(type + ", " + serialNo + ", " + message + ", " + phone + ", " + email + ", " + date);
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return notifications;
+	public static boolean updateReminderDetails(int serial, String message, int subID, String phone, String email,
+			Date datetosend) {
+
+		String query = "UPDATE reminders SET reminder_message = ?, subscriber_id = ?"
+				+ ", subscriber_phonenumber = ?, subscriber_email = ?, reminder_dateWillSend = ?"
+				+ " WHERE reminder_serial = ?";
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+			stmt.setString(1, message);
+			stmt.setInt(2, subID);
+			stmt.setString(3, phone);
+			stmt.setString(4, email);
+			stmt.setDate(5, datetosend);
+
+			stmt.setInt(6, serial);
+
+			stmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static List<String> GetNewOldReminders(Date fromThisDate, int subID) {
+		List<String> notifications = new ArrayList<>();
+		Date today = Date.valueOf(LocalDate.now());
+		String query = "SELECT *, CASE WHEN reminder_dateWillSend >= ? AND reminder_dateWillSend <= ? THEN 'new' "
+				+ "WHEN reminder_dateWillSend > ? THEN 'not_sent_yet' "
+				+ "ELSE 'old' END AS reminder_type "
+				+ "FROM reminders WHERE subscriber_id = ? " // Add the condition for subscriber_id
+				+ "ORDER BY reminder_dateWillSend DESC";
+
+		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
+			stmt.setDate(1, fromThisDate);
+			stmt.setDate(2, today);
+			stmt.setDate(3, today);
+			stmt.setInt(4, subID);
+
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+					String type = rs.getString("reminder_type");
+					int serialNo = rs.getInt("reminder_serial");
+					String message = rs.getString("reminder_message");
+					String phone = rs.getString("subscriber_phonenumber");
+					String email = rs.getString("subscriber_email");
+					Date date = rs.getDate("reminder_dateWillSend");
+
+					notifications
+							.add(type + ", " + serialNo + ", " + message + ", " + phone + ", " + email + ", " + date);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return notifications;
 	}
 
 	/////////////////////// END //////////////////////////////////
-	///////////////////// --- Einav Reminders Entity section ---///////////////////////
+	///////////////////// --- Einav Reminders Entity section
+	/////////////////////// ---///////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
 
-	
 }

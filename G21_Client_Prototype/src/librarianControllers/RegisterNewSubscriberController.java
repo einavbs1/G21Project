@@ -1,7 +1,7 @@
 package librarianControllers;
 
 import java.io.IOException;
-
+import java.time.LocalDate;
 import java.util.HashMap;
 import client.ClientUI;
 import javafx.animation.PauseTransition;
@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mainControllers.ConnectionSetupController;
 import entity.*;
 
 /**
@@ -91,6 +92,13 @@ public class RegisterNewSubscriberController {
 			try {
 				Subscriber newOne = new Subscriber(Integer.parseInt(txtId.getText()), txtName.getText(),
 						txtPhoneNumber.getText(), txtEmail.getText(), txtPassword.getText());
+				SubscribersStatusReport reportToUpdate = new SubscribersStatusReport(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+				reportToUpdate.addNewSubscriber();
+				reportToUpdate.addtoTotal();
+				reportToUpdate.UpdateDetails();
+				
+				new LogActivity(newOne.getId(), "Welcome! You registered to our library.", null, null, 0);
+				
 				if (newOne != null) {
 					lblMessageStatus.setText("Subscriber " + txtName.getText() + " has been registered successfully.");
 					needToRegistered = false;
@@ -157,10 +165,7 @@ public class RegisterNewSubscriberController {
 	 * the server.
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Disconnecting from the Server and ending the program.");
-		HashMap<String, String> EndingConnections = new HashMap<String, String>();
-		EndingConnections.put("Disconnect", "");
-		ClientUI.chat.accept(EndingConnections);
+		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}
 }

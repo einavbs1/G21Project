@@ -34,11 +34,11 @@ public class Reminders {
 	 * @param date
 	 * @param borrow_number
 	 */
-	public Reminders(String message, int subscriberID,String subscriberPhone, String subscriberEmail, Date date) {
+	public Reminders(String message, int subscriberID, String subscriberPhone, String subscriberEmail, Date date) {
 		String newReminder = message + ", " + subscriberID + ", " + subscriberPhone + ", " + subscriberEmail + ", " + date;
 		/// addBookToDB
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("CreateReminder", newReminder);
+		requestHashMap.put("Reminders+CreateReminder", newReminder);
 		ClientUI.chat.accept(requestHashMap);		
 		// now load to this Book
 		String NewReminderString = ChatClient.getStringfromServer();
@@ -63,6 +63,25 @@ public class Reminders {
 	    
 	   
 	}
+	
+	
+	public boolean UpdateDetails() {
+		HashMap<String, String> updateMap = new HashMap<>();
+		updateMap.put("Reminders+UpdateReminderDetails", toString()); // Using toString to generate a string with all the details
+
+		ClientUI.chat.accept(updateMap);
+		String UpdateString = ChatClient.getStringfromServer();
+
+		if (UpdateString.equals("Updated")) {
+			loadReminder(getReminderFromDB(serial));
+			return true;
+		}
+		return false;
+
+	}
+	
+	
+	
 
 	/**Author: Einav
 	 * 
@@ -73,7 +92,7 @@ public class Reminders {
 	private String[] getReminderFromDB(int serial) throws NoSuchElementException {
 		String str = new String();
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetReminder", String.valueOf(serial));
+		requestHashMap.put("Reminders+GetReminder", String.valueOf(serial));
 		ClientUI.chat.accept(requestHashMap);
 		/// send request to DB to get the string.
 		str = ChatClient.getStringfromServer();
@@ -86,11 +105,13 @@ public class Reminders {
 		}
 	}
 	
+
+	
 	
 	public static List<String> getNewOldRemindersFromDB(Date fromthisDate, int id) {
 		
 	       HashMap<String, String> showRemindersMap = new HashMap<>();
-	       showRemindersMap.put("GetNewOldReminders", String.valueOf(fromthisDate)+", "+id);
+	       showRemindersMap.put("Reminders+GetNewOldReminders", String.valueOf(fromthisDate)+", "+id);
 	       
 	       ClientUI.chat.accept(showRemindersMap);
 	       List<String> remindersList = ChatClient.getListfromServer();
@@ -107,7 +128,6 @@ public class Reminders {
 	
 	///////////////////////
 	/// Getters 
-	/// No setters because we don't want to change reminders that already sent.
 	///////////////////////
 
 
@@ -139,6 +159,33 @@ public class Reminders {
 	public Date getDate() {
 		return date;
 	}
+
+	///////////////////////
+	/// Setters 
+	///////////////////////
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+
+	public void setSubscriberPhone(String subscriberPhone) {
+		this.subscriberPhone = subscriberPhone;
+	}
+
+
+	public void setSubscriberEmail(String subscriberEmail) {
+		this.subscriberEmail = subscriberEmail;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	
+	
+	
 
 
 

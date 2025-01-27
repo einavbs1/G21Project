@@ -37,7 +37,7 @@ public class Librarian {
 
 		/// LibrarianToDB
 		HashMap<String, String> addLibrarianMap = new HashMap<>();
-		addLibrarianMap.put("AddNewLibrarian", newlib);
+		addLibrarianMap.put("Librarian+AddNewLibrarian", newlib);
 		ClientUI.chat.accept(addLibrarianMap);
 
 		// now load to this librarian
@@ -69,7 +69,7 @@ public class Librarian {
 		// send request to DB to get the string
 
 		HashMap<String, String> request = new HashMap<>();
-		request.put("GetLibrarianDetails", String.valueOf(librarian_id));
+		request.put("Librarian+GetLibrarianDetails", String.valueOf(librarian_id));
 		ClientUI.chat.accept(request);
 		response = ChatClient.getStringfromServer();
 
@@ -91,7 +91,7 @@ public class Librarian {
 		/// Send the update request to the server
 
 		HashMap<String, String> updateMap = new HashMap<>();
-		updateMap.put("UpdateLibrarian", newDetails);
+		updateMap.put("Librarian+UpdateLibrarian", newDetails);
 
 		ClientUI.chat.accept(updateMap);
 

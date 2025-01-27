@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import mainControllers.ConnectionSetupController;
 
 public class GenerateReportsController {
 
@@ -82,10 +83,7 @@ public class GenerateReportsController {
      */
     @FXML
     public void getExitBtn(ActionEvent event) throws Exception {
-        System.out.println("Disconnecting from the Server and ending the program.");
-        HashMap<String, String> EndingConnections = new HashMap<String, String>();
-        EndingConnections.put("Disconnect", "");
-        ClientUI.chat.accept(EndingConnections);
-        System.exit(0);
-    }
+		ConnectionSetupController.stopConnectionToServer();
+		System.exit(0);
+	}
 }

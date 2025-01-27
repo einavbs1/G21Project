@@ -48,9 +48,9 @@
          </font>
       </Label>
       <Label alignment="CENTER" layoutX="282.0" layoutY="286.0" prefHeight="17.0" prefWidth="545.0" text="You can find your book at the library with the location and borrow it with the librarian." />
-      <Label layoutX="170.0" layoutY="593.0" text="Books that matched your search description but not available to borrow. You can order the books if your book's column contains can order" />
-      <Label layoutX="357.0" layoutY="610.0" text="Don't forget to save the book's barcode to order the book you want." wrapText="true" />
-      <Button id="btnOrderBook" fx:id="btnOrderBook" layoutX="497.0" layoutY="646.0" mnemonicParsing="false" onAction="#OrderBook" prefHeight="40.0" prefWidth="100.0" text="Order Book" textFill="#478150" textOverrun="CENTER_ELLIPSIS">
+      <Label layoutX="182.0" layoutY="593.0" text="Books that matched your search description but not available to borrow. You can order the books if your book's column contains can order" />
+      <Label layoutX="368.0" layoutY="610.0" text="Don't forget to save the book's barcode to order the book you want." wrapText="true" />
+      <Button id="btnOrderBook" fx:id="btnOrderBook" layoutX="501.0" layoutY="646.0" mnemonicParsing="false" onAction="#OrderBook" prefHeight="40.0" prefWidth="100.0" text="Order Book" textFill="#478150" textOverrun="CENTER_ELLIPSIS">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>

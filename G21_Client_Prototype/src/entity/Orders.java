@@ -48,7 +48,7 @@ public class Orders {
 	public Orders(int subscriberId, String bookBarcode, String bookTitle) {
 		HashMap<String, String> createOrderMap = new HashMap<>();
 		String newOrderDetails = subscriberId + ", " + bookBarcode + ", " + bookTitle;
-		createOrderMap.put("CreateNewOrder", newOrderDetails);
+		createOrderMap.put("Order+CreateNewOrder", newOrderDetails);
 		ClientUI.chat.accept(createOrderMap);
 
 		String NewOrderString = ChatClient.getStringfromServer();
@@ -91,7 +91,7 @@ public class Orders {
 	private String[] getOrderFromDB(int orderNumber) throws NoSuchElementException {
 		// create hashmap to send the server
 		HashMap<String, String> getOrderMap = new HashMap<>();
-		getOrderMap.put("LoadOrder", String.valueOf(orderNumber));
+		getOrderMap.put("Order+LoadOrder", String.valueOf(orderNumber));
 
 		// send to server
 		ClientUI.chat.accept(getOrderMap);
@@ -122,7 +122,7 @@ public class Orders {
 
 	public boolean UpdateDetails() {
 		HashMap<String, String> updateMap = new HashMap<>();
-		updateMap.put("UpdateOrderDetails", toString()); // Using toString to generate a string with all the details
+		updateMap.put("Order+UpdateOrderDetails", toString()); // Using toString to generate a string with all the details
 
 		ClientUI.chat.accept(updateMap);
 		String UpdateStatusString = ChatClient.getStringfromServer();
@@ -143,7 +143,7 @@ public class Orders {
 	private static List<String> getAllActiveOrdersofaBook(String barcode) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetAllActiveOrdersofaBook", barcode);
+		requestHashMap.put("Order+GetAllActiveOrdersofaBook", barcode);
 		ClientUI.chat.accept(requestHashMap);
 		List<String> myOrders = ChatClient.getListfromServer();
 
@@ -195,7 +195,7 @@ public class Orders {
 	public static List<String> getMyActiveOrdersSubscriber(int subID) {
 
 		HashMap<String, String> showOrdersMap = new HashMap<>();
-        showOrdersMap.put("ShowSubscriberActiveOrders", String.valueOf(subID));
+        showOrdersMap.put("Order+ShowSubscriberActiveOrders", String.valueOf(subID));
         ClientUI.chat.accept(showOrdersMap);
         List<String> ordersList = ChatClient.getListfromServer();
 

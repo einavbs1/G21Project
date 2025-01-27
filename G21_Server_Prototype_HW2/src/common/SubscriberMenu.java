@@ -2,10 +2,17 @@ package common;
 
 public enum SubscriberMenu {
 
-///////-----Author: Avishag.-----///////
 	AddNewSubscriber("Add New Subscriber"),
 	GetSubscriberDetails("Get Subscriber Details"),
-	UpdateSubscriber("Update Subscriber");
+	UpdateSubscriber("Update Subscriber"),
+	ShowAllSubscribers("Show All Subscribers"),
+    GetSubscribersIDsAndNames("Get Subscribers IDs And Names"),
+    GetFrozenReportForSubscriber("Get Frozen Report For Subscriber"),
+    AddingNewRecordOfFrozen("Adding New Record Of Frozen"),
+    UpdateRecordOfFrozen("Update Record Of Frozen"),
+    GetSpecificFrozenRecord("Get Specific Frozen Record"),
+    GetStatusReport("Get Status Report"),
+    UpdateSubscribersStatusReport("Update Subscribers Status Report");
 
 	private final String displayName;
 

@@ -3,8 +3,10 @@ package common;
 public enum RemindersMenu {
 
 ///////-----Author: Einav.-----///////
-	CreateReminder("Create Reminder"),
-    GetReminder("Get Reminder");
+	  CreateReminder("Create Reminder"),
+	    GetReminder("Get Reminder"),
+	    UpdateReminderDetails("Update Reminder Details"),
+	    GetNewOldReminders("Get New Old Reminders");
 
 	private final String displayName;
 

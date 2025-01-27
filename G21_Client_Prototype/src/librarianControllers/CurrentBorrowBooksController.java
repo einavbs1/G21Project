@@ -24,6 +24,7 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mainControllers.ConnectionSetupController;
 import entity.*;
 
 /**
@@ -54,6 +55,8 @@ public class CurrentBorrowBooksController {
 	@FXML
 	private Button btnBack = null;
 	@FXML
+	private Button btnLostBook = null;
+	@FXML
 	private Button btnShowAllMyActiveBorrows = null;
 	@FXML
 	private Button btnLoadOneBorrow = null;
@@ -81,6 +84,8 @@ public class CurrentBorrowBooksController {
 	private TableColumn<String, String> colBorrowDate;
 	@FXML
 	private TableColumn<String, String> colExpectReturnDate;
+	@FXML
+	private TableColumn<String, String> colLostBook;
 
 	public static Subscriber mySubscriber;
 
@@ -103,13 +108,14 @@ public class CurrentBorrowBooksController {
 				txtBorrowNumber.setEditable(false);
 				btnLoadOneBorrow.setDisable(true);
 			}
-		}else {
+		} else {
 			loadactiveBorrowRecords(new ArrayList<String>());
 			txtBorrowNumber.setEditable(false);
 			btnLoadOneBorrow.setDisable(true);
 		}
 		txtDaysToExtend.setEditable(false);
 		btnExtendSelectedBorrow.setDisable(true);
+		btnLostBook.setDisable(true);
 		chosenRecord = null;
 		lblSelectedBorrowDetails.setText("");
 		if (!txtBorrowNumber.getText().isEmpty()) {
@@ -154,6 +160,31 @@ public class CurrentBorrowBooksController {
 			return new javafx.beans.property.SimpleStringProperty(parts[5]);
 		});
 
+		colLostBook.setCellValueFactory(cellData -> {
+			String[] parts = cellData.getValue().split(", ");
+			if (Integer.parseInt(parts[6]) > 0) {
+
+				return new javafx.beans.property.SimpleStringProperty("Book Lost");
+			}
+			return new javafx.beans.property.SimpleStringProperty("");
+		});
+
+		colLostBook.setCellFactory(column -> new javafx.scene.control.TableCell<>() {
+			@Override
+			protected void updateItem(String item, boolean empty) {
+				super.updateItem(item, empty);
+				if (item == null || empty) {
+					setText(null);
+					setStyle(""); // Clear style
+				} else {
+					setText(item);
+					if (item.equalsIgnoreCase("Book Lost")) {
+						setTextFill(javafx.scene.paint.Color.RED);
+					}
+				}
+			}
+		});
+
 	}
 
 	/**
@@ -168,7 +199,7 @@ public class CurrentBorrowBooksController {
 	}
 
 	private enum myEnum {
-		checkid, checkBorrow, checkDays;
+		checkid, checkBorrow, checkDays, LostBook;
 	}
 
 	private boolean VerifyInput(myEnum x) {
@@ -213,6 +244,19 @@ public class CurrentBorrowBooksController {
 				return false;
 			}
 			break;
+			
+		case LostBook:
+			if(VerifyInput(myEnum.checkBorrow)) {
+				for (int i = 0; i < tableBorrows.getItems().size(); i++) {
+					String borrowNumber = tableBorrows.getColumns().get(0).getCellData(i).toString();
+					String lostStatus = tableBorrows.getColumns().get(6).getCellData(i).toString();
+					if (borrowNumber.equals(String.valueOf(chosenRecord.getBorrowNumber())) && !lostStatus.equals("Lost Book")) {
+						return true;
+					}
+				}
+				return false;
+			}
+			return false;
 
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + x);
@@ -262,11 +306,12 @@ public class CurrentBorrowBooksController {
 
 	public void btnLoadOneBorrowToEdit(ActionEvent event) {
 		if (VerifyInput(myEnum.checkBorrow)) {
+			btnLostBook.setDisable(false);
 			txtDaysToExtend.setEditable(true);
 			btnExtendSelectedBorrow.setDisable(false);
 			chosenRecord = new BorrowedRecord(Integer.parseInt(txtBorrowNumber.getText()));
 			lblSelectedBorrowDetails.setText("You will extend the borrow id = " + chosenRecord.getBorrowNumber()
-					+ " for book: " + chosenRecord.getBookTitle() + " Current expected return date: "
+					+ " for book: \"" + chosenRecord.getBookTitle() + "\" \nCurrent expected return date: "
 					+ chosenRecord.getBorrowExpectReturnDate());
 		}
 	}
@@ -289,10 +334,36 @@ public class CurrentBorrowBooksController {
 			String daysToExtend = txtDaysToExtend.getText();
 			LocalDate newExpectReturnDate = expectReturnDate_Date.plusDays(Integer.parseInt(daysToExtend));
 
+			Reminders currReminder = new Reminders(chosenRecord.getReminderSerial());
+
+			Date newDateReminder = Date.valueOf(expectReturnDate_Date.plusDays(Integer.parseInt(daysToExtend) - 1));
+			String newMSG = "Reminder to return the book: \"" + chosenRecord.getBookTitle()
+					+ "\" tommorow on the date: " + newExpectReturnDate + ".";
+
+			if (!Date.valueOf(LocalDate.now()).before(currReminder.getDate())) {
+				currReminder = new Reminders(newMSG, mySubscriber.getId(), mySubscriber.getPhoneNumber(),
+						mySubscriber.getEmail(), newDateReminder);
+			} else {
+				currReminder.setMessage(newMSG);
+				currReminder.setSubscriberPhone(mySubscriber.getPhoneNumber());
+				currReminder.setSubscriberEmail(mySubscriber.getEmail());
+				currReminder.setDate(newDateReminder);
+				currReminder.UpdateDetails();
+			}
+			if (!Date.valueOf(LocalDate.now()).before(currReminder.getDate())) {
+				chosenRecord.setReminderSerial(currReminder.getSerial());
+			}
+			BookCopy bookCopyToUpdate = new BookCopy(chosenRecord.getBookBarcode(), chosenRecord.getBookcopyNo());
+			bookCopyToUpdate.setReturnDate(Date.valueOf(newExpectReturnDate));
+			bookCopyToUpdate.UpdateDetails();
 			chosenRecord.setBorrowExpectReturnDate(Date.valueOf(newExpectReturnDate));
 			chosenRecord.setChangedBylibrarianId(ChatClient.getCurrectLibrarian().getId());
 			chosenRecord.setChangedBylibrarianName(ChatClient.getCurrectLibrarian().getName());
 			chosenRecord.setLastChange(Date.valueOf(LocalDate.now()));
+			String activityMsg = "The librarian: " + ChatClient.getCurrectLibrarian().getName()+" has extend your borrow: "
+					+chosenRecord.getBorrowNumber()+" with "+daysToExtend+" days more. (You need to return the book in the date: "+newExpectReturnDate+").";
+			new LogActivity(chosenRecord.getSubscriberId(), activityMsg,
+					chosenRecord.getBookBarcode(), chosenRecord.getBookTitle(), chosenRecord.getBookcopyNo());
 			if (chosenRecord.UpdateBorrowDetails()) {
 				initialize();
 				changeString("Borrow num: " + borrowNumberInput + " extended successfully with " + daysToExtend
@@ -304,16 +375,47 @@ public class CurrentBorrowBooksController {
 		}
 	}
 
+	public void btnLostTheBook(ActionEvent event) {
+		if (VerifyInput(myEnum.LostBook)) {
+			String borrowNumberInput = txtBorrowNumber.getText();
+			Book booktoUpdate = new Book(chosenRecord.getBookBarcode());
+			BookCopy bookCopyToUpdate = new BookCopy(chosenRecord.getBookBarcode(), chosenRecord.getBookcopyNo());
+			try {
+				booktoUpdate.addToLostNumber();
+				booktoUpdate.UpdateDetails();
+
+				bookCopyToUpdate.lostThisCopy(1);
+				bookCopyToUpdate.setReturnDate(null);
+				bookCopyToUpdate.UpdateDetails();
+
+				chosenRecord.setBorrowLostBook(BorrowedRecord.LOSTBOOK);
+				String msgLogActivity = "Lost the book: \"" + chosenRecord.getBookTitle() + "\" on the Date: "
+						+ LocalDate.now();
+				new LogActivity(chosenRecord.getSubscriberId(), msgLogActivity, chosenRecord.getBookBarcode(),
+						chosenRecord.getBookTitle(), chosenRecord.getBookcopyNo());
+				if (chosenRecord.UpdateBorrowDetails()) {
+					initialize();
+					changeString("Borrow num: " + borrowNumberInput
+							+ " has been updated that the subscriber lost the book: " + chosenRecord.getBookTitle(),
+							"#086f03");
+				} else {
+					changeString("Error while update the book to be lost.", "#bf3030");
+				}
+
+			} catch (Exception e) {
+				changeString(e.getMessage(), "#bf3030");
+			}
+
+		}
+	}
+
 	/*
 	 * Author: Yuval. This method is for the exit button sending a message to the
 	 * server that now we are disconnecting, closing the GUI and the connection for
 	 * the server.
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Disconnecting from the Server and ending the program.");
-		HashMap<String, String> EndingConnections = new HashMap<String, String>();
-		EndingConnections.put("Disconnect", "");
-		ClientUI.chat.accept(EndingConnections);
+		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}
 

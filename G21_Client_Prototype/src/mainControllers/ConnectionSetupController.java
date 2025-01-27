@@ -79,7 +79,7 @@ public class ConnectionSetupController {
 
 	public static String startConnectionToServer() {
 		HashMap<String, String> connectionHash = new HashMap<>();
-		connectionHash.put("Connected", localIp);
+		connectionHash.put("Connected+", localIp);
 		ClientUI.chat.accept(connectionHash);
 		
 		return ChatClient.getStringfromServer();
@@ -87,7 +87,7 @@ public class ConnectionSetupController {
 	
 	public static void stopConnectionToServer() {
 		HashMap<String, String> EndingConnections = new HashMap<>();
-	       EndingConnections.put("Disconnect", "");
+	       EndingConnections.put("Disconnect+", "");
 	       ClientUI.chat.accept(EndingConnections);		
 	}
 	

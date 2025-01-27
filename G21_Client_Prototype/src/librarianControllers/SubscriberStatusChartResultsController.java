@@ -26,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import mainControllers.ConnectionSetupController;
 import client.ClientUI;
 import common.LibrarianOptions;
 import common.Month;
@@ -50,6 +51,8 @@ public class SubscriberStatusChartResultsController {
     private Button btnExit = null;
     @FXML
     private Button btnRefresh = null;
+    @FXML
+    private Button btnSpecificSubscriber = null;
     
     @FXML
     private Label lblErrMsg;
@@ -220,13 +223,23 @@ public class SubscriberStatusChartResultsController {
         stage.show();
         ((Node) event.getSource()).getScene().getWindow().hide();
     }
-
+    
+    
+    public void openReportForSpecificSubscriber(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarianGui/SpecificSubscriberChartResults.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/librarianGui/SpecificSubscriberChartResults.css").toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle("Specific Subscriber Chart Results");
+        stage.show();
+        ((Node) event.getSource()).getScene().getWindow().hide();
+    }
+    
     @FXML
     public void getExitBtn(ActionEvent event) throws Exception {
-        System.out.println("Disconnecting from the Server and ending the program.");
-        HashMap<String, String> EndingConnections = new HashMap<>();
-        EndingConnections.put("Disconnect", "");
-        ClientUI.chat.accept(EndingConnections);
-        System.exit(0);
-    }
+		ConnectionSetupController.stopConnectionToServer();
+		System.exit(0);
+	}
 }

@@ -8,29 +8,55 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="486.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="subscriberControllers.ShowMyOrdersController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="subscriberControllers.ShowMyOrdersController">
    <children>
-      <Button id="btnExit" fx:id="btnExit" layoutX="647.0" layoutY="424.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
-      <Button id="btnBack" fx:id="btnBack" layoutX="148.0" layoutY="424.0" mnemonicParsing="false" onAction="#Back" text="Back" />
-      <TextField id="txtOrderNumber" fx:id="txtOrderNumber" layoutX="154.0" layoutY="285.0" promptText="Enter order number" />
-      <Label id="lblOrderNum" fx:id="lblOrderNum" layoutX="21.0" layoutY="289.0" text="Enter Order number:" />
-      <TableView id="ordersTable" fx:id="ordersTable" layoutX="17.0" layoutY="32.0" prefHeight="211.0" prefWidth="800.0">
+      <Button id="btnExit" fx:id="btnExit" layoutX="1007.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button id="btnBack" fx:id="btnBack" layoutX="48.0" layoutY="655.0" mnemonicParsing="false" onAction="#Back" prefHeight="30.0" prefWidth="50.0" text="Back" textFill="#262d71">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <TextField id="txtOrderNumber" fx:id="txtOrderNumber" layoutX="458.0" layoutY="419.0" prefHeight="32.0" prefWidth="200.0" promptText="Enter order number" />
+      <Label id="lblOrderNum" fx:id="lblOrderNum" layoutX="258.0" layoutY="419.0" text="Enter Order number :">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TableView id="ordersTable" fx:id="ordersTable" layoutX="95.0" layoutY="88.0" prefHeight="305.0" prefWidth="913.0">
         <columns>
-          <TableColumn id="orderNumberColumn" fx:id="orderNumberColumn" prefWidth="89.0" text="Order Number" />
-          <TableColumn id="bookBarcodeColumn" fx:id="bookBarcodeColumn" prefWidth="98.0" text="Book Barcode" />
-          <TableColumn id="bookNameColumn" fx:id="bookNameColumn" prefWidth="154.0" text="Book Name" />
-          <TableColumn id="requestedDateColumn" fx:id="requestedDateColumn" prefWidth="128.0" text="Requested Date" />
-          <TableColumn id="statusColumn" fx:id="statusColumn" prefWidth="200.0" text="Status" />
-          <TableColumn id="arrivedDateColumn" fx:id="arrivedDateColumn" prefWidth="131.0" text="Book Arrival Date" />
+          <TableColumn id="orderNumberColumn" fx:id="orderNumberColumn" prefWidth="149.60005950927734" text="Order Number" />
+          <TableColumn id="bookBarcodeColumn" fx:id="bookBarcodeColumn" prefWidth="160.79995727539062" text="Book Barcode" />
+          <TableColumn id="bookNameColumn" fx:id="bookNameColumn" prefWidth="210.40005493164062" text="Book Name" />
+          <TableColumn id="requestedDateColumn" fx:id="requestedDateColumn" prefWidth="146.1334228515625" text="Requested Date" />
+          <TableColumn id="statusColumn" fx:id="statusColumn" prefWidth="112.5333251953125" text="Status" />
+          <TableColumn id="arrivedDateColumn" fx:id="arrivedDateColumn" prefWidth="137.86663818359375" text="Book Arrival Date" />
         </columns>
       </TableView>
-      <Button id="btnLoadOrder" fx:id="btnLoadOrder" layoutX="32.0" layoutY="318.0" mnemonicParsing="false" onAction="#LoadOrderBtn" text="Load Order" />
-      <Label id="lblBookName" fx:id="lblBookName" layoutX="444.0" layoutY="277.0" prefHeight="17.0" prefWidth="248.0" text="Book Name: " />
-      <Label id="lblStatus" fx:id="lblStatus" layoutX="444.0" layoutY="313.0" prefHeight="17.0" prefWidth="228.0" text="Status: " />
-      <Button id="btnCancelOrder" fx:id="btnCancelOrder" layoutX="444.0" layoutY="352.0" mnemonicParsing="false" onAction="#CancelOrderBtn" text="Cancel Order" />
-      <Label id="lblError" fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" layoutX="229.0" layoutY="383.0" prefHeight="84.0" prefWidth="401.0" textAlignment="CENTER" textFill="#47cc7c" wrapText="true">
+      <Button id="btnLoadOrder" fx:id="btnLoadOrder" layoutX="683.0" layoutY="420.0" mnemonicParsing="false" onAction="#LoadOrderBtn" prefHeight="30.0" prefWidth="112.0" text="Load Order" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label id="lblBookName" fx:id="lblBookName" layoutX="430.0" layoutY="475.0" prefHeight="27.0" prefWidth="248.0" text="Book Name: ">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label id="lblStatus" fx:id="lblStatus" layoutX="430.0" layoutY="511.0" prefHeight="27.0" prefWidth="248.0" text="Status: ">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Button id="btnCancelOrder" fx:id="btnCancelOrder" layoutX="493.0" layoutY="548.0" mnemonicParsing="false" onAction="#CancelOrderBtn" prefHeight="30.0" prefWidth="112.0" text="Cancel Order" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label id="lblError" fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" layoutX="349.0" layoutY="588.0" prefHeight="84.0" prefWidth="401.0" textAlignment="CENTER" textFill="#47cc7c" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
+      <Label fx:id="lblTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="15.0" prefHeight="32.0" prefWidth="1066.0" text="My Orders" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

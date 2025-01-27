@@ -1,5 +1,3 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-
 .chart-bar {
     -fx-bar-fill: #3498db; /* Change bar color (blue in this case) */
 }
@@ -18,15 +16,7 @@
     -fx-alignment: CENTER;
 }
 
-
-#btnStudentInfo {
-	/*-fx-background-color: rgba(255, 255, 255, .80);*/
-	-fx-background-color: skyblue;
-	-fx-text-fill: red;
-	-fx-padding: 6 6 6 6;
-	-fx-border-radius: 8;
-	-fx-font-weight : bold;
-}
+/*Background color*/
 .root {
 	-fx-background-color: #c3d5db;
 }

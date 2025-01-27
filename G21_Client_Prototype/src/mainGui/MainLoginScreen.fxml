@@ -3,13 +3,34 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="234.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainControllers.MainLoginScreenController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainControllers.MainLoginScreenController">
    <children>
-      <Button id="btnExit" fx:id="btnExit" layoutX="121.0" layoutY="177.0" mnemonicParsing="false" onAction="#getExitBtn" text="Exit" />
-      <Label id="lblWelcome" fx:id="lblWelcome" alignment="CENTER" layoutX="51.0" layoutY="20.0" prefHeight="25.0" prefWidth="190.0" text="Welcome to G21 Library" textAlignment="CENTER" />
-      <Button id="btnSubscriberLogin" fx:id="btnSubscriberLogin" layoutX="160.0" layoutY="72.0" mnemonicParsing="false" onAction="#SubscriberButton" text="Login as Subscriber" />
-      <Button id="btnLibrarianLogin" fx:id="btnLibrarianLogin" layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onAction="#LibrarianButton" text="Login as Librarian" />
-      <Button id="btnGuestLogin" fx:id="btnGuestLogin" layoutX="86.0" layoutY="118.0" mnemonicParsing="false" onAction="#GuestButton" text="Continue as a guest" />
+      <Button id="btnExit" fx:id="btnExit" layoutX="1005.0" layoutY="655.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label id="lblWelcome" fx:id="lblWelcome" alignment="CENTER" layoutX="16.0" layoutY="184.0" prefHeight="26.0" prefWidth="1070.0" text="G21 Library" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font></Label>
+      <Button id="btnSubscriberLogin" fx:id="btnSubscriberLogin" layoutX="451.0" layoutY="314.0" mnemonicParsing="false" onAction="#SubscriberButton" prefHeight="40.0" prefWidth="200.0" text="Login as Subscriber">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <Button id="btnLibrarianLogin" fx:id="btnLibrarianLogin" layoutX="203.0" layoutY="313.0" mnemonicParsing="false" onAction="#LibrarianButton" prefHeight="40.0" prefWidth="200.0" text="Login as Librarian">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <Button id="btnGuestLogin" fx:id="btnGuestLogin" layoutX="697.0" layoutY="315.0" mnemonicParsing="false" onAction="#GuestButton" prefHeight="40.0" prefWidth="200.0" text="Continue as a guest">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <Label id="lblWelcome" fx:id="lblWelcome1" alignment="CENTER" layoutX="18.0" layoutY="89.0" prefHeight="26.0" prefWidth="1065.0" text="Welcome To B-Lib" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="64.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

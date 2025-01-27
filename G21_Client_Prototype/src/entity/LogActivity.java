@@ -1,6 +1,7 @@
 package entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import client.ChatClient;
@@ -42,14 +43,12 @@ public class LogActivity {
      */
     public LogActivity(int subscriberId, String activityAction, 
     		String bookBarcode, String bookTitle, int bookcopyCopyNo) {
-    	
-    	Date currentDate = new Date(System.currentTimeMillis());
+    	Date currentDate = Date.valueOf(LocalDate.now());
     
     	String newActivityLog = subscriberId + ", " + activityAction + ", " + bookBarcode + ", " + bookTitle + ", "
 				+ bookcopyCopyNo + ", " + currentDate;
-    	
     	HashMap<String, String> addNewActivityLogMap = new HashMap<>();
-		addNewActivityLogMap.put("AddNewLogActivity", newActivityLog);
+		addNewActivityLogMap.put("LogActivity+AddNewLogActivity", newActivityLog);
 		ClientUI.chat.accept(addNewActivityLogMap);
     	
 		String NewActivityLogString = ChatClient.getStringfromServer();
@@ -90,7 +89,7 @@ public class LogActivity {
     private static String[] getActivityBySerial(int serialNumber) {
     	
         HashMap<String, String> loadMap = new HashMap<>();
-        loadMap.put("LoadActivityBySerial", String.valueOf(serialNumber));
+        loadMap.put("LogActivity+LoadActivityBySerial", String.valueOf(serialNumber));
         ClientUI.chat.accept(loadMap);
         
         String resultfromDB = ChatClient.getStringfromServer();
@@ -109,7 +108,7 @@ public class LogActivity {
      */
     public static List<String> loadActivitiesBySubscriberId(int subscriberId) {
         HashMap<String, String> loadMap = new HashMap<>();
-        loadMap.put("LoadActivityById", String.valueOf(subscriberId));
+        loadMap.put("LogActivity+LoadActivityById", String.valueOf(subscriberId));
         
         ClientUI.chat.accept(loadMap);
         

@@ -56,7 +56,7 @@ public class SubscribersStatusReport {
 	private String[] getReportFromDB(int month, int year) throws NoSuchElementException {
 		String str = new String();
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetStatusReport", String.valueOf(month)+", "+String.valueOf(year));
+		requestHashMap.put("Subscriber+GetStatusReport", String.valueOf(month)+", "+String.valueOf(year));
 		ClientUI.chat.accept(requestHashMap);
 		/// send request to DB to get the string.
 		str = ChatClient.getStringfromServer();
@@ -69,23 +69,31 @@ public class SubscribersStatusReport {
 	}
 	
 	
-	 /**
-	    * Loads all notifications from the server and displays them in the table.
-	    * Sends request to server, receives notifications list and updates the table.
-	    *
-	   public static List<String> getAllNotificationsFromDB() {
-	       // Create request HashMap
-	       HashMap<String, String> showNotificationsMap = new HashMap<>();
-	       showNotificationsMap.put("GetAllNotifications", "");
-	       
-	       // Send request to server
-	       ClientUI.chat.accept(showNotificationsMap);
-	       
-	       // Get response from server
-	       List<String> notificationsList = ChatClient.getListfromServer();
-	       
-	       return notificationsList;
-	   }*/
+	/**
+	 * Author: Avishag. After we set the new information that we want to save we
+	 * will send request to DB. see details in the setter section VVV.
+	 */
+	public boolean UpdateDetails() {
+		String newDetails = toString();
+		/// Send the update request to the server
+
+		HashMap<String, String> updateMap = new HashMap<>();
+		updateMap.put("Subscriber+UpdateSubscribersStatusReport", newDetails);
+
+		ClientUI.chat.accept(updateMap);
+		String str = ChatClient.getStringfromServer();
+
+		loadReport(getReportFromDB(month, year));
+
+		if (!str.equals("Updated")) {
+			return false;
+		}
+
+		return true;
+
+	}
+	
+
 	
 	
 	@Override

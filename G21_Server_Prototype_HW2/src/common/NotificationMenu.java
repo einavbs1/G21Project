@@ -4,7 +4,8 @@ public enum NotificationMenu {
 
 ///////-----Author: Einav.-----///////
 	CreateNotification("Create Notification"),
-	GetNotification("Get Notification");
+	GetNotification("Get Notification"),
+	GetNewOldNotifications("Get New Old Notifications");
 
 	private final String displayName;
 

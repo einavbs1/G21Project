@@ -36,7 +36,7 @@ public class ViewRemindersController {
 	private Button btnBack = null;
 	
 	@FXML
-	private Label lblLastCheckedIn;
+	private Label lblLastCheckedDate;
 
 	@FXML
 	private TableView<String> newRemindersTable;
@@ -73,7 +73,7 @@ public class ViewRemindersController {
 	 * automatically called after the FXML file has been loaded.
 	 */
 	public void initialize() {
-		lblLastCheckedIn.setText("Last date checked Reminders: " + ChatClient.getCurrectSubscriber().getLastCheckedReminders());
+		lblLastCheckedDate.setText("Last date checked Reminders: " + ChatClient.getCurrectSubscriber().getLastCheckedReminders());
 		initNewTable();
 		initOldTable();
 		loadNotifications();

@@ -22,7 +22,7 @@ public class Subjects {
 	public static List<String> getAllSubjects(){
 		
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("GetAllSubjects", "");
+		requestHashMap.put("Book+GetAllSubjects", "");
 		ClientUI.chat.accept(requestHashMap);
 		List<String> myRes = ChatClient.getListfromServer();
 		

@@ -193,6 +193,26 @@ public class queriesForSubscriber {
 	}
 	
 	
+	public static List<String> getSubscribersIDsAndNames() {
+        List<String> subscribersList = new ArrayList<>();
+        String query = "SELECT CONCAT(subscriber_id, ', ', subscriber_name) AS subscriber_info FROM subscriber";
+
+        try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+        	
+            while (rs.next()) {
+                String subscriberInfo = rs.getString("subscriber_info");
+                subscribersList.add(subscriberInfo);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return subscribersList;
+    }
+	
+	
 
 /////////////////////// END //////////////////////////////////
 ///////////////////// --- Avishag Subscriber Entity section
@@ -239,6 +259,7 @@ public class queriesForSubscriber {
 	    return subscriberStats;
 	}
 }
+
 
 
 /////////////////////// END amir 19.01.2025 //////////////////////////////////

@@ -6,6 +6,7 @@ import client.ClientUI;
 import client.ChatClient;
 import entity.Subscriber;
 import entity.Book;
+import entity.LogActivity;
 import entity.Orders;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -21,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mainControllers.ConnectionSetupController;
 
 /**
  * This class handles the GUI for ordering books. It allows subscribers to order
@@ -205,9 +207,15 @@ public class OrderBookController {
 				bookToOrder.addToOrdersNumber();
 				bookToOrder.UpdateDetails();
 				
+				String activityMsg = "You ordered the book: " + bookToOrder.getTitle() + " (barcode: "
+						+ bookToOrder.getBarcode() + ").";
+				
+				new LogActivity(currSubscriber.getId(), activityMsg, bookToOrder.getBarcode(), bookToOrder.getTitle(), 0);
+				
 				lblmsgOrder.setTextFill(Paint.valueOf("#086f03"));
 				lblmsgOrder.setText("The order for the book: " + bookToOrder.getTitle() + " (barcode: "
 						+ bookToOrder.getBarcode() + ")\n has been created successfully");
+				
 			} catch (Exception e) {
 				lblmsgOrder.setTextFill(Paint.valueOf("#bf3030"));
 				lblmsgOrder.setText(e.getMessage());
@@ -244,10 +252,7 @@ public class OrderBookController {
 	 */
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("Disconnecting from the Server and ending the program.");
-		HashMap<String, String> EndingConnections = new HashMap<String, String>();
-		EndingConnections.put("Disconnect", "");
-		ClientUI.chat.accept(EndingConnections);
+		ConnectionSetupController.stopConnectionToServer();
 		System.exit(0);
 	}
 }
