@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="subscriberControllers.SubscriberMenuController">
+   <children>
+      <Button id="btnExit" fx:id="btnExit" layoutX="1004.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label id="lblinstructions" fx:id="lblinstructions" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="156.0" prefHeight="18.0" prefWidth="1068.0" text="Please choose the action you wish to perform" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label id="lblHello" fx:id="lblHello" alignment="CENTER" layoutX="17.0" layoutY="109.0" prefHeight="28.0" prefWidth="1067.0" text="Hello Dear ______ ">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Button id="btnLogOut" fx:id="btnLogOut" layoutX="50.0" layoutY="655.0" mnemonicParsing="false" onAction="#LogOutBtn" prefHeight="30.0" prefWidth="80.0" text="Log Out" textFill="#b81212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="17.0" prefHeight="41.0" prefWidth="1068.0" text="Subscriber Menu" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Button id="btnSearchBooks" fx:id="btnSearchBooks" contentDisplay="TOP" layoutX="212.0" layoutY="228.0" mnemonicParsing="false" onAction="#openSearchBooks" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Search Books">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForSubscriberScreens/SearchBooks.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnExtendBorrowRequest" fx:id="btnExtendBorrowRequest" contentDisplay="TOP" layoutX="449.0" layoutY="229.0" mnemonicParsing="false" onAction="#openExtendBorrowRequest" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Extend Borrow Request">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForSubscriberScreens/Extendborrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnOrderBook" fx:id="btnOrderBook" contentDisplay="TOP" layoutX="752.0" layoutY="228.0" mnemonicParsing="false" onAction="#openOrderBook" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Order Book">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForSubscriberScreens/OrderBook.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnViewReminders" fx:id="btnViewReminders" contentDisplay="TOP" layoutX="207.0" layoutY="371.0" mnemonicParsing="false" onAction="#openViewReminders" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="View Remainders">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForSubscriberScreens/ViewRimainders.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnShowMyOrder" fx:id="btnShowMyOrder" contentDisplay="TOP" layoutX="474.0" layoutY="372.0" mnemonicParsing="false" onAction="#openShowMyOrders" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Show My Orders">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForSubscriberScreens/ShowMyOrders.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnUpdateMyData" fx:id="btnUpdateMyData" contentDisplay="TOP" layoutX="737.0" layoutY="372.0" mnemonicParsing="false" onAction="#openUpdateMyData" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Update My Data">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForSubscriberScreens/UpdateMyData.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="btnViewActionsHistory" fx:id="btnViewActionsHistory" contentDisplay="TOP" layoutX="461.0" layoutY="528.0" mnemonicParsing="false" onAction="#openViewActionsHistory" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="View Action History">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="65.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/iconsForSubscriberScreens/ViewActionHistory.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="153.0" fitWidth="80.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/G21Blib.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="966.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/BraudeSemel.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
