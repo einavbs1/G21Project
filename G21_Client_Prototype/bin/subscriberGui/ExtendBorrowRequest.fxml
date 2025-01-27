@@ -26,7 +26,7 @@
             <TableColumn id="colBookCopyNo" fx:id="colBookCopyNo" prefWidth="179.0" text="Book Copy No" />
             <TableColumn id="colBorrowDate" fx:id="colBorrowDate" prefWidth="137.0" text="Borrow Date" />
             <TableColumn id="colExpectReturnDate" fx:id="colExpectReturnDate" prefWidth="161.0" text="Expected Return Date" />
-            <TableColumn id="colExpectReturnDate" fx:id="colLost" prefWidth="91.0" text="Lost" />
+            <TableColumn id="colLost" fx:id="colLost" prefWidth="91.0" text="Lost" />
          </columns>
       </TableView>
       
