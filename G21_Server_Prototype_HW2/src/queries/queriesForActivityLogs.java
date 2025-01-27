@@ -94,7 +94,7 @@ public class queriesForActivityLogs {
 
 	/* ADDED BY AMIR */
 	public static int AddNewLogActivity(int subscriberId, String activityAction, String bookBarcode, String bookTitle,
-			int bookcopyCopyNo, Date activityDate) {
+			Integer bookcopyCopyNo, Date activityDate) {
 		PreparedStatement stmt;
 		try {
 			stmt = mysqlConnection.conn.prepareStatement("INSERT INTO activitylog (subscriber_id, activity_action, book_barcode, book_title, bookcopy_copyNo, activity_date) VALUES (?, ?, ?, ?, ?, ?)",
@@ -104,7 +104,11 @@ public class queriesForActivityLogs {
 			stmt.setString(2, activityAction);
 			stmt.setString(3, bookBarcode);
 			stmt.setString(4, bookTitle);
-			stmt.setObject(5, bookcopyCopyNo);
+			if (bookcopyCopyNo == null) {
+	            stmt.setNull(5, java.sql.Types.INTEGER);
+	        } else {
+	            stmt.setInt(5, bookcopyCopyNo);
+	        }
 			stmt.setDate(6, activityDate);
 
 			stmt.executeUpdate();

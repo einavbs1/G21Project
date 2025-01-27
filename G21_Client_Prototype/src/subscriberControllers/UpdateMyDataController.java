@@ -136,6 +136,7 @@ public class UpdateMyDataController {
 	 */
 	public void UpdateBtn(ActionEvent event) {
 		if (VerifyInput()) {
+			String oldString = me.toString();
 			me.setPhoneNumber(txtPhoneNumber.getText());
 			me.setEmail(txtEmail.getText());
 			me.setPassword(txtPassword.getText());
@@ -143,6 +144,10 @@ public class UpdateMyDataController {
 			if (me.UpdateDetails()) {
 				lblMessage.setText("Updated successfully.");
 				ChatClient.setCurrectSubscriber(me);
+
+				String activityMsg = "You changed your personal information.";
+				new LogActivity(me.getId(), activityMsg, null, null, 0);
+
 			} else {
 				lblMessage.setText("Error while update the details.");
 			}

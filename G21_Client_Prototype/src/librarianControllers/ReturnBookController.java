@@ -134,11 +134,17 @@ public class ReturnBookController {
 						lblsubscriberidmsg);
 				return false;
 			}
-			if (!txtSubscriberId.getText().matches("\\d+")) {
-				changeString("ID number must contain only digits.", "#bf3030", lblsubscriberidmsg);
+			if (!txtSubscriberId.getText().matches("\\d{9}")) {
+				changeString("ID number must contain only 9 digits.", "#bf3030", lblsubscriberidmsg);
 				return false;
 			}
-			break;
+			try {
+				subscriber = new Subscriber(Integer.parseInt(txtSubscriberId.getText()));
+				return true;
+			}catch (Exception e) {
+				changeString(e.getMessage(), "#bf3030", lblsubscriberidmsg);
+				return false;
+			}
 
 		case VerifyBookDetails:
 			if (txtbookBarcode.getText().isEmpty() || txtbookCopyNo.getText().isEmpty()) {
@@ -278,7 +284,7 @@ public class ReturnBookController {
 				mySubBorrowedRecord.UpdateBorrowDetails();
 				LocalDate expectReturnDate = mySubBorrowedRecord.getBorrowExpectReturnDate().toLocalDate();
 				
-				long timeDifferenceDays = ChronoUnit.DAYS.between(currentDate, expectReturnDate);
+				long timeDifferenceDays = ChronoUnit.DAYS.between(expectReturnDate, currentDate);
 				String activityMsg = "You return the book: " + bookCopyToReturn.getTitle();
 				if (timeDifferenceDays > 6) {
 					
@@ -288,8 +294,7 @@ public class ReturnBookController {
 					
 					String msgActivityFrozen = "You account has been frozen for 30 days by the librarian: "
 							+ ChatClient.getCurrectLibrarian().getName() + ". Because of the late return.";
-					new LogActivity(bookCopyToReturn.getSubscriberId(),
-							msgActivityFrozen, bookCopyToReturn.getBarcode(), bookCopyToReturn.getTitle(), bookCopyToReturn.getCopyNo());
+					new LogActivity(subscriber.getId(),msgActivityFrozen, bookCopyToReturn.getBarcode(), bookCopyToReturn.getTitle(), bookCopyToReturn.getCopyNo());
 					
 					Subscriber.addingNewRecordOfFrozen(subscriber.getId(), Date.valueOf(currentDate),
 							Date.valueOf(currentDate.plusDays(30)));
@@ -302,6 +307,7 @@ public class ReturnBookController {
 							+ "The returning of " + bookCopyToReturn.getTitle() + " was successful.");
 
 				} else {
+					lblreturnmsg.setTextFill(Paint.valueOf("#086f03"));
 					lblreturnmsg.setText(
 							"congratulations, The returning of " + bookCopyToReturn.getTitle() + " was successful");
 
@@ -314,13 +320,13 @@ public class ReturnBookController {
 					activityMsg += " This late return was the cause of freezing your subscriptions.";
 				}
 
-				new LogActivity(bookCopyToReturn.getSubscriberId(), activityMsg,
+				new LogActivity(subscriber.getId(), activityMsg,
 						bookCopyToReturn.getBarcode(), bookCopyToReturn.getTitle(), bookCopyToReturn.getCopyNo());
 
 				String ordertoNotifyString = Orders
 						.theFirstOrderToNotifyArrivalOfBook(Orders.checkMyActiveOrders(bookCopyToReturn.getBarcode()));
 
-				if (ordertoNotifyString.contains(",")) {
+				if (ordertoNotifyString != null && ordertoNotifyString.contains(",")) {
 					String[] partStrings = ordertoNotifyString.split(", ");
 					Orders notifyThisOrder = new Orders(Integer.parseInt(partStrings[0]));
 					notifyThisOrder.setBookArrivedDate(Date.valueOf(currentDate));

@@ -42,7 +42,7 @@ public class LogActivity {
      * @param bookcopyCopyNo Copy number of the book (if applicable)
      */
     public LogActivity(int subscriberId, String activityAction, 
-    		String bookBarcode, String bookTitle, int bookcopyCopyNo) {
+    		String bookBarcode, String bookTitle, Integer bookcopyCopyNo) {
     	Date currentDate = Date.valueOf(LocalDate.now());
     
     	String newActivityLog = subscriberId + ", " + activityAction + ", " + bookBarcode + ", " + bookTitle + ", "
@@ -77,7 +77,7 @@ public class LogActivity {
         this.activityAction = str[2];
         this.bookBarcode = str[3];
         this.bookTitle = str[4];
-        this.bookcopyCopyNo = (str[5] != null && !str[5].equals("null")) ? Integer.parseInt(str[5]) : null;
+        this.bookcopyCopyNo = (str[5].equals("null")) ? null :Integer.parseInt(str[5]);
         this.activityDate = Date.valueOf(str[6]);
     }
 

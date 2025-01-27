@@ -25,8 +25,7 @@ public class logActivityServer {
 					activityData[2], // bookBarcode
 					activityData[3], // bookTitle
 					activityData[4].equals("null") ? null : Integer.parseInt(activityData[4]), // bookcopyCopyNo
-					Date.valueOf(activityData[5]) // activityDate
-			);
+					Date.valueOf(activityData[5]));
 			if (NewActivityNumber > 0) {
 				return (String.valueOf(NewActivityNumber));
 			} else {

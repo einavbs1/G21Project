@@ -125,7 +125,7 @@ public class queriesForBorrows {
 			stmt.setDate(1, borrow_expectReturnDate);
 			
 			if(borrow_actualReturnDate == null) {
-				stmt.setNull(3, java.sql.Types.DATE);
+				stmt.setNull(2, java.sql.Types.DATE);
 			}else {
 				stmt.setDate(2, borrow_actualReturnDate);
 			}
@@ -136,7 +136,7 @@ public class queriesForBorrows {
 				stmt.setInt(3, librarianID);
 			}
 			
-			if(librarianName.equals("null")) {
+			if(librarianName == null) {
 				stmt.setNull(4, java.sql.Types.VARCHAR);
 			}else {
 				stmt.setString(4, librarianName);

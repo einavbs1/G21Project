@@ -92,6 +92,7 @@ public class ExtendBorrowRequestController {
 	 */
 	public void initialize() {
 		try {
+			txtBorrowNumber.setText("");
 			List<String> res = BorrowedRecord.getSubscriberActiveBorrowsFromDB(me.getId());
 			loadactiveBorrowRecords(res);
 			initTheTable();
@@ -111,7 +112,9 @@ public class ExtendBorrowRequestController {
 		});
 		PauseTransition pause = new PauseTransition(Duration.seconds(10));
 		pause.setOnFinished(event -> {
-			lbl.setText("");
+			if(lbl.getText().equals(s)) {
+				lbl.setText("");
+			}
 		});
 		pause.play();
 	}
@@ -215,12 +218,12 @@ public class ExtendBorrowRequestController {
 					} else {
 						LocalDate newExpectReturnDate = expectReturnDate.plusDays(7);
 
-						String msgToLib = "The system approved extend return date to the borrow:"
-								+ chosenBorrow.getBorrowNumber() + " of the subscriber: " + me.getId() + "to date: "+ newExpectReturnDate;
+						String msgToLib = "The system approved extend return date to the borrow: \""
+								+ chosenBorrow.getBorrowNumber() + "\" of the subscriber: \"" + me.getId() + "\" to date: "+ newExpectReturnDate;
 						new Notifications(msgToLib, me.getId(), Date.valueOf(LocalDate.now()), chosenBorrow.getBorrowNumber());
 						
-						String activityMsg = "The system approved extend return date to the borrow:"
-								+ chosenBorrow.getBorrowNumber() + " with 7 days to date: "+ newExpectReturnDate;
+						String activityMsg = "The system approved extend return date to the borrow: \""
+								+ chosenBorrow.getBorrowNumber() + "\" with 7 days to date: "+ newExpectReturnDate;
 						new LogActivity(chosenBorrow.getSubscriberId(), activityMsg,
 								chosenBorrow.getBookBarcode(), chosenBorrow.getBookTitle(), chosenBorrow.getBookcopyNo());
 						
@@ -243,15 +246,12 @@ public class ExtendBorrowRequestController {
 						if (!Date.valueOf(LocalDate.now()).before(currReminder.getDate())) {
 							chosenBorrow.setReminderSerial(currReminder.getSerial());
 						}
-						
 						BookCopy bookCopyToUpdate = new BookCopy(chosenBorrow.getBookBarcode(), chosenBorrow.getBookcopyNo());
 						bookCopyToUpdate.setReturnDate(Date.valueOf(newExpectReturnDate));
 						bookCopyToUpdate.UpdateDetails();
-						
 						chosenBorrow.setBorrowExpectReturnDate(Date.valueOf(newExpectReturnDate));
-						
 						if (chosenBorrow.UpdateBorrowDetails()) {
-							changeString("Borrow extended successfully.", lblMessageStatus);
+							changeString(activityMsg, lblMessageStatus);
 							initialize();
 						} else {
 							changeString("Error while update the extend Date", lblErrMessage);

@@ -31,6 +31,7 @@ public class queriesForFrozenSubscribersRecords {
 			stmt.setDate(2, Begin);
 			stmt.setDate(3, End);
 
+			stmt.executeUpdate();
 			// Retrieve the generated key
 			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
 				if (generatedKeys.next()) {

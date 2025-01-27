@@ -30,17 +30,14 @@ public class borrowedRecordServer {
 		// client and sending to the DB.
 		case UpdateBorrowDetails:
 			String updateBorrowRecordsdetails[] = infoFromUser.get(menuChoiceString).split(", ");
-
 			boolean borrowRecordUpdateSuccess = queriesForBorrows.UpdateBorrowedRecord(
 					Integer.parseInt(updateBorrowRecordsdetails[0]), Date.valueOf(updateBorrowRecordsdetails[6]),
 					updateBorrowRecordsdetails[7].equals("null") ? null : Date.valueOf(updateBorrowRecordsdetails[7]),
-					updateBorrowRecordsdetails[8].equals("null") ? null
-							: Integer.valueOf(updateBorrowRecordsdetails[8]),
+					updateBorrowRecordsdetails[8].equals("null") ? null : Integer.valueOf(updateBorrowRecordsdetails[8]),
 					updateBorrowRecordsdetails[9].equals("null") ? null : String.valueOf(updateBorrowRecordsdetails[9]),
 					updateBorrowRecordsdetails[10].equals("null") ? null : Date.valueOf(updateBorrowRecordsdetails[10]),
 					Integer.parseInt(updateBorrowRecordsdetails[11]), Integer.parseInt(updateBorrowRecordsdetails[12]),
 					Integer.parseInt(updateBorrowRecordsdetails[13]));
-
 			if (borrowRecordUpdateSuccess) {
 				return ("Borrow record has been updated");
 			} else {

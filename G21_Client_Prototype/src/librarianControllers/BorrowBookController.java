@@ -124,11 +124,17 @@ public class BorrowBookController {
 						lblsubscriberidmsg);
 				return false;
 			}
-			if (!txtSubscriberId.getText().matches("\\d+")) {
-				changeString("ID number must contain only digits.", "#bf3030", lblsubscriberidmsg);
+			if (!txtSubscriberId.getText().matches("\\d{9}")) {
+				changeString("ID number must contain only 9 digits.", "#bf3030", lblsubscriberidmsg);
 				return false;
 			}
-			break;
+			try {
+				subscriber = new Subscriber(Integer.parseInt(txtSubscriberId.getText()));
+				return true;
+			}catch (Exception e) {
+				changeString(e.getMessage(), "#bf3030", lblsubscriberidmsg);
+				return false;
+			}
 
 		case VerifyBarcode:
 			if (txtbookBarcode.getText().isEmpty()) {

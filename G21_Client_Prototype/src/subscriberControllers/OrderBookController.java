@@ -133,6 +133,12 @@ public class OrderBookController {
 				changeString("You need to load the book first.", "#bf3030", lblmsgMain);
 				return false;
 			}
+			if(bookToOrder.getAvailableCopies() > 0 ) {
+				changeString(
+						"This book exists in the library.\n You can't order it, go to the library and collect it on the shelf: \"" +bookToOrder.getLocation() + "\".",
+						"#bf3030", lblmsgMain);
+				return false;
+			}
 			if(Orders.checkMyActiveOrders(bookToOrder.getBarcode()).size() >= (bookToOrder.getAllCopies() - bookToOrder.getLostNumber())) {
 				changeString(
 						"You can't order this book.\n You can try again in couple days or after the closest return date.",
@@ -177,6 +183,10 @@ public class OrderBookController {
 			} catch (Exception e) {
 				changeString(e.getMessage(), "#bf3030", lblmsgMain);
 			}
+		}else {
+			String toShowString = lblmsgMain.getText();
+			initialize();
+			changeString(toShowString, "#bf3030", lblmsgMain);
 		}
 	}
 	

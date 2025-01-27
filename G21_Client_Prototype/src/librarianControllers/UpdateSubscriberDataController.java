@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+
+import client.ChatClient;
 import client.ClientUI;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -127,6 +129,7 @@ public class UpdateSubscriberDataController {
 	 */
 	public void UpdateBtn(ActionEvent event) {
 		if (!needToLoad && !updated && VerifyInput()) {
+			String oldString = subtoload.toString();
 			subtoload.setName(txtName.getText());
 			subtoload.setEmail(txtEmail.getText());
 			subtoload.setPhoneNumber(txtPhoneNumber.getText());
@@ -151,6 +154,7 @@ public class UpdateSubscriberDataController {
 					int recordTochange = Integer.parseInt(parts[0]);
 					Subscriber.updateRecordOfFrozen(recordTochange, Date.valueOf(parts[2]) ,Date.valueOf(txtFrozenUntil.getText()));
 				}else {
+					 System.out.println("you enter to add froze record");
 					SubscribersStatusReport reportToUpdate = new SubscribersStatusReport(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
 					reportToUpdate.addGotFroze();
 					reportToUpdate.UpdateDetails();
@@ -163,6 +167,10 @@ public class UpdateSubscriberDataController {
 			}
 			if (subtoload.UpdateDetails()) {
 				changeString("Subscriber details has been updated successfully.", "#086f03");
+				
+				String activityMsg = "the librarian: \""+ ChatClient.getCurrectLibrarian().getName() +"\" changed your personal information.";
+				new LogActivity(subtoload.getId(), activityMsg, null, null, null);
+				
 			} else {
 				changeString("Error while saving updating details", "#bf3030");
 			}
