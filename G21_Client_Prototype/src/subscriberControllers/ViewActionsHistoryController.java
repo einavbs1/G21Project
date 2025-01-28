@@ -109,6 +109,7 @@ public class ViewActionsHistoryController {
         });
     }
 
+    
     /**
      * Loads and displays activities for the current subscriber
      */
@@ -117,6 +118,7 @@ public class ViewActionsHistoryController {
         activityLogTable.setItems(FXCollections.observableArrayList(subscriberActivities));
     }
 
+    
     /**
      * Handles the back button action.
      * Returns to the menu screen.
@@ -137,6 +139,7 @@ public class ViewActionsHistoryController {
 		((Node) event.getSource()).getScene().getWindow().hide();
     }
 
+    
     /**
      * Handles the exit button action.
      * Disconnects from the server and exits the application.

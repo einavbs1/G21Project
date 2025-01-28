@@ -10,7 +10,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'FirstMenuMerge' of https://github.com/einavbs1/G21Project.git
 <AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="subscriberControllers.ExtendBorrowRequestController">
    <children>
       <Label id="lblTitle" fx:id="lblTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="14.0" prefHeight="32.0" prefWidth="1065.0" text="Extend Borrow Request" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">

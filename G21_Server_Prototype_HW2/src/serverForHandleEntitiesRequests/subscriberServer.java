@@ -9,8 +9,24 @@ import queries.queriesForFrozenSubscribersRecords;
 import queries.queriesForStatusReport;
 import queries.queriesForSubscriber;
 
+/**
+ * This class is to handle the client requests about the subscriber table.
+ */
 public class subscriberServer {
 
+	
+	/**
+	 * This method is getting the request from the server (that got from the client).
+	 * and handling the client request to the DB.
+	 * 
+	 * @param infoFromUser - hashmap that we get from the client.
+	 **
+	 ** we are getting the request as hashmap from the client.
+	 ** Key = EntityServer + request.
+	 ** Value = Values that need to query. 
+	 *
+	 * @return String (OR) List<String> - very query returning different object
+	 */
 	public static Object handleSubscriberRequests(HashMap<String, String> infoFromUser) {
 
 		String menuChoiceString = (infoFromUser.keySet().iterator().next());
@@ -23,27 +39,32 @@ public class subscriberServer {
 		case ShowAllSubscribers:
 			List<String> TheTable = queriesForSubscriber.GetSubscriberTable();
 			return TheTable;
-
+			
+		// This case retrieves a list of subscriber IDs and names
 		case GetSubscribersIDsAndNames:
 			return (queriesForSubscriber.getSubscribersIDsAndNames());
 
+		// This case adds a new frozen record for a subscriber	
 		case AddingNewRecordOfFrozen:
 			String[] newFrozenSubDataToAdd = infoFromUser.get(menuChoiceString).split(", ");
 			return (queriesForFrozenSubscribersRecords.addNewFrozenRecordToDB(
 					Integer.parseInt(newFrozenSubDataToAdd[0]), Date.valueOf(newFrozenSubDataToAdd[1]),
 					Date.valueOf(newFrozenSubDataToAdd[2])));
-
+		
+		// This case retrieves the frozen report for a specific subscriber.
 		case GetFrozenReportForSubscriber:
 			String[] frozenSubDataToGet = infoFromUser.get(menuChoiceString).split(", ");
 			return (queriesForFrozenSubscribersRecords.GetFrozenReportForSubscriber(
 					Integer.parseInt(frozenSubDataToGet[0]), Integer.valueOf(frozenSubDataToGet[1]),
 					Integer.valueOf(frozenSubDataToGet[2])));
-
+			
+	    // This case retrieves details of a specific frozen record for a subscriber.
 		case GetSpecificFrozenRecord:
 			String[] frozenRecordToSub = infoFromUser.get(menuChoiceString).split(", ");
 			return (queriesForFrozenSubscribersRecords.getRecordOfFrozenDetails(Integer.parseInt(frozenRecordToSub[0]),
 					Date.valueOf(frozenRecordToSub[1])));
 
+		// This case updates an existing frozen record.	
 		case UpdateRecordOfFrozen:
 			String[] frozenRecordToUpdate = infoFromUser.get(menuChoiceString).split(", ");
 			Boolean succToUpdateRecordBoolean = queriesForFrozenSubscribersRecords.updateRecordOfFrozen(
@@ -54,10 +75,8 @@ public class subscriberServer {
 			} else {
 				return ("Error");
 			}
-
-			// Author: Avishag.
-			// This case is getting the information to change from the user and saving in
-			// DB.
+	
+		// This case is getting the information to change from the user and saving in DB.
 		case UpdateSubscriber:
 			String idNinfo[] = infoFromUser.get(menuChoiceString).split(", ");
 			boolean succ3 = queriesForSubscriber.updateSubscriverDetails(Integer.parseInt(idNinfo[0]), idNinfo[1],
@@ -69,8 +88,8 @@ public class subscriberServer {
 				return "Error";
 			}
 
-			// Author: Avishag.
-			// This case is getting the information to add new user and saving in DB.
+
+		// This case is getting the information to add new user and saving in DB.
 		case AddNewSubscriber:
 			String idNinfoNew[] = infoFromUser.get(menuChoiceString).split(", ");
 			boolean succ4 = queriesForSubscriber.addNewSubscriber(Integer.parseInt(idNinfoNew[0]), idNinfoNew[1],
@@ -81,13 +100,14 @@ public class subscriberServer {
 				return "Error";
 			}
 
-			// Author: Avishag.
-			// This case is loading the requested ID from the DB and sending to the client.
+
+		// This case is loading the requested ID from the DB and sending to the client.
 		case GetSubscriberDetails:
 			String RequestedIDToGet = queriesForSubscriber
 					.getSubscriberDetails(Integer.parseInt(infoFromUser.get(menuChoiceString)));
 			return RequestedIDToGet;
 
+		// This case retrieves the Status Report.
 		case GetStatusReport:
 			String statusSubscriberReport[] = infoFromUser.get(menuChoiceString).split(", ");
 			String statusReport = queriesForStatusReport.GetStatusReport(Integer.parseInt(statusSubscriberReport[0]),
@@ -99,7 +119,8 @@ public class subscriberServer {
 				return (queriesForStatusReport.addNewReportToDB(Integer.parseInt(statusSubscriberReport[0]),
 						Integer.parseInt(statusSubscriberReport[1])));
 			}
-			
+
+	    // This case is for Update Subscriber sStatus Report and saving in DB.	
 		case UpdateSubscribersStatusReport:
 			String updateDetailesForReport[] = infoFromUser.get(menuChoiceString).split(", ");
 			boolean succUpdateReport = queriesForStatusReport.updateSubscribersStatusReport(Integer.parseInt(updateDetailesForReport[0]), Integer.parseInt(updateDetailesForReport[1]),

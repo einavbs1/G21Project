@@ -42,6 +42,7 @@ public class EchoServer extends AbstractServer {
 
 		HashMap<String, String> infoFromUser = (HashMap<String, String>) msg;
 		String menuChoiceString = (infoFromUser.keySet().iterator().next());
+		
 		String[] menuSplitString = menuChoiceString.split("\\+");
 
 		echoServerMenu x = echoServerMenu.getSelectionFromEnumName(menuSplitString[0]);

@@ -93,7 +93,8 @@ public class UpdateMyDataController {
 	}
 
 	/**
-	 * Author: Avishag. This method is for the back button closing the current GUI
+	 * Author: Avishag. 
+	 * This method is for the back button closing the current GUI
 	 * and uploading the menu GUI.
 	 * 
 	 * @param event - click on the back button.
@@ -128,7 +129,8 @@ public class UpdateMyDataController {
 	}
 
 	/**
-	 * Author: Avishag. This method is for the update button, sending the
+	 * Author: Avishag. 
+	 * This method is for the update button, sending the
 	 * information to the server about which subscriber to update and what fields to
 	 * change.
 	 * 
@@ -154,6 +156,14 @@ public class UpdateMyDataController {
 		}
 	}
 
+	/**
+	 * Verifies user input for updating details.  
+	 * Ensures all fields are filled, the phone number is exactly 10 digits,  
+	 * and the email follows a valid format.  
+	 * Displays appropriate error messages for invalid cases.
+	 *  
+	 * @return true if the input is valid, otherwise false.
+	 */
 	private boolean VerifyInput() {
 
 		if (txtPhoneNumber.getText().isEmpty() || txtEmail.getText().isEmpty() || txtPassword.getText().isEmpty()) {
@@ -176,7 +186,8 @@ public class UpdateMyDataController {
 	}
 
 	/*
-	 * Author: Avishag. This method is for the exit button sending a message to the
+	 * Author: Avishag. 
+	 * This method is for the exit button sending a message to the
 	 * server that now we are disconnecting, closing the GUI and the connection for
 	 * the server.
 	 */

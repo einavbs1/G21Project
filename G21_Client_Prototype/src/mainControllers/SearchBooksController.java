@@ -83,7 +83,7 @@ public class SearchBooksController {
 	public static List<String> getUnavailableBooks() {
 		return UnavailableBooks;
 	}
-	///////////////////////////////////////////////////////////////////
+
 	
 	/*
 	 * This method is setting the ComboBox with all the subjects
@@ -164,7 +164,7 @@ public class SearchBooksController {
 		}
 	}
 
-	/////////////////////////////////////////////
+
 	/**
 	 *Private enum to make a options to search books: 
 	 */
@@ -174,7 +174,7 @@ public class SearchBooksController {
 		AddKeyWord,
 		SearchByDescription;
 	}
-	/////////////////////////////////////////////
+
 	/**
 	 * This method is starting to search the book by the name if clicked and user entered word to search.
 	 * @param event - the click on search by name button action
@@ -440,9 +440,11 @@ public class SearchBooksController {
 
 	}
 	
-	/*
-	 * This method is for the exit button sending a message to the server that now
-	 * we are disconnecting, closing the GUI and the connection for the server.
+	/**
+	 * This method is for the exit button sending a message to the server that now we are disconnecting,
+	 * closing the GUI and the connection for the server.
+	 * @param event
+	 * @throws Exception
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
 		ConnectionSetupController.stopConnectionToServer();

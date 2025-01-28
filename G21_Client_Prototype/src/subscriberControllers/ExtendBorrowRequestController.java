@@ -1,6 +1,7 @@
 package subscriberControllers;
 
 
+import java.awt.PrintGraphics;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -103,6 +104,7 @@ public class ExtendBorrowRequestController {
 	}
 
 	/**
+	 * Author: Yuval.
 	 * This method is changing the message on the String to 10 seconds
 	 * 
 	 * @param s - the message we want to see on the GUI
@@ -120,6 +122,12 @@ public class ExtendBorrowRequestController {
 		pause.play();
 	}
 
+	/**
+	 * Author: Yuval.
+	 * Initializes the table by setting up cell value factories for each column.  
+	 * The data is split from a comma-separated string, and the "Lost" column  
+	 * displays "Book Lost" in red if the value is 1.
+	 */
 	public void initTheTable() {
 		// Split each row of data (string) and display it in separate columns
 		colBorrowNumber.setCellValueFactory(cellData -> {
@@ -180,7 +188,8 @@ public class ExtendBorrowRequestController {
 	}
 
 	/**
-	 * Author: Yuval. This method is getting list of the active Borrow Record and
+	 * Author: Yuval. 
+	 * This method is getting list of the active Borrow Record and
 	 * uploading it to the table view
 	 * 
 	 * @param activeBorrowRecords - list of the active borrow records.
@@ -189,7 +198,14 @@ public class ExtendBorrowRequestController {
 		// Convert the list to an observable list and set it to the table
 		tableBorrows.setItems(FXCollections.observableArrayList(activeBorrowRecords));
 	}
-
+	
+	/**
+	 * Author: Yuval. 
+	 * Verifies user input for extending a borrow.  
+	 * Ensures the table has borrows, the input is not empty, and contains only digits.  
+	 * Checks if the borrow number exists in the table and is not marked as lost.  
+	 * Displays appropriate error messages for invalid input cases.
+	 */
 	private boolean VerifyInput() {
 		if (tableBorrows.getItems().size() == 0) {
 			changeString("You don't have borrows to extend", lblErrMessage);
@@ -223,7 +239,8 @@ public class ExtendBorrowRequestController {
 	}
 
 	/**
-	 * Author: Yuval. This method is for the extend borrow button, checking if
+	 * Author: Yuval.
+	 * This method is for the extend borrow button, checking if
 	 * extend can be done. sending the information to the server about which borrow
 	 * to extend and which date to. what fields to change.
 	 * 
@@ -298,10 +315,14 @@ public class ExtendBorrowRequestController {
 		}
 	}
 
-	/*
-	 * Author: Yuval. This method is for the exit button sending a message to the
+	/**
+	 * Author: Yuval.
+	 * This method is for the exit button sending a message to the
 	 * server that now we are disconnecting, closing the GUI and the connection for
 	 * the server.
+	 * 
+	 * @param event
+	 * @throws Exception
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
 		ConnectionSetupController.stopConnectionToServer();
@@ -309,7 +330,8 @@ public class ExtendBorrowRequestController {
 	}
 
 	/**
-	 * Author: Yuval. This method is for the back button closing the current GUI and
+	 * Author: Yuval. 
+	 * This method is for the back button closing the current GUI and
 	 * uploading the menu GUI.
 	 * 
 	 * @param event - click on the back button.

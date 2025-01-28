@@ -160,8 +160,11 @@ public class SubscriberMenuController {
 		primaryStage.show();
 	}
 	
-	/*
-	 * This method is for loggin out from the subscriber user and going be to the main login screen.
+
+	/**
+	 * This method is for login out from the subscriber user and going be to the main login screen.
+	 * @param event
+	 * @throws Exception
 	 */
 	public void LogOutBtn(ActionEvent event) throws Exception {
 		ChatClient.setCurrectSubscriber(null);
@@ -178,10 +181,11 @@ public class SubscriberMenuController {
 	}
 	
 	
-
-	/*
-	 * This method is for the exit button sending a message to the server that now
+	/**
+	 *This method is for the exit button sending a message to the server that now
 	 * we are disconnecting, closing the GUI and the connection for the server.
+	 * @param event
+	 * @throws Exception
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
 		ConnectionSetupController.stopConnectionToServer();

@@ -105,9 +105,11 @@ public class MainLoginScreenController {
 
 	}
 
-	/*
-	 * This method is for the exit button sending a message to the server that now
-	 * we are disconnecting, closing the GUI and the connection for the server.
+	/**
+	 * This method is for the exit button sending a message to the server that now we are disconnecting,
+	 * closing the GUI and the connection for the server.
+	 * @param event
+	 * @throws Exception
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
 		ConnectionSetupController.stopConnectionToServer();

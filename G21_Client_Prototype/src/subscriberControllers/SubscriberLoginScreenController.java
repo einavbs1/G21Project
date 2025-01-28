@@ -53,8 +53,6 @@ public class SubscriberLoginScreenController {
 	}
 	
 	
-	
-	
 	/**
 	 * This method is return the main screen of our library.
 	 * @param event - the button action

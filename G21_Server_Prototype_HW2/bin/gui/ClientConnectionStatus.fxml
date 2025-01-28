@@ -9,9 +9,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
 
 <Pane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientConnectionStatusController">
 
+=======
+<Pane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientConnectionStatusController">
+>>>>>>> branch 'FirstMenuMerge' of https://github.com/einavbs1/G21Project.git
    <children>
       <Button fx:id="btnExit" layoutX="1002.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
          <font>
@@ -32,9 +36,13 @@
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
+<<<<<<< HEAD
 
       <Label id="lblNewConnection" fx:id="lblNewConnection" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="542.0" prefHeight="90.0" prefWidth="480.0" textAlignment="CENTER">
 
+=======
+      <Label id="lblNewConnection" fx:id="lblNewConnection" alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="542.0" prefHeight="90.0" prefWidth="576.0" textAlignment="CENTER" wrapText="true">
+>>>>>>> branch 'FirstMenuMerge' of https://github.com/einavbs1/G21Project.git
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
