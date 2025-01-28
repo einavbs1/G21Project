@@ -9,25 +9,31 @@ import java.util.List;
 
 import Server.mysqlConnection;
 
+/**
+ * This class provides methods to interact with the activity logs table.
+ */
 public class queriesForActivityLogs {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////// --- Amir LogActivity Entity
 ////////////////////////////////////////////////////////////////////////////////////////// section---///////////////////////
 
-	/* ADDED BY AMIR */
+	
+	/**
+     * Retrieves all activity logs for a specific subscriber by their ID.
+     *
+     * @param idtoload The ID of the subscriber whose activity logs need to be retrieved.
+     * @return A list of strings, where each string represents an activity log entry
+     *         in the format: "serialid, id, activityaction, bookbarcode, booktitle, copynumber, date".
+     */
 	public static List<String> LoadLogActivitybyid(int idtoload) {
-// SQL query to fetch all rows from LogActivity table for the given
-// subscriber_id
 		String query = "SELECT * FROM activitylog WHERE subscriber_id = ?";
 
 		List<String> subscriberDataList = new ArrayList<>();
 
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
-// Set the value for the placeholder (?) in the query
 			stmt.setInt(1, idtoload);
 
-// Execute the query and get the result set
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					int serialid = rs.getInt("activity_serial");
@@ -38,11 +44,9 @@ public class queriesForActivityLogs {
 					int copynumber = rs.getInt("bookcopy_copyNo");
 					Date date = rs.getDate("activity_date");
 
-// Create a formatted string with the retrieved data
 					String subscriberData = serialid + ", " + id + ", " + activityaction + ", " + bookbarcode + ", "
 							+ booktitle + ", " + copynumber + ", " + date;
 
-// Add the formatted string to the list
 					subscriberDataList.add(subscriberData);
 				}
 			}
@@ -50,27 +54,28 @@ public class queriesForActivityLogs {
 			e.printStackTrace();
 		}
 
-// Return the list of formatted strings
 		return subscriberDataList;
 	}
 
-	/* ADDED BY AMIR */
+	
+	/**
+     * Retrieves a single activity log entry by its serial ID.
+     *
+     * @param serialIdToLoad The serial ID of the activity log to be retrieved.
+     * @return A string representing the activity log entry in the format:
+     *         "serialid, id, activityaction, bookbarcode, booktitle, copynumber, date".
+     *         If no record is found, returns "Record not found".
+     */
 	public static String LoadLogActivityBySerialId(int serialIdToLoad) {
-// SQL query to fetch the row with the given serial ID
 		String query = "SELECT * FROM activitylog WHERE activity_serial = ?";
 
-// Variable to store the resulting data
 		String subscriberData = "Record not found";
 
 		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query)) {
-// Set the value for the placeholder (?) in the query
 			stmt.setInt(1, serialIdToLoad);
 
-// Execute the query and get the result set
 			try (ResultSet rs = stmt.executeQuery()) {
-// Check if a row exists
 				if (rs.next()) {
-// Retrieve column values from the row
 					int serialid = rs.getInt("activity_serial");
 					int id = rs.getInt("subscriber_id");
 					String activityaction = rs.getString("activity_action");
@@ -79,20 +84,30 @@ public class queriesForActivityLogs {
 					String copynumber = rs.getString("bookcopy_copyNo");
 					Date date = rs.getDate("activity_date");
 
-// Create a formatted string with the retrieved data
 					subscriberData = serialid + ", " + id + ", " + activityaction + ", " + bookbarcode + ", "
 							+ booktitle + ", " + copynumber + ", " + date;
 				}
 			}
 		} catch (SQLException e) {
-// Print the stack trace if an SQL exception occurs
 			e.printStackTrace();
 		}
 
 		return subscriberData;
 	}
 
-	/* ADDED BY AMIR */
+	
+	/**
+     * Adds a new activity log entry to the database.
+     *
+     * @param subscriberId     The ID of the subscriber associated with the activity log.
+     * @param activityAction   The action performed (e.g., "borrowed", "returned").
+     * @param bookBarcode      The barcode of the book associated with the activity.
+     * @param bookTitle        The title of the book associated with the activity.
+     * @param bookcopyCopyNo   The copy number of the book, or null if not applicable.
+     * @param activityDate     The date of the activity.
+     * @return The generated key (serial ID) of the newly inserted activity log entry,
+     *         or -1 if the operation failed.
+     */
 	public static int AddNewLogActivity(int subscriberId, String activityAction, String bookBarcode, String bookTitle,
 			Integer bookcopyCopyNo, Date activityDate) {
 		PreparedStatement stmt;
@@ -114,7 +129,6 @@ public class queriesForActivityLogs {
 			stmt.executeUpdate();
 			
 			int generatedKey = -1;
-			// Retrieve the generated key
 			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
 			    if (generatedKeys.next()) {
 			        generatedKey = generatedKeys.getInt(1);

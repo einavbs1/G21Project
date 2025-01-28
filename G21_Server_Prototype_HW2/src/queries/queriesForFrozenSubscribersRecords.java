@@ -13,13 +13,20 @@ import java.util.Map;
 
 import Server.mysqlConnection;
 
+/**
+ * Handles frozen subscriber records, including adding, updating, and retrieving frozen periods.
+ */
 public class queriesForFrozenSubscribersRecords {
 
-//////////////////////////////////////////////////////////////////////////////////////////
-///////////////////// --- Einav Notifications Entity  section---///////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-
+	
+	/**
+     * Adds a new frozen record for a subscriber.
+     *
+     * @param SubscriberID The subscriber ID.
+     * @param Begin        The start date of the frozen period.
+     * @param End          The end date of the frozen period.
+     * @return The generated serial ID for the record, or -1 if failed.
+     */
 	public static int addNewFrozenRecordToDB(int SubscriberID, Date Begin, Date End) {
 		PreparedStatement stmt;
 		int generatedKey = -1;
@@ -47,6 +54,15 @@ public class queriesForFrozenSubscribersRecords {
 	}
 	
 	
+
+    /**
+     * Updates an existing frozen record.
+     *
+     * @param serial The record serial number.
+     * @param Begin  The new start date.
+     * @param End    The new end date.
+     * @return True if the update succeeded, false otherwise.
+     */
 	public static boolean updateRecordOfFrozen(int serial, Date Begin, Date End) {
 
 			String query = "UPDATE FrozenSubscribersRecords SET frozen_beginDate = ?, frozen_untilDate = ?"
@@ -65,7 +81,13 @@ public class queriesForFrozenSubscribersRecords {
 	}
 	
 	
-
+	/**
+     * Retrieves details of a specific frozen record by subscriber ID and end date.
+     *
+     * @param idtoload The subscriber ID.
+     * @param End      The end date of the frozen period.
+     * @return The record details as a string, or "Empty" if not found.
+     */
 	public static String getRecordOfFrozenDetails(int idtoload, Date End) {
 
 		String query = "SELECT * FROM FrozenSubscribersRecords WHERE subscriber_id = ? AND frozen_untilDate = ?";
@@ -93,7 +115,14 @@ public class queriesForFrozenSubscribersRecords {
 
 	}
 	
-
+	 /**
+     * Retrieves a report of all frozen records for a subscriber within a specific month and year.
+     *
+     * @param SubscriberID The subscriber ID.
+     * @param month1       The month (1-12).
+     * @param year1        The year.
+     * @return A list of frozen record details.
+     */
 	public static List<String> GetFrozenReportForSubscriber(int SubscriberID, int month1, int year1) {
 		String query = "SELECT * FROM frozensubscribersrecords"
 					+ " WHERE subscriber_id = ? AND "
@@ -125,10 +154,5 @@ public class queriesForFrozenSubscribersRecords {
 	
 	
 	
-
-/////////////////////// END //////////////////////////////////
-///////////////////// --- Einav Notifications Entity section
-/////////////////////// ---///////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 
 }

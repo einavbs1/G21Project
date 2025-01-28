@@ -9,13 +9,23 @@ import java.util.List;
 
 import Server.mysqlConnection;
 
+
+
+/**
+ * Handles notification management, including adding, retrieving, and classifying notifications.
+ */
 public class queriesForNotifications {
 
-//////////////////////////////////////////////////////////////////////////////////////////
-///////////////////// --- Einav Notifications Entity  section---///////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+     * Adds a new notification to the database.
+     *
+     * @param message   The notification message.
+     * @param subID     The subscriber ID.
+     * @param date      The notification date.
+     * @param borrowNum The related borrow number.
+     * @return The generated notification serial or -1 on failure.
+     */
 	public static int addNewNotificationToDB(String message, int subID, Date date, int borrowNum) {
 		PreparedStatement stmt;
 		try {
@@ -43,6 +53,13 @@ public class queriesForNotifications {
 		}
 	}
 
+	
+	 /**
+     * Retrieves a specific notification by serial.
+     *
+     * @param serial The notification serial.
+     * @return The notification details as a string or "Empty" if not found.
+     */
 	public static String GetNotification(int serial) {
 		String query = "SELECT * FROM notifications WHERE notification_serial = ? ";
 		String NotificationData = "Empty";
@@ -68,10 +85,10 @@ public class queriesForNotifications {
 	}
 
 	/**
-	 * Author: Chen Tsafir Returns all notifications from the database
-	 * 
-	 * @return List<String> List of notifications as strings
-	 */
+     * Retrieves all notifications from the database.
+     *
+     * @return A list of all notifications as strings.
+     */
 	public static List<String> GetAllNotifications() {
 		List<String> notifications = new ArrayList<>();
 		String query = "SELECT * FROM notifications";
@@ -93,7 +110,12 @@ public class queriesForNotifications {
 	}
 	
 	
-	
+	/**
+     * Retrieves notifications and classifies them as "new" or "old" based on the given date.
+     *
+     * @param fromThisDate The date to classify notifications as new or old.
+     * @return A list of classified notifications.
+     */
 	public static List<String> GetNewOldNotifications(Date fromThisDate) {
 	    List<String> notifications = new ArrayList<>();
 	    String query = "SELECT *, CASE WHEN notification_date >= ? THEN 'new' ELSE 'old' END AS notification_type "
@@ -121,9 +143,5 @@ public class queriesForNotifications {
 	    return notifications;
 	}
 
-/////////////////////// END //////////////////////////////////
-///////////////////// --- Einav Notifications Entity section
-/////////////////////// ---///////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 
 }

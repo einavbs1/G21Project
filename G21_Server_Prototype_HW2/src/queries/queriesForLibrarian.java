@@ -8,20 +8,20 @@ import java.sql.Statement;
 
 import Server.mysqlConnection;
 
+/**
+ * Provides methods to manage librarians in the database, including adding, updating, and retrieving librarian details.
+ */
 public class queriesForLibrarian {
 
-	//////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////// --- Yuval librarian Entity
-	////////////////////////////////////////////////////////////////////////////////////////// section---///////////////////////
 
-	/**
-	 * Author: Yuval. This method adds a new librarian to the database.
-	 * 
-	 * @param librarian_id       - librarian ID (PK)
-	 * @param librarian_name     - name of the librarian
-	 * @param librarian_password - password of librarian
-	 * @return True if success to add the librarian
-	 */
+	 /**
+     * Adds a new librarian to the database.
+     *
+     * @param librarian_id       The librarian's ID (primary key).
+     * @param librarian_name     The librarian's name.
+     * @param librarian_password The librarian's password.
+     * @return True if the librarian was added successfully, false otherwise.
+     */
 	public static boolean addNewLibrarian(int librarian_id, String librarian_name, String librarian_password) {
 		PreparedStatement stmt;
 		try {
@@ -40,13 +40,14 @@ public class queriesForLibrarian {
 	}
 
 	/**
-	 * Author: Yuval. This method is getting information to change in the DB
-	 * 
-	 * @param librarian_id       - librarian ID (PK)
-	 * @param librarian_name     - name of the librarian
-	 * @param librarian_password - password of librarian
-	 * @return True if success to save the changes
-	 */
+     * Updates the details of a librarian in the database.
+     *
+     * @param librarian_id               The librarian's ID (primary key).
+     * @param librarian_name             The librarian's name.
+     * @param librarian_password         The librarian's password.
+     * @param lastCheckedNotifications   The date the librarian last checked notifications.
+     * @return True if the update was successful, false otherwise.
+     */
 	public static boolean updateLibrarianDetails(int librarian_id, String librarian_name, String librarian_password, Date lastCheckedNotifications) {
 			
 			String query = "UPDATE librarian SET librarian_name = ?, librarian_password = ?, librarian_lastCheckedNotifications = ?"
@@ -101,10 +102,6 @@ public class queriesForLibrarian {
 		return librarianData;
 	}
 
-	/////////////////////// END //////////////////////////////////
-	///////////////////// --- Yuval librarian Entity section
-	/////////////////////// ---///////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////
 
 	
 }

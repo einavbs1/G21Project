@@ -10,14 +10,23 @@ import java.util.List;
 
 import Server.mysqlConnection;
 
+
+/**
+ * Handles operations related to reminders in the database, including creation, retrieval, and updates.
+ */
 public class queriesForReminders {
 
-	//////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////// --- Einav Reminders Entity
-	////////////////////////////////////////////////////////////////////////////////////////// section---///////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////
 
+	 /**
+     * Adds a new reminder to the database.
+     *
+     * @param message The reminder message.
+     * @param subID   The subscriber ID.
+     * @param subPhone The subscriber phone number.
+     * @param subEmail The subscriber email.
+     * @param date    The date the reminder will be sent.
+     * @return The generated reminder serial or -1 if failed.
+     */
 	public static int addNewReminderToDB(String message, int subID, String subPhone, String subEmail, Date date) {
 		PreparedStatement stmt;
 		try {
@@ -47,6 +56,13 @@ public class queriesForReminders {
 		}
 	}
 
+	
+	/**
+     * Retrieves a reminder by its serial number.
+     *
+     * @param serial The serial number of the reminder.
+     * @return The reminder details as a string or "Empty" if not found.
+     */
 	public static String GetReminder(int serial) {
 		String query = "SELECT * FROM reminders WHERE reminder_serial = ? ";
 		String ReminderData = "Empty";
@@ -72,6 +88,17 @@ public class queriesForReminders {
 		return ReminderData;
 	}
 
+	/**
+     * Updates the details of an existing reminder in the database.
+     *
+     * @param serial   The serial number of the reminder.
+     * @param message  The reminder message.
+     * @param subID    The subscriber ID.
+     * @param phone    The subscriber phone number.
+     * @param email    The subscriber email.
+     * @param datetosend The date the reminder will be sent.
+     * @return True if the update was successful, false otherwise.
+     */
 	public static boolean updateReminderDetails(int serial, String message, int subID, String phone, String email,
 			Date datetosend) {
 
@@ -95,6 +122,14 @@ public class queriesForReminders {
 		}
 	}
 
+	
+	/**
+     * Retrieves reminders for a specific subscriber, classified as new, old, or not sent yet.
+     *
+     * @param fromThisDate The date to classify reminders.
+     * @param subID        The subscriber ID.
+     * @return A list of reminders classified as "new", "old", or "not_sent_yet".
+     */
 	public static List<String> GetNewOldReminders(Date fromThisDate, int subID) {
 		List<String> notifications = new ArrayList<>();
 		Date today = Date.valueOf(LocalDate.now());
@@ -129,9 +164,5 @@ public class queriesForReminders {
 		return notifications;
 	}
 
-	/////////////////////// END //////////////////////////////////
-	///////////////////// --- Einav Reminders Entity section
-	/////////////////////// ---///////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////
 
 }

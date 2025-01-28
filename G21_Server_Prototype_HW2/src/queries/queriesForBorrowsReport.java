@@ -7,13 +7,20 @@ import java.sql.SQLException;
 
 import Server.mysqlConnection;
 
+
+/**
+ * Handles borrow reports, allowing creation and retrieval of monthly reports.
+ */
 public class queriesForBorrowsReport {
 
-//////////////////////////////////////////////////////////////////////////////////////////
-///////////////////// --- Einav Notifications Entity  section---///////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+     * Adds a new borrow report for the given month and year.
+     *
+     * @param month1 The month of the report (1-12).
+     * @param year1  The year of the report.
+     * @return The report data or an error message if a report already exists.
+     */
 	public static String addNewReportToDB(int month1, int year1) {
 		PreparedStatement stmt;
 		String statusReportData = "Empty";
@@ -53,7 +60,13 @@ public class queriesForBorrowsReport {
 
 	}
 
-	
+	/**
+     * Retrieves the borrow report for the given month and year.
+     *
+     * @param month1 The month of the report (1-12).
+     * @param year1  The year of the report.
+     * @return The report data or "Empty" if no report exists.
+     */
 	public static String GetStatusReport(int month1, int year1) {
 		String query = "SELECT * FROM BorrowsReturnReport WHERE borrowsReport_month = ? and borrowsReport_year = ?";
 		String statusReportData = "Empty";
@@ -81,10 +94,5 @@ public class queriesForBorrowsReport {
 
 		return statusReportData;
 	}
-
-/////////////////////// END //////////////////////////////////
-///////////////////// --- Einav Notifications Entity section
-/////////////////////// ---///////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 
 }

@@ -8,27 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 import Server.mysqlConnection;
 
+/**
+ * This class provides methods to interact with the borrowed records in the database.
+ */
 public class queriesForBorrows {
 
-	//////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////// --- Matan Borrow Entity section---///////////////////////
 
 	/**
-	 * Author: Matan send request to DB to create new borrowed record
-	 * 
-	 * @param borrow_number
-	 * @param subscriber_id
-	 * @param book_barcode
-	 * @param book_title
-	 * @param bookcopy_copyNo
-	 * @param borrow_date
-	 * @param borrow_expectReturnDate
-	 * @param borrow_actualReturnDate
-	 * @param librarian_id
-	 * @param librarian_name
-	 * @param borrow_lostBook
-	 * @return
-	 */
+     * Creates a new borrowed record in the database.
+     *
+     * @param subscriber_id The ID of the subscriber.
+     * @param book_barcode  The barcode of the borrowed book.
+     * @param book_title    The title of the borrowed book.
+     * @param bookcopy_copyNo The copy number of the book.
+     * @param borrow_date   The borrow date.
+     * @param borrow_expectReturnDate The expected return date.
+     * @param reminder_serial The reminder serial number.
+     * @return The ID of the created borrowed record or -1 if an error occurs.
+     */
 	public static int createNewBorrowedRecord(int subscriber_id, String book_barcode, String book_title,
 			int bookcopy_copyNo, Date borrow_date, Date borrow_expectReturnDate, int reminder_serial) {
 		PreparedStatement stmt;
@@ -59,11 +56,11 @@ public class queriesForBorrows {
 	}
 
 	/**
-	 * Author: Matan return borrowedRecord string by borrowNumber from DB
-	 * 
-	 * @param borrowNumber
-	 * @return
-	 */
+     * Retrieves a borrowed record by its borrow number.
+     *
+     * @param borrowNumber The borrow record number.
+     * @return A string representing the borrowed record, or "Empty" if not found.
+     */
 	public static String getBorrowedRecordFromDB(int borrowNumber) {
 
 		String query = "SELECT * FROM borrowedrecords WHERE borrow_number = ?";
@@ -106,14 +103,19 @@ public class queriesForBorrows {
 	}
 
 	/**
-	 * Author: Matan update borrow return date and if the book lost
-	 * 
-	 * @param borrow_number
-	 * @param borrow_expectReturnDate
-	 * @param borrow_actualReturnDate
-	 * @param borrow_lostBook
-	 * @return
-	 */
+     * Updates the details of a borrowed record.
+     *
+     * @param borrow_number The borrow record number.
+     * @param borrow_expectReturnDate The expected return date.
+     * @param borrow_actualReturnDate The actual return date.
+     * @param librarianID   The librarian's ID who updated the record.
+     * @param librarianName The librarian's name who updated the record.
+     * @param lastChange    The date of the last update.
+     * @param borrow_lostBook The status of whether the book is lost.
+     * @param borrow_status The status of the borrow record.
+     * @param reminder_serial The reminder serial number.
+     * @return {@code true} if the update was successful, {@code false} otherwise.
+     */
 	public static boolean UpdateBorrowedRecord(int borrow_number, Date borrow_expectReturnDate, Date borrow_actualReturnDate,
 			Integer librarianID, String librarianName, Date lastChange, int borrow_lostBook, int borrow_status, int reminder_serial) {
 		String query = "UPDATE borrowedrecords SET borrow_expectReturnDate = ?, borrow_actualReturnDate = ?, borrow_changedBylibrarian_id = ?,"
@@ -164,17 +166,12 @@ public class queriesForBorrows {
 		}
 	}
 
-	/////////////////////// END //////////////////////////////////
-	///////////////////// --- Matan Borrow Entity section ---///////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////
-
 	/**
-	 * Author: Yuval. This method is returning the list of active borrow records for
-	 * a specific subscriber from the DB.
-	 * 
-	 * @param subscriber_id
-	 * @return List of active borrow records
-	 */
+     * Retrieves a list of active borrow records for a specific subscriber.
+     *
+     * @param subscriber_id The subscriber's ID.
+     * @return A list of strings representing active borrow records.
+     */
 	public static List<String> getAllSubscriberActiveBorrowRecordsFromDB(int subscriber_id) {
 
 		List<String> activeBorrowRecords = new ArrayList<>();
@@ -205,6 +202,13 @@ public class queriesForBorrows {
 		return activeBorrowRecords;
 	}
 
+	 /**
+     * Generates a borrow statistics report for a specific date.
+     *
+     * @param month The month of the records.
+     * @param year  The year of the records.
+     * @return A string containing the statistics.
+     */
 	public static String getBorrowsOfSpecificDate(int month, int year) {
 
 		String borrowsReportData = "Empty";
@@ -244,7 +248,16 @@ public class queriesForBorrows {
 	}
 	
 	
-	
+	/**
+	 * Generates a borrow statistics report for a specific book in a given month and year.
+	 *
+	 * @param barcode The barcode of the book.
+	 * @param month   The month of the records (1-12).
+	 * @param year    The year of the records.
+	 * @return A string containing the statistics in the format:
+	 *         "totalBorrows, returnInTime, lateReturn, returnBeforeTime, notReturnedYet, lostBooks".
+	 *         Returns "0, 0, 0, 0, 0, 0" if no records are found.
+	 */
 	public static String getBorrowsOfBookInSpecificDate(String barcode,int month, int year) {
 
 		String borrowsReportData = "Empty";
@@ -282,56 +295,6 @@ public class queriesForBorrows {
 			e.printStackTrace();
 		}
 		return borrowsReportData;
-	}
-
-	// added by amir 18.1
-
-	/**
-	 * Gets borrowed books statistics for the current month
-	 * 
-	 * @return List of borrowed books with loan duration details for the current
-	 *         month
-	 */
-	public static List<String> getMonthlyBorrowedBooksStats() {
-		ArrayList<String> monthlyBorrows = new ArrayList<>();
-
-		String query = "SELECT br.*, "
-				+ "DATEDIFF(COALESCE(br.borrow_actualReturnDate, CURRENT_DATE), br.borrow_date) as loan_duration, "
-				+ "CASE WHEN br.borrow_actualReturnDate IS NULL THEN "
-				+ "    DATEDIFF(CURRENT_DATE, br.borrow_expectReturnDate) " + "ELSE "
-				+ "    DATEDIFF(br.borrow_actualReturnDate, br.borrow_expectReturnDate) " + "END as delay_days "
-				+ "FROM borrowedrecords br " + "WHERE (YEAR(br.borrow_date) = YEAR(CURRENT_DATE) AND "
-				+ "       MONTH(br.borrow_date) = MONTH(CURRENT_DATE)) OR "
-				+ "      (br.borrow_actualReturnDate IS NULL) " + "ORDER BY loan_duration DESC";
-
-		try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query);
-				ResultSet rs = stmt.executeQuery()) {
-
-			while (rs.next()) {
-				int borrow_number = rs.getInt("borrow_number");
-				int subscriber_id = rs.getInt("subscriber_id");
-				String book_barcode = rs.getString("book_barcode");
-				String book_title = rs.getString("book_title");
-				int bookcopy_copyNo = rs.getInt("bookcopy_copyNo");
-				String borrow_date = rs.getString("borrow_date");
-				String borrow_expectReturnDate = rs.getString("borrow_expectReturnDate");
-				String borrow_actualReturnDate = rs.getString("borrow_actualReturnDate");
-				int librarian_id = rs.getInt("librarian_id");
-				int loan_duration = rs.getInt("loan_duration");
-				int delay_days = rs.getInt("delay_days");
-
-				String borrowRecord = borrow_number + ", " + subscriber_id + ", " + book_barcode + ", " + book_title
-						+ ", " + bookcopy_copyNo + ", " + borrow_date + ", " + borrow_expectReturnDate + ", "
-						+ borrow_actualReturnDate + ", " + librarian_id + ", " + loan_duration + ", "
-						+ (delay_days > 0 ? delay_days : 0);
-
-				monthlyBorrows.add(borrowRecord);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return monthlyBorrows;
 	}
 
 }

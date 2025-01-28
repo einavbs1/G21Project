@@ -14,12 +14,6 @@ import java.util.List;
 /*
  * This class is connect to mySQL DB for G21-prototype server. 
  */
-/**
- * 
- */
-/**
- * 
- */
 public class mysqlConnection {
 
 	public static Connection conn;
@@ -49,74 +43,6 @@ public class mysqlConnection {
 			ret = ret + ("\nVendorError: " + ex.getErrorCode());
 		}
 		return ret;
-
-	}
-
-	/**
-	 * This method is getting information to change in the DB
-	 * 
-	 * @param id       - subscriber ID (PK)
-	 * @param phonenum - Phone number to change to the subscriber
-	 * @return True if success to save the changes
-	 */
-	public static boolean updatephone(int id, String phonenum) {
-		PreparedStatement stmt;
-		try {
-			stmt = conn.prepareStatement("UPDATE subscriber SET subscriber_phone_number = \"" + phonenum
-					+ "\" WHERE  subscriber_id = \"" + id + "\"");
-			stmt.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	/**
-	 * This method is getting information to change in the DB
-	 * 
-	 * @param id    - subscriber ID (PK)
-	 * @param email - Email address to change to the subscriber
-	 * @return True if success to save the changes
-	 */
-	public static boolean updatemail(int id, String email) {
-		PreparedStatement stmt;
-		try {
-			stmt = conn.prepareStatement(
-					"UPDATE subscriber SET subscriber_email = \"" + email + "\" WHERE  subscriber_id = \"" + id + "\"");
-			stmt.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	/**Author: Avishag. - old one! not me :)
-	 * This method is getting ID and returning String of his data
-	 * 
-	 * @param idtoload - ID that client ask his details
-	 * @return String of this subscriber
-	 */
-	public static String Load(int idtoload) {
-		String query = "SELECT * FROM subscriber WHERE  subscriber_id = \"" + idtoload + "\"";
-		String subscriberData = new String("Empty");
-		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-			while (rs.next()) {
-				int id = rs.getInt("subscriber_id");
-				String name = rs.getString("subscriber_name");
-				int history = rs.getInt("detailed_subscription_history");
-				String phoneNumber = rs.getString("subscriber_phone_number");
-				String email = rs.getString("subscriber_email");
-
-				// Create a formatted string with the subscriber's information
-				subscriberData = id + ", " + name + ", " + history + ", " + phoneNumber + ", " + email;
-				return subscriberData;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return subscriberData;
 
 	}
 	

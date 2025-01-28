@@ -13,13 +13,20 @@ import java.util.Map;
 
 import Server.mysqlConnection;
 
+
+/**
+ * Handles operations related to subscriber status reports in the database.
+ */
 public class queriesForStatusReport {
 
-//////////////////////////////////////////////////////////////////////////////////////////
-///////////////////// --- Einav Notifications Entity  section---///////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+     * Adds a new subscriber status report to the database.
+     *
+     * @param month1 The month of the report.
+     * @param year1  The year of the report.
+     * @return The status report details or an error message if it already exists.
+     */
 	public static String addNewReportToDB(int month1, int year1) {
 		PreparedStatement stmt;
 		String statusReportData = "Empty";
@@ -60,6 +67,14 @@ public class queriesForStatusReport {
 		return statusReportData;
 	}
 
+	
+	/**
+     * Retrieves a subscriber status report from the database.
+     *
+     * @param month1 The month of the report.
+     * @param year1  The year of the report.
+     * @return The status report details or "Empty" if not found.
+     */
 	public static String GetStatusReport(int month1, int year1) {
 		String query = "SELECT * FROM SubscribersStatusReport WHERE statusReport_month = ? and statusReport_year = ?";
 		String statusReportData = "Empty";
@@ -89,6 +104,20 @@ public class queriesForStatusReport {
 		return statusReportData;
 	}
 
+	
+	/**
+     * Updates a subscriber status report in the database.
+     *
+     * @param month1    The month of the report.
+     * @param year1     The year of the report.
+     * @param active    The number of active subscribers.
+     * @param frozen    The number of frozen subscribers.
+     * @param gotfroze  The number of subscribers who were frozen.
+     * @param unfroze   The number of subscribers who were unfrozen.
+     * @param newSubs   The number of new subscribers.
+     * @param totalSubs The total number of subscribers.
+     * @return True if the update was successful, false otherwise.
+     */
 	public static boolean updateSubscribersStatusReport(int month1, int year1, int active, int frozen, int gotfroze,
 			int unfroze, int newSubs, int totalSubs) {
 
@@ -114,9 +143,5 @@ public class queriesForStatusReport {
 		}
 	}
 
-/////////////////////// END //////////////////////////////////
-///////////////////// --- Einav Notifications Entity section
-/////////////////////// ---///////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 
 }

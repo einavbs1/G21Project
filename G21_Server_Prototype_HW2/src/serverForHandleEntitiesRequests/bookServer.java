@@ -7,8 +7,23 @@ import common.*;
 import queries.queriesForBooks;
 import queries.queriesForSubjects;
 
+/**
+ * This class is to handle the client requests about the books table.
+ */
 public class bookServer {
 
+	/**
+	 * This method is getting the request from the server (that got from the client).
+	 * and handling the client request to the DB.
+	 * 
+	 * @param infoFromUser - hashmap that we get from the client.
+	 **
+	 ** we are getting the request as hashmap from the client.
+	 ** Key = EntityServer + request.
+	 ** Value = Values that need to query. 
+	 *
+	 * @return String (OR) List<String> - very query returning different object
+	 */
 	public static Object handleBookRequests(HashMap<String, String> infoFromUser) {
 
 		String menuChoiceString = (infoFromUser.keySet().iterator().next());

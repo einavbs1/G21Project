@@ -13,10 +13,9 @@ public class queriesForSubjects {
 	
 	
 	/**
-	 * Author: Einav This method is returning book list of the like the name.
+	 * Author: Einav This method is returning lift of all subjects.
 	 * 
-	 * @param bookname
-	 * @return List of books that match the name 
+	 * @return List of all subjects 
 	 */
 	public static List<String> getAllSubjects() {
 		String query = "SELECT * FROM bookssubjects";

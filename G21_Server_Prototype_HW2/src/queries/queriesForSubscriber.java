@@ -167,7 +167,11 @@ public class queriesForSubscriber {
 	    return subscribers;
 	}
 	
-	
+	/**
+     * Retrieves the count of subscribers grouped by their status (Active or Frozen).
+     *
+     * @return A map containing the count of subscribers for each status.
+     */
 	public static Map<String, Integer> GetSubscriberStatusCount() {
 	    Map<String, Integer> statusCounts = new HashMap<>();
 	    statusCounts.put("Active", 0);
@@ -193,6 +197,11 @@ public class queriesForSubscriber {
 	}
 	
 	
+	 /**
+     * Retrieves a list of subscribers with their IDs and names in a concatenated format.
+     *
+     * @return A list of strings containing subscriber IDs and names.
+     */
 	public static List<String> getSubscribersIDsAndNames() {
         List<String> subscribersList = new ArrayList<>();
         String query = "SELECT CONCAT(subscriber_id, ', ', subscriber_name) AS subscriber_info FROM subscriber";
@@ -212,6 +221,8 @@ public class queriesForSubscriber {
         return subscribersList;
     }
 	
+}
+	
 	
 
 /////////////////////// END //////////////////////////////////
@@ -219,48 +230,4 @@ public class queriesForSubscriber {
 /////////////////////// ---///////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-
-	
-	
-/////////////////////// start amir 19.01.2025 //////////////////////////////////
-
-	
-	/**
-	 * Gets monthly subscriber status statistics
-	 * @return List of subscribers with their current status details
-	 */
-	public static List<String> getMonthlySubscriberStats() {
-	    ArrayList<String> subscriberStats = new ArrayList<>();
-	    
-	    String query = "SELECT DISTINCT s.subscriber_id, s.subscriber_name, s.status " +
-	                  "FROM subscriber s " +
-	                  "ORDER BY s.subscriber_id";
-
-	    try (PreparedStatement stmt = mysqlConnection.conn.prepareStatement(query);
-	         ResultSet rs = stmt.executeQuery()) {
-	        
-	        while (rs.next()) {
-	            int subscriber_id = rs.getInt("subscriber_id");
-	            String subscriber_name = rs.getString("subscriber_name");
-	            String status = rs.getString("status");
-	            
-	            String subscriberRecord = String.format("%d, %s, %s",
-	                subscriber_id,
-	                subscriber_name,
-	                status
-	            );
-	            
-	            subscriberStats.add(subscriberRecord);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-	    return subscriberStats;
-	}
-}
-
-
-
-/////////////////////// END amir 19.01.2025 //////////////////////////////////
 

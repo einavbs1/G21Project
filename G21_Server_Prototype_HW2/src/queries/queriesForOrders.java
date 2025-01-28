@@ -12,23 +12,22 @@ import java.util.List;
 
 import Server.mysqlConnection;
 
+
+/**
+ * Handles operations related to orders in the database, such as creating, retrieving, and updating orders.
+ */
 public class queriesForOrders {
 	
 	
-	//////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////// --- Chen Orders Entity section---///////////////////////
 
-	/**
-	 * Author: Chen Creates a new order in the database.
-	 *
-	 * @param subscriberId The ID of the subscriber making the order
-	 * @param bookBarcode The barcode of the book being ordered
-	 * @return int The new order number if successful, -1 if failed
-	 * 
-	 *         Note: This method automatically: - Generates the next available order
-	 *         number - Sets the request date to current date - Sets the initial
-	 *         status to 0 (pending)
-	 */
+	 /**
+     * Creates a new order in the database.
+     *
+     * @param subscriberId The ID of the subscriber making the order.
+     * @param bookBarcode  The barcode of the book being ordered.
+     * @param bookTitle    The title of the book being ordered.
+     * @return The new order number if successful, -1 otherwise.
+     */
 	public static int createOrder(int subscriberId, String bookBarcode, String bookTitle) {
 		PreparedStatement stmt;
 		try {
@@ -56,12 +55,10 @@ public class queriesForOrders {
 	}
 
 	/**
-	 * Author: Chen Retrieves all orders from the database.
-	 * 
-	 * @return List<String> A list of strings, each representing an order with its
-	 *         details in the format: "orderNumber, subscriberId, bookBarcode,
-	 *         requestDate, status, arrivedDate"
-	 */
+     * Retrieves all orders from the database.
+     *
+     * @return A list of all orders as strings.
+     */
 	public static List<String> GetOrdersTable() {
 		List<String> orders = new ArrayList<>();
 		String query = "SELECT * FROM Orders";
@@ -80,12 +77,11 @@ public class queriesForOrders {
 	}
 
 	/**
-	 * Author: Chen Loads a specific order from the database.
-	 * 
-	 * @param orderNumber The unique identifier of the order to load
-	 * @return String The order details as a comma-separated string, or "Empty" if
-	 *         not found
-	 */
+     * Loads a specific order by its order number.
+     *
+     * @param orderNumber The order number.
+     * @return The order details as a string or "Empty" if not found.
+     */
 
 	public static String LoadOrder(int orderNumber) {
 		String query = "SELECT * FROM Orders WHERE order_number = ?";
@@ -107,18 +103,17 @@ public class queriesForOrders {
 	}
 
 	/**
-	 * Author: Chen Updates an existing order's details in the database.
-	 * 
-	 * @param orderNumber  The unique identifier of the order to update
-	 * @param subscriberId The ID of the subscriber associated with the order
-	 * @param bookBarcode  The barcode of the book being ordered
-	 * @param copyNo       The copy number of the book
-	 * @param requestDate  The date when the order was requested
-	 * @param status       The new status of the order (-1: cancelled, 0: pending,
-	 *                     1: fulfilled)
-	 * @param arrivedDate  The date when the book arrived (can be null)
-	 * @return boolean True if update was successful, false otherwise
-	 */
+     * Updates the details of an existing order.
+     *
+     * @param orderNumber  The order number.
+     * @param subscriberId The subscriber ID.
+     * @param bookBarcode  The book barcode.
+     * @param bookTitle    The book title.
+     * @param requestDate  The request date.
+     * @param status       The status of the order.
+     * @param arrivedDate  The arrival date (nullable).
+     * @return True if the update was successful, false otherwise.
+     */
 	public static boolean updateOrderDetails(int orderNumber, int subscriberId, String bookBarcode, String bookTitle,
 			Date requestDate, int status, Date arrivedDate) {
 		try {
@@ -149,11 +144,11 @@ public class queriesForOrders {
 	
 	
 	/**
-	 * Author: Matan This method is returning order list of specific book.
-	 * 
-	 * @param barcode - the barcode on the requested book
-	 * @return List of copybooks on this book barcode
-	 */
+     * Retrieves all active orders for a specific book.
+     *
+     * @param barcode The book barcode.
+     * @return A list of active orders for the book.
+     */
 	public static List<String> GetAllMyActiveOrders(String barcode) {
 		String query = "SELECT * FROM orders WHERE book_barcode = ? AND order_status IN (1, 2)";
 		String bookcopyData = new String();
@@ -185,12 +180,11 @@ public class queriesForOrders {
 
 	
 	/**
-	 * Author: Chen
-	 * Retrieves all orders for a specific subscriber from the database.
-	 * 
-	 * @param subscriberId The ID of the subscriber whose orders we want to fetch
-	 * @return List<String> A list of strings, each representing an order
-	 */
+     * Retrieves all orders for a specific subscriber.
+     *
+     * @param subscriberId The subscriber ID.
+     * @return A list of all orders for the subscriber.
+     */
 	public static List<String> GetOrdersBySubscriber(int subscriberId) {
 	    List<String> orders = new ArrayList<>();
 	    String query = "SELECT * FROM Orders WHERE subscriber_id = ?";
@@ -216,12 +210,11 @@ public class queriesForOrders {
 	}
 	
 	/**
-	 * Author: Chen
-	 * Returns the number of active orders for a specific book.
-	 * 
-	 * @param bookBarcode The barcode of the book to check
-	 * @return int Number of active orders for this book
-	 */
+     * Gets the count of active orders for a specific book.
+     *
+     * @param bookBarcode The book barcode.
+     * @return The count of active orders.
+     */
 	public static int getActiveOrdersCountForBook(String bookBarcode) {
 	    String query = "SELECT COUNT(*) FROM Orders WHERE book_barcode = ? AND order_status IN (1, 2)";
 	    try (PreparedStatement pstmt = mysqlConnection.conn.prepareStatement(query)) {
@@ -238,9 +231,6 @@ public class queriesForOrders {
 
 
 			
-	/////////////////////// END //////////////////////////////////
-	///////////////////// --- Chen Orders Entity section ---///////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////
 
 
 }

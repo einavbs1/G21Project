@@ -10,8 +10,23 @@ import queries.queriesForBooks;
 import queries.queriesForBorrows;
 import queries.queriesForBorrowsReport;
 
+/**
+ * This class is to handle the client requests about the borrowed Record table.
+ */
 public class borrowedRecordServer {
 
+	/**
+	 * This method is getting the request from the server (that got from the client).
+	 * and handling the client request to the DB.
+	 * 
+	 * @param infoFromUser - hashmap that we get from the client.
+	 **
+	 ** we are getting the request as hashmap from the client.
+	 ** Key = EntityServer + request.
+	 ** Value = Values that need to query. 
+	 *
+	 * @return String (OR) List<String> - very query returning different object
+	 */
 	public static Object handleBorrowedRecordRequests(HashMap<String, String> infoFromUser) {
 
 		String menuChoiceString = (infoFromUser.keySet().iterator().next());

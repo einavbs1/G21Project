@@ -8,26 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 import Server.mysqlConnection;
 
+/**
+ * This class provides methods to interact with the books and book copies in the database.
+ */
 public class queriesForBooks {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////// --- Einavs books Entity section---///////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-	/**
-	 * Author: Einav This method is getting all information to create new Book in DB
-	 * 
-	 * @param barcode
-	 * @param title
-	 * @param subject
-	 * @param description
-	 * @param allCopies
-	 * @param availableCopies
-	 * @param ordersNumber
-	 * @param lostNumber
-	 * @param location
-	 * @return
-	 */
+	 /**
+     * Adds a new book to the database.
+     *
+     * @param barcode          The barcode of the book.
+     * @param title            The title of the book.
+     * @param subject          The subject of the book.
+     * @param description      A description of the book.
+     * @param allCopies        The total number of copies available for this book.
+     * @param availableCopies  The number of currently available copies.
+     * @param ordersNumber     The number of orders placed for this book.
+     * @param lostNumber       The number of lost copies of this book.
+     * @param location         The location of the book in the library.
+     * @return {@code true} if the book was successfully added, {@code false} otherwise.
+     */
 	public static boolean addNewBookToDB(String barcode, String title, String subject, String description,
 			int allCopies, int availableCopies, int ordersNumber, int lostNumber, String location) {
 		PreparedStatement stmt;
@@ -52,12 +55,15 @@ public class queriesForBooks {
 		}
 	}
 
-	/**
-	 * Author: Einav This method is returning book string by his barcode.
-	 * 
-	 * @param barcode
-	 * @return String of the requested book
-	 */
+	 /**
+     * Retrieves a book from the database based on its barcode.
+     *
+     * @param barcode The barcode of the book.
+     * @return A string containing the book details in the format:
+     *         "book_barcode, book_title, book_subject, book_description,
+     *         book_allCopies, book_availableCopies, book_ordersNumber, book_lostNumber, book_location".
+     *         If no book is found, returns "Empty".
+     */
 	public static String GetBookFromDB(String barcode) {
 		String query = "SELECT * FROM books WHERE book_barcode = ?";
 		String bookData = "Empty";
@@ -88,20 +94,20 @@ public class queriesForBooks {
 		return bookData;
 	}
 
-	/**
-	 * Author: Einav this method is updating the book details if we need to change.
-	 * 
-	 * @param barcode
-	 * @param title
-	 * @param subject
-	 * @param description
-	 * @param allCopies
-	 * @param availableCopies
-	 * @param ordersNumber
-	 * @param lostNumber
-	 * @param location
-	 * @return
-	 */
+	 /**
+     * Updates the details of a book in the database.
+     *
+     * @param barcode          The barcode of the book.
+     * @param title            The updated title of the book.
+     * @param subject          The updated subject of the book.
+     * @param description      The updated description of the book.
+     * @param allCopies        The updated total number of copies.
+     * @param availableCopies  The updated number of available copies.
+     * @param ordersNumber     The updated number of orders for the book.
+     * @param lostNumber       The updated number of lost copies.
+     * @param location         The updated location of the book in the library.
+     * @return {@code true} if the book details were successfully updated, {@code false} otherwise.
+     */
 	public static boolean updateBookDetails(String barcode, String title, String subject, String description,
 			int allCopies, int availableCopies, int ordersNumber, int lostNumber, String location) {
 		String query = "UPDATE books SET book_title = ?, book_subject = ?, book_description = ?, "
@@ -127,11 +133,11 @@ public class queriesForBooks {
 	
 
 	/**
-	 * Author: Einav This method is returning book list of the like the name.
-	 * 
-	 * @param bookname - bookname need to contains this string.
-	 * @return List of books that match the name
-	 */
+     * Searches for books by name, matching any part of the book title.
+     *
+     * @param bookname The string to search for in book titles.
+     * @return A list of strings representing books that match the name.
+     */
 	public static List<String> SearchBooksByName(String bookname) {
 		String query = "SELECT * FROM Books WHERE LOWER(book_title) LIKE ?";
 		String bookData = new String();
@@ -166,11 +172,13 @@ public class queriesForBooks {
 	}
 
 	/**
-	 * Author: Einav This method is returning book list that with the requested subject.
-	 * 
-	 * @param subject - subject of the books.
-	 * @return List of books that match the subject
-	 */
+     * Searches for books by a specific subject.
+     *
+     * @param subject The subject of the books to search for.
+     * @return A list of strings where each string represents a book with details in the format:
+     *         "book_barcode, book_title, book_subject, book_description, book_allCopies,
+     *         book_availableCopies, book_ordersNumber, book_lostNumber, book_location".
+     */
 	public static List<String> SearchBooksBySubject(String subject) {
 		String query = "SELECT * FROM Books WHERE book_subject = ?";
 		String bookData = new String();
@@ -206,11 +214,13 @@ public class queriesForBooks {
 	}
 
 	/**
-	 * Author: Einav This method is returning book list that matches to the description.
-	 * 
-	 * @param description - keywords that we want to search in the descriptions
-	 * @return List of books that match the description
-	 */
+     * Searches for books by keywords in the description.
+     *
+     * @param description A comma-separated string of keywords to search for in book descriptions.
+     * @return A list of strings where each string represents a book with details in the format:
+     *         "book_barcode, book_title, book_subject, book_description, book_allCopies,
+     *         book_availableCopies, book_ordersNumber, book_lostNumber, book_location".
+     */
 	public static List<String> SearchBooksByDescription(String description) {
 		String[] tags = description.split(", ");
 	    List<String> foundBooks = new ArrayList<>();
@@ -260,11 +270,11 @@ public class queriesForBooks {
 	
 	
 	/**
-	 * Author: Einav This method is returning book list of all the copies on this book.
-	 * 
-	 * @param barcode - the barcode on the requested book
-	 * @return List of copybooks on this book barcode
-	 */
+     * Retrieves all copies of a book by its barcode.
+     *
+     * @param barcode The barcode of the book.
+     * @return A list of all copies of a book
+     */
 	public static List<String> GetAllMyCopies(String barcode) {
 		String query = "SELECT * FROM Bookcopy WHERE book_barcode = ?";
 		String bookcopyData = new String();
@@ -293,7 +303,11 @@ public class queriesForBooks {
 		return foundBooks;
 	}
 	
-	
+	/**
+     * Retrieves a list of book barcodes and titles from the database.
+     *
+     * @return A list of book barcodes and titles
+     */
 	public static List<String> getBookBarcodesAndTitles() {
         List<String> bookList = new ArrayList<>();
         String query = "SELECT CONCAT(book_barcode, ', ', book_title) AS book_info FROM books";
