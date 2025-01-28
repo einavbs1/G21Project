@@ -20,7 +20,7 @@ public class Notifications {
     /**Author: Einav
 	 * Constractor that load notification from DB if exist.
 	 * 
-	 * @param id
+	 * @param serial
 	 */
 	public Notifications(int serial) {
 		loadNotification(getNotificationFromDB(serial));
@@ -102,7 +102,11 @@ public class Notifications {
 	       return notificationsList;
 	   }
 	   
-	   
+	   /**
+	    * Loads certain notifications(divided to new and old by fromthisDate) from the server and displays them in the table.
+	    * Sends request to server, receives notifications list and updates the table.
+	    * @param fromthisDate
+	    */
 	   public static List<String> getNewOldNotificationsFromDB(Date fromthisDate) {
 	       // Create request HashMap
 	       HashMap<String, String> showNotificationsMap = new HashMap<>();

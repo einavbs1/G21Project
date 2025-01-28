@@ -44,6 +44,7 @@ public class Orders {
 	 *
 	 * @param subscriberId the ID of the subscriber making the order.
 	 * @param bookBarcode  the barcode of the book being ordered.
+	 * @param bookTitle
 	 */
 	public Orders(int subscriberId, String bookBarcode, String bookTitle) {
 		HashMap<String, String> createOrderMap = new HashMap<>();
@@ -152,6 +153,12 @@ public class Orders {
 	
 	
 	
+	/**
+	 * check all active orders of certain book and return records of all active orders
+	 * also check if there is order of book that wait for subscriber mor ethan 2 days
+	 * @param bookBarcode
+	 * @return List<String>
+	 */
 	public static List<String> checkMyActiveOrders(String bookBarcode){
 		int countActiveOrders = 0;
 		Book bookToCheck = new Book(bookBarcode);
@@ -189,7 +196,7 @@ public class Orders {
 	
 	/**
 	 * Author: Matan.
-	 * @param barcode
+	 * @param subID
 	 * @return list<String> of orders of the same book
 	 */
 	public static List<String> getMyActiveOrdersSubscriber(int subID) {

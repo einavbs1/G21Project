@@ -17,7 +17,7 @@ public class Librarian {
 	/**
 	 * Author: Yuval. Constructor that load librarian from DB if exist.
 	 * 
-	 * @param id
+	 * @param librarian_id
 	 */
 	public Librarian(int librarian_id) {
 		String[] str = getLibrarianFromDB(librarian_id);
@@ -61,7 +61,7 @@ public class Librarian {
 	/**
 	 * Author: Yuval.
 	 * 
-	 * @param id - subscriber's id to get.
+	 * @param librarian_id - subscriber's id to get.
 	 */
 	private String[] getLibrarianFromDB(int librarian_id) throws NoSuchElementException {
 		String response = new String();

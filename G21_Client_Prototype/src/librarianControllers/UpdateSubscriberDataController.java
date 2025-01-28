@@ -108,6 +108,12 @@ public class UpdateSubscriberDataController {
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 
+	
+	/**
+	 * desplays all current borrows of certain subscriber
+	 * @param event
+	 * @throws IOException
+	 */
 	public void OpenCurrectBorrows(ActionEvent event) throws IOException {
 		CurrentBorrowBooksController.mySubscriber = subtoload;
 		FXMLLoader Loader = new FXMLLoader(getClass().getResource("/librarianGui/CurrentBorrowBooks.fxml"));
@@ -183,6 +189,10 @@ public class UpdateSubscriberDataController {
 
 	}
 
+	/**
+	 * check if the values are correct and fit the form
+	 * @return true for verified input or false 
+	 */
 	private boolean VerifyInput() {
 		if (needToLoad) {
 			if (txtId.getText().isEmpty()) {
@@ -260,6 +270,7 @@ public class UpdateSubscriberDataController {
 	 * This method is changing the message on the String to 10 seconds
 	 * 
 	 * @param s - the message we want to see on the GUI
+	 * @param color
 	 */
 	private void changeString(String s, String color) {
 		Platform.runLater(() -> {

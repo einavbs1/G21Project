@@ -78,7 +78,10 @@ public class ViewNotificationsController {
 		initOldTable();
 		loadNotifications();
 	}
-
+	
+	/**
+	 * initialize the tables for the GUI
+	 */
 	private void initNewTable() {
 		serialColumn.setCellValueFactory(cellData -> {
 			String[] parts = cellData.getValue().split(", ");
@@ -105,7 +108,10 @@ public class ViewNotificationsController {
 			return new javafx.beans.property.SimpleStringProperty(parts[5]);
 		});
 	}
-
+	
+	/**
+	 * initialize old notifications table for the GUI
+	 */
 	private void initOldTable() {
 		serialColumn1.setCellValueFactory(cellData -> {
 			String[] parts = cellData.getValue().split(", ");
@@ -133,7 +139,11 @@ public class ViewNotificationsController {
 		});
 
 	}
+	
 
+    /**
+     * load all the data of the table
+     */
 	private void loadNotifications() {
 		List<String> notificationsList = Notifications
 				.getNewOldNotificationsFromDB(ChatClient.getCurrectLibrarian().getLibrarian_lastCheckedNotifications());

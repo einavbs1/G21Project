@@ -39,10 +39,6 @@ public class Book {
 	 * @param title
 	 * @param subject
 	 * @param description
-	 * @param allCopies
-	 * @param availableCopies
-	 * @param ordersNumber
-	 * @param lostNumber
 	 * @param location
 	 */
 	public Book(String barcode, String title, String subject, String description, String location) {
@@ -99,8 +95,8 @@ public class Book {
 			String[] parts = str.split(", ");
 			return parts;
 		} else {
-			throw new NoSuchElementException("Unfortunately, this barcode ("
-					+ barcode + ") isn't recognized.\n We love adding new books as we evolve, it might join our library soon!");
+			throw new NoSuchElementException("Unfortunately, this barcode (" + barcode
+					+ ") isn't recognized.\n We love adding new books as we evolve, it might join our library soon!");
 		}
 	}
 
@@ -119,6 +115,11 @@ public class Book {
 
 	}
 
+	/**
+	 * send request of SearchBook to server for query to DB if choosen to search by name
+	 * @param bookname 
+	 * @return List<String> of books
+	 */
 	public static List<String> SearchBookByName(String bookname) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
@@ -129,6 +130,11 @@ public class Book {
 		return myRes;
 	}
 
+	/**
+	 * send request of SearchBook to server for query to DB if choosen to search by subject
+	 * @param subject
+	 * @return List<String> of books
+	 */
 	public static List<String> SearchBookBySubject(String subject) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
@@ -139,6 +145,11 @@ public class Book {
 		return myRes;
 	}
 
+	/**
+	 * send request of SearchBook to server for query to DB if choosen to search by description
+	 * @param tags
+	 * @return List<String> of books
+	 */
 	public static List<String> SearchBookByDescription(String tags) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
@@ -148,6 +159,11 @@ public class Book {
 		return myRes;
 	}
 
+	/**
+	 * send requset to server for query to DB to get all the copies of this book
+	 * @param barcode
+	 * @return
+	 */
 	public static List<String> getAllmyCopies(String barcode) {
 
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
@@ -159,6 +175,11 @@ public class Book {
 
 	}
 
+	/**
+	 * send requset to server for query to DB to get the closest return date of a copy of this book	
+	 * @param barcode
+	 * @return
+	 */
 	public static Date getClosestReturnDate(String barcode) {
 		Date closestDate = null;
 		List<String> myCopies = getAllmyCopies(barcode);
@@ -171,17 +192,19 @@ public class Book {
 		return closestDate;
 
 	}
-	
-	public static List<String> getBookBarcodesAndTitles(){
-		
+
+	/**return list of book titles and their barcode
+	 * @return List<String>
+	 */
+	public static List<String> getBookBarcodesAndTitles() {
+
 		HashMap<String, String> requestHashMap = new HashMap<String, String>();
-		requestHashMap.put("Book+GetBookBarcodesAndTitles","");
+		requestHashMap.put("Book+GetBookBarcodesAndTitles", "");
 		ClientUI.chat.accept(requestHashMap);
 		List<String> myRes = ChatClient.getListfromServer();
 		return myRes;
-		
+
 	}
-	
 
 	@Override
 	public String toString() {
@@ -252,51 +275,51 @@ public class Book {
 		this.availableCopies += 1;
 	}
 
-	public void addToAvailableCopies()  throws Exception {
-		if(availableCopies < allCopies - lostNumber) {
+	public void addToAvailableCopies() throws Exception {
+		if (availableCopies < allCopies - lostNumber) {
 			this.availableCopies += 1;
-		}else {
+		} else {
 			throw new Exception("Cant avaiable another copy. Avialable copies reach to maximum.");
 		}
 	}
 
 	public void addToOrdersNumber() throws Exception {
-		if(ordersNumber < allCopies - lostNumber) {
+		if (ordersNumber < allCopies - lostNumber) {
 			this.ordersNumber += 1;
-		}else {
+		} else {
 			throw new Exception("Cant make order for this book. orders number reach to maximum.");
 		}
 	}
 
 	public void addToLostNumber() throws Exception {
-		if(lostNumber < allCopies) {
+		if (lostNumber < allCopies) {
 			this.lostNumber += 1;
-		}else {
+		} else {
 			throw new Exception("Cant lost another book. All the copies already lost.");
 		}
 	}
 
 	/////////////// ----- Removing 1 -----
-	public void removeFromAvailableCopies()  throws Exception {
-		if(availableCopies > 0) {
+	public void removeFromAvailableCopies() throws Exception {
+		if (availableCopies > 0) {
 			this.availableCopies -= 1;
-		}else {
+		} else {
 			throw new Exception("Available copies can't be negative number.");
 		}
 	}
 
-	public void removeFromOrdersNumber()  throws Exception {
-		if(ordersNumber > 0) {
+	public void removeFromOrdersNumber() throws Exception {
+		if (ordersNumber > 0) {
 			this.ordersNumber -= 1;
-		}else {
+		} else {
 			throw new Exception("Order number can't be negative number.");
 		}
 	}
 
-	public void removeFromLostNumber()  throws Exception {
-		if(lostNumber > 0) {
+	public void removeFromLostNumber() throws Exception {
+		if (lostNumber > 0) {
 			this.lostNumber -= 1;
-		}else {
+		} else {
 			throw new Exception("Book lost can't be negative number.");
 		}
 	}
