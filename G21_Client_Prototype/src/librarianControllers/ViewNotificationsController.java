@@ -134,6 +134,10 @@ public class ViewNotificationsController {
 
 	}
 
+
+    /**
+     * load all the data of the table
+     */
 	private void loadNotifications() {
 		List<String> notificationsList = Notifications
 				.getNewOldNotificationsFromDB(ChatClient.getCurrectLibrarian().getLibrarian_lastCheckedNotifications());

@@ -9,7 +9,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+
 <Pane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientConnectionStatusController">
+
    <children>
       <Button fx:id="btnExit" layoutX="1002.0" layoutY="656.0" mnemonicParsing="false" onAction="#getExitBtn" prefHeight="30.0" prefWidth="50.0" text="Exit" textFill="#b81212">
          <font>
@@ -30,7 +32,9 @@
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
+
       <Label id="lblNewConnection" fx:id="lblNewConnection" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="542.0" prefHeight="90.0" prefWidth="480.0" textAlignment="CENTER">
+
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>

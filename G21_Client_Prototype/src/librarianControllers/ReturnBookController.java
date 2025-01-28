@@ -91,7 +91,10 @@ public class ReturnBookController {
 		Stage.show();
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
-
+	
+	/**
+	 * initialize all the variables for the GUI
+	 */
 	public void initialize() {
 		subscriber = null;
 		bookCopyToReturn = null;
@@ -106,7 +109,13 @@ public class ReturnBookController {
 		btnLoadBook.setDisable(true);
 		btnReturn.setDisable(true);
 	}
-
+	
+	/**
+	 * presents a message on the gui for 10 seconds
+	 * @param s
+	 * @param color
+	 * @param lbl
+	 */
 	private void changeString(String s, String color, Label lbl) {
 		Platform.runLater(() -> {
 			lbl.setText(s);
@@ -124,11 +133,16 @@ public class ReturnBookController {
 	enum myEnum {
 		VerifyID, VerifyBookDetails, LoadedBookToReturn;
 	}
-
+	
+	/**
+	 * switch case for convenient distribution of the actions of the user
+	 * @param x
+	 * @return
+	 */
 	private boolean VerifyInput(myEnum x) {
 
 		switch (x) {
-		case VerifyID:
+		case VerifyID: // if id button check if the input is valid
 			if (txtSubscriberId.getText().isEmpty()) {
 				changeString("You have to enter the id of the subscriber to load his status.", "#bf3030",
 						lblsubscriberidmsg);
@@ -146,7 +160,7 @@ public class ReturnBookController {
 				return false;
 			}
 
-		case VerifyBookDetails:
+		case VerifyBookDetails: //if barcode button check if the input is valid
 			if (txtbookBarcode.getText().isEmpty() || txtbookCopyNo.getText().isEmpty()) {
 				changeString("You have to enter the book details load his data.", "#bf3030", lblbookDetailsmsg);
 				return false;
@@ -158,7 +172,7 @@ public class ReturnBookController {
 			}
 			break;
 
-		case LoadedBookToReturn:
+		case LoadedBookToReturn: // check if the input is valid
 			if (bookCopyToReturn == null || mySubBorrowedRecord == null) {
 				changeString("You should insert first book that the subscriber borrowed.", "#bf3030", lblreturnmsg);
 				return false;

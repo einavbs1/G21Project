@@ -89,6 +89,10 @@ public class BorrowBookController {
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 
+
+	/**
+	 * initialize all the variables for the GUI
+	 */
 	public void initialize() {
 		subscriber = null;
 		bookToBorrow = null;
@@ -100,7 +104,13 @@ public class BorrowBookController {
 		btnLoadBook.setDisable(true);
 		btnBorrow.setDisable(true);
 	}
-
+	
+	/**
+	 * presents a message on the gui for 10 seconds
+	 * @param s
+	 * @param color
+	 * @param lbl
+	 */
 	private void changeString(String s, String color, Label lbl) {
 		Platform.runLater(() -> {
 			lbl.setText(s);
@@ -116,11 +126,16 @@ public class BorrowBookController {
 	enum myEnum {
 		VerifyID, VerifyBarcode, LoadedBook;
 	}
-
+	
+	/**
+	 * switch case for convenient distribution of the actions of the user
+	 * @param x
+	 * @return
+	 */
 	private boolean VerifyInput(myEnum x) {
 		switch (x) {
-		case VerifyID:
-			if (txtSubscriberId.getText().isEmpty()) {
+		case VerifyID: // if id button check if the input is valid
+			if (txtSubscriberId.getText().isEmpty()) { 
 				changeString("You have to enter the id of the subscriber to load his status.", "#bf3030",
 						lblsubscriberidmsg);
 				return false;
@@ -137,7 +152,7 @@ public class BorrowBookController {
 				return false;
 			}
 
-		case VerifyBarcode:
+		case VerifyBarcode: //if barcode button check if the input is valid
 			if (txtbookBarcode.getText().isEmpty()) {
 				changeString("You have to enter the Barcode of the book to load his data.", "#bf3030",
 						lblbookDetailsmsg);
@@ -149,7 +164,7 @@ public class BorrowBookController {
 				return false;
 			}
 			break;
-		case LoadedBook:
+		case LoadedBook: // check if the input is valid
 			if (bookToBorrow == null) {
 				changeString("Book not loaded yet.", "#bf3030", lblborrowmsg);
 				return false;
@@ -197,6 +212,12 @@ public class BorrowBookController {
 
 	
 
+	/*
+	 * check if the sucscriber has order of a book
+	 * @param SubID
+	 * @param activeOrdersOnly
+	 * @return
+	 */
 	private int thisSubscriberHasOrder(int SubID, List<String> activeOrdersOnly) {
 		
 		for (String activeOrder : activeOrdersOnly) {

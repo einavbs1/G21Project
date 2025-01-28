@@ -89,6 +89,12 @@ public class Subscriber {
 
 	}
 
+
+	/**
+	 * check if status of subscriber need to be change to frozen
+	 * @param date
+	 * @return
+	 */
 	private boolean needToChangeFrozenStatus(String date) {
 		if (date == null || date.equals("null")) {
 			return false;
@@ -107,7 +113,7 @@ public class Subscriber {
 
 	/**
 	 * Author: Avishag.
-	 * 
+	 * return specific subscriber of borrowing from DB 
 	 * @param id - subscriber's id to get.
 	 */
 	private String[] getSubscriberFromDB(int id) throws NoSuchElementException {
@@ -152,6 +158,11 @@ public class Subscriber {
 
 	}
 
+
+	/**
+	 * return all records of subscriber from DB
+	 * @return
+	 */
 	public static List<String> showAllSubscribers() {
 		HashMap<String, String> requestMap = new HashMap<>();
 		requestMap.put("Subscriber+ShowAllSubscribers", "");
@@ -163,6 +174,10 @@ public class Subscriber {
 
 	}
 
+	/**
+	 * return all records of subscriber only by id and name respectively from DB
+	 * @return
+	 */
 	public static List<String> getIDsAndNames() {
 		HashMap<String, String> requestMap = new HashMap<>();
 		requestMap.put("Subscriber+GetSubscribersIDsAndNames", "");
@@ -170,6 +185,13 @@ public class Subscriber {
 		return ChatClient.getListfromServer();
 	}
 
+	/**
+	 * add new record to DB of change status to frozen
+	 * @param SubscriberID
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	public static String addingNewRecordOfFrozen(int SubscriberID, Date start, Date end) {
 		HashMap<String, String> requestMap = new HashMap<>();
 		requestMap.put("Subscriber+AddingNewRecordOfFrozen", SubscriberID + ", " + start + ", " + end);
@@ -177,6 +199,13 @@ public class Subscriber {
 		return ChatClient.getStringfromServer();
 	}
 	
+
+	/*
+	 * return certain frozen record of subscriber from DB
+	 * @param SubscriberID
+	 * @param end
+	 * @return
+	 */
 	public static String getSpecificFrozenRecord(int SubscriberID, Date end) {
 		HashMap<String, String> requestMap = new HashMap<>();
 		requestMap.put("Subscriber+GetSpecificFrozenRecord", SubscriberID + ", " + end);
@@ -184,6 +213,14 @@ public class Subscriber {
 		return ChatClient.getStringfromServer();
 	}
 	
+
+	/**
+	 * update record in DB, frozen record of subscriber
+	 * @param SubscriberID
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	public static String updateRecordOfFrozen(int serial, Date start, Date end) {
 		HashMap<String, String> requestMap = new HashMap<>();
 		requestMap.put("Subscriber+UpdateRecordOfFrozen", serial + ", " + start + ", " + end);
@@ -191,6 +228,13 @@ public class Subscriber {
 		return ChatClient.getStringfromServer();
 	}
 
+	/**
+	 * return certain frozen report of subscriber from DB by certain times
+	 * @param SubscriberID
+	 * @param month1
+	 * @param year1
+	 * @return
+	 */
 	public static List<String> GetFrozenReportForSubscriber(int SubscriberID, int month1, int year1) {
 		HashMap<String, String> requestMap = new HashMap<>();
 		requestMap.put("Subscriber+GetFrozenReportForSubscriber", SubscriberID + ", " + month1 + ", " + year1);

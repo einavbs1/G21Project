@@ -65,6 +65,9 @@ public class LibrarianMenuController {
 	}
 
 
+////////////////////////////////////////////////////////
+	////// each method describe button in the menu of the librarian//////
+	////// each method change to another screen by Actionevent///////////
 	public void openRegisterNewSubscriber(ActionEvent event) throws Exception {
 		Select(LibrarianOptions.RegisterNewSubscriber, event);
 	}
@@ -101,7 +104,8 @@ public class LibrarianMenuController {
 		Select(LibrarianOptions.SearchBooks, event);
 	}
 	
-	
+	////////////////////////////////////////////////////////////////////////////
+
 	
 	
 	/**

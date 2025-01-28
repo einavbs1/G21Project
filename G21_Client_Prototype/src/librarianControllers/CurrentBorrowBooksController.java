@@ -128,8 +128,12 @@ public class CurrentBorrowBooksController {
 
 	}
 
+
+	/**
+	 * plit each row of data (string) and display it in separate columns
+	 */
 	private void initTheTable() {
-		// Split each row of data (string) and display it in separate columns
+		
 		colBorrowNumber.setCellValueFactory(cellData -> {
 			String[] parts = cellData.getValue().split(", ");
 			return new javafx.beans.property.SimpleStringProperty(parts[0]);
@@ -201,7 +205,14 @@ public class CurrentBorrowBooksController {
 	private enum myEnum {
 		checkid, checkBorrow, checkDays, LostBook;
 	}
-
+	
+	/*
+	 * switch case for convenient distribution of the actions of the user
+	 * in each case it check if the input is valid.
+	 * present message in the GUI in any case
+	 * @param x
+	 * @return
+	 */
 	private boolean VerifyInput(myEnum x) {
 
 		switch (x) {
@@ -269,6 +280,7 @@ public class CurrentBorrowBooksController {
 	 * This method is changing the message on the String to 10 seconds
 	 * 
 	 * @param s - the message we want to see on the GUI
+	 * @param color
 	 */
 	private void changeString(String s, String color) {
 		Platform.runLater(() -> {
@@ -304,6 +316,10 @@ public class CurrentBorrowBooksController {
 
 	}
 
+	/**
+	 * load one borrow record to edit(lost book or extend borrow)
+	 * @param event
+	 */
 	public void btnLoadOneBorrowToEdit(ActionEvent event) {
 		if (VerifyInput(myEnum.checkBorrow)) {
 			btnLostBook.setDisable(false);
@@ -316,7 +332,7 @@ public class CurrentBorrowBooksController {
 		}
 	}
 
-	/**
+	/*
 	 * Author: Yuval. This method is for the extend borrow button. sending the
 	 * information to the server about which borrow to extend and which date to.
 	 * 
@@ -375,6 +391,10 @@ public class CurrentBorrowBooksController {
 		}
 	}
 
+	/*
+	 * update that certain sbscriber lost certain book
+	 * @param event
+	 */
 	public void btnLostTheBook(ActionEvent event) {
 		if (VerifyInput(myEnum.LostBook)) {
 			String borrowNumberInput = txtBorrowNumber.getText();

@@ -22,7 +22,9 @@ public class SubscribersStatusReport {
     /**Author: Einav
 	 * Constractor that load notification from DB if exist.
 	 * 
-	 * @param id
+
+	 * @param month
+	 * @param year
 	 */
 	public SubscribersStatusReport(int month, int year) {
 		loadReport(getReportFromDB(month, year));
@@ -49,7 +51,8 @@ public class SubscribersStatusReport {
 
 	/**Author: Einav
 	 * 
-	 * @param serial
+	 * @param month
+	 * @param year
 	 * @return String[] - array of notification's string with each field in array's positions.
 	 * @throws NoSuchElementException
 	 */

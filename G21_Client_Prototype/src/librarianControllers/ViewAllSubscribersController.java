@@ -59,6 +59,10 @@ public class ViewAllSubscribersController {
 		initTheTable();
 	}
 
+
+	/**
+	 * initialize the tables for the GUI
+	 */
 	private void initTheTable() {
 		idColumn.setCellValueFactory(cellData -> {
 			String[] parts = cellData.getValue().split(", ");

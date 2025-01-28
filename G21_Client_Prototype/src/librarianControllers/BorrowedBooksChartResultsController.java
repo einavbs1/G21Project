@@ -73,7 +73,10 @@ public class BorrowedBooksChartResultsController {
     private BorrowsReturnReport myReport;
     
     
-    
+  
+    /**
+     * initialize the relevant date for the chart
+     */
     private void comboBoxMonthYear() {
 		Month SelectOptions[] = Month.values();
 		for (int i = 0; i < SelectOptions.length; i++) {
@@ -88,6 +91,10 @@ public class BorrowedBooksChartResultsController {
 		comboBoxMonth.setValue(Month.getByNumber(month1).toString());
 	}
     
+    
+    /**
+     * initialize the table base
+     */
     private void initBothTables() {
     	columnTotalBorrows.setCellValueFactory(cellData -> {
         	String[] parts = cellData.getValue().split(", ");
@@ -116,6 +123,10 @@ public class BorrowedBooksChartResultsController {
 
 	}
     
+    /**
+     * verify the input by correct terms of date
+     * @return boolean value
+     */
     private boolean VerifyInput() {
 		if (((Month.getByName(getComboBoxMonth()).getMonthNumber() > month1) && (getComboBoxYear().equals(String.valueOf(year1)))) ||
 					Integer.parseInt(getComboBoxYear()) > year1 ){
@@ -127,6 +138,9 @@ public class BorrowedBooksChartResultsController {
 
 	}
     
+    /**refresh the chart
+     * @param event
+     */
     public void refreshBtn(ActionEvent event) {
     	if(VerifyInput()) {
     		try {
@@ -155,6 +169,9 @@ public class BorrowedBooksChartResultsController {
     }
     
     
+    /**
+     * load all the data of the chart 
+     */
     @FXML
     private void loadBarChartData() {
         // Clear existing BarChart data
@@ -180,6 +197,9 @@ public class BorrowedBooksChartResultsController {
     
     
     
+    /**
+     * initialize all the variables for the GUI
+     */
     @FXML
     public void initialize() {
     	currectCalendar = Calendar.getInstance();
@@ -203,6 +223,11 @@ public class BorrowedBooksChartResultsController {
 		}
     }
     
+    /**
+     * change screen to a specific book screen
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void goToSpecificBookScreen(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarianGui/SpecificBookChartResults.fxml"));
@@ -216,6 +241,11 @@ public class BorrowedBooksChartResultsController {
         ((Node) event.getSource()).getScene().getWindow().hide();
     }
 
+    /**
+     * change screen to the previous screen
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void Back(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarianGui/GenerateReports.fxml"));
@@ -229,6 +259,11 @@ public class BorrowedBooksChartResultsController {
         ((Node) event.getSource()).getScene().getWindow().hide();
     }
 
+    /**
+     * exit from the librarian
+     * @param event
+     * @throws Exception
+     */
     @FXML
     public void getExitBtn(ActionEvent event) throws Exception {
 		ConnectionSetupController.stopConnectionToServer();

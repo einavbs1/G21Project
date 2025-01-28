@@ -37,7 +37,7 @@ public class BorrowedRecord {
 	/**
 	 * Author: Matan. Constructor that load borrow records from DB if exist.
 	 * 
-	 * @param id
+	 * @param borrowNumber
 	 */
 	public BorrowedRecord(int borrowNumber) {
 		loadBorrowRecord(getBorrowRecordFromDB(borrowNumber));
@@ -47,18 +47,11 @@ public class BorrowedRecord {
 	 * Author: Matan.
 	 * 	
 	 * Constractor that add new borrow record to the DB.
-	 * 
-	 * @param borrowNumber
 	 * @param subscriberId
 	 * @param bookBarcode
 	 * @param bookTitle
 	 * @param bookcopyNo
-	 * @param borrowDate
-	 * @param borrowExpectReturnDate
-	 * @param borrowActualReturnDate
-	 * @param librarianId
-	 * @param librarianName
-	 * @param borrowLostBook
+	 * @param reminderSerial
 	 */
 	public BorrowedRecord(int subscriberId, String bookBarcode, String bookTitle, int bookcopyNo, int reminderSerial) {
 		Date currentDate = new Date(System.currentTimeMillis());
@@ -108,7 +101,7 @@ public class BorrowedRecord {
 
 	/**
 	 * Author: Matan.
-	 * 
+	 * return specific record of borrowing from DB
 	 * @param borrowNumber
 	 * @return borrow String[] of specific borrow number.
 	 * @throws NoSuchElementException
@@ -131,7 +124,7 @@ public class BorrowedRecord {
 	
 	
 	/** Author: Yuval.
-	 * @param id - subscriber's id to get his active borrows.
+	 * @param subscriberId - subscriber's id to get his active borrows.
 	 */
 	public static List<String> getSubscriberActiveBorrowsFromDB(int subscriberId) throws NoSuchElementException {
 
@@ -187,6 +180,14 @@ public class BorrowedRecord {
 	}
 	
 	
+
+	/**
+	 * eturn records of borrowing of specific month from DB
+	 * @param barcode
+	 * @param month
+	 * @param year
+	 * @return
+	 */
 	public static String getBookBorrowsInSpecificDate(String barcode,int month, int year) {
 		HashMap<String, String> requestMap = new HashMap<>();
 		requestMap.put("BorrowedRecord+GetBorrowsOfBookInSpecificDate", barcode+", "+month+", "+year);

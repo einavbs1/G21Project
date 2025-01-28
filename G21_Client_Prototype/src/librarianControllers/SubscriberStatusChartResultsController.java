@@ -81,8 +81,11 @@ public class SubscriberStatusChartResultsController {
     private SubscribersStatusReport myReport;
     
 
-    
-    
+ 
+    /**
+	 * initialize the values comboBox of the chart for the GUI
+	 * for picking dates and books titles
+	 */
     private void comboBoxMonthYear() {
 		Month SelectOptions[] = Month.values();
 		for (int i = 0; i < SelectOptions.length; i++) {
@@ -97,6 +100,9 @@ public class SubscriberStatusChartResultsController {
 		comboBoxMonth.setValue(Month.getByNumber(month1).toString());
 	}
     
+    /**
+	 * initialize the tables for the GUI
+	 */
     private void initBothTables() {
     	columnTotalActive.setCellValueFactory(cellData -> {
         	String[] parts = cellData.getValue().split(", ");
@@ -125,6 +131,10 @@ public class SubscriberStatusChartResultsController {
 
 	}
     
+    /**
+	 * check if the values are correct
+	 * @return true for verified input or false
+	 */
     private boolean VerifyInput() {
 		if (((Month.getByName(getComboBoxMonth()).getMonthNumber() > month1) && (getComboBoxYear().equals(String.valueOf(year1)))) ||
 					Integer.parseInt(getComboBoxYear()) > year1 ){
@@ -136,6 +146,9 @@ public class SubscriberStatusChartResultsController {
 
 	}
     
+    /**refresh the chart
+     * @param event
+     */
     public void refreshBtn(ActionEvent event) {
     	if(VerifyInput()) {
     		try {
@@ -148,6 +161,10 @@ public class SubscriberStatusChartResultsController {
     	}
     }
     
+////////////////////////////////////////////
+////// getters for the data from combobox//////
+///////////////////////////////////////////////
+
     private String getComboBoxYear() {
     	return (String) comboBoxYear.getValue();
 	}
@@ -155,7 +172,11 @@ public class SubscriberStatusChartResultsController {
     private String getComboBoxMonth() {
     	return (String) comboBoxMonth.getValue();
 	}
+    ////////////////////////////////////////////////////////////
     
+    /**
+	 * load the report for the chart
+	 */
     public void loadReport() {
     	if(VerifyInput()) {
     		String report = myReport.toString();
@@ -164,7 +185,9 @@ public class SubscriberStatusChartResultsController {
     	}
     }
     
-    
+    /**
+     * load all the data of the chart 
+     */
     @FXML
     private void loadBarChartData() {
         // Clear existing BarChart data
@@ -188,7 +211,9 @@ public class SubscriberStatusChartResultsController {
     }
     
     
-    
+    /**
+     * initialize all the variables for the GUI
+     */
     @FXML
     public void initialize() {
     	currectCalendar = Calendar.getInstance();
@@ -210,7 +235,12 @@ public class SubscriberStatusChartResultsController {
 			lblErrMsg.setText(e.getMessage());
 		}
     }
-
+    
+    /**
+     * change screen to the previous screen
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void Back(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarianGui/GenerateReports.fxml"));
@@ -225,6 +255,11 @@ public class SubscriberStatusChartResultsController {
     }
     
     
+    /**
+     * method opens another report for a certain subscriber 
+     * @param event
+     * @throws IOException
+     */
     public void openReportForSpecificSubscriber(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarianGui/SpecificSubscriberChartResults.fxml"));
         Parent root = loader.load();
@@ -237,6 +272,12 @@ public class SubscriberStatusChartResultsController {
         ((Node) event.getSource()).getScene().getWindow().hide();
     }
     
+    /**
+     * exit from the librarian
+     * @param event
+     * @throws Exception
+     */
+
     @FXML
     public void getExitBtn(ActionEvent event) throws Exception {
 		ConnectionSetupController.stopConnectionToServer();

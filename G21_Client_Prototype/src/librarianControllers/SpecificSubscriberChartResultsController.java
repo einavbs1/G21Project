@@ -80,7 +80,11 @@ public class SpecificSubscriberChartResultsController {
 	private Subscriber currSubscriber;
 	List<String> subscriberFrozenListDetails;
 	String frozenResult;
-
+	
+	/**
+	 * initialize the values comboBox of the chart for the GUI
+	 * for picking dates and books titles
+	 */
 	private void comboBoxMonthYearSubscribers() {
 		List<String> subsInformations = Subscriber.getIDsAndNames();
 		for (String subscriberString : subsInformations) {
@@ -99,7 +103,10 @@ public class SpecificSubscriberChartResultsController {
 		comboBoxYear.setValue(String.valueOf(year1));
 		comboBoxMonth.setValue(Month.getByNumber(month1).toString());
 	}
-
+	
+	/**
+	 * initialize the tables for the GUI
+	 */
 	private void initBothTables() {
 		columnTotalFrozenDays.setCellValueFactory(cellData -> {
 			String[] parts = cellData.getValue().split(", ");
@@ -119,7 +126,11 @@ public class SpecificSubscriberChartResultsController {
 		});
 
 	}
-
+	
+	/**
+	 * check if the values are correct
+	 * @return true for verified input or false
+	 */
 	private boolean VerifyInput() {
 		if (((Month.getByName(getComboBoxMonth()).getMonthNumber() > month1)
 				&& (getComboBoxYear().equals(String.valueOf(year1)))) || Integer.parseInt(getComboBoxYear()) > year1) {
@@ -134,7 +145,10 @@ public class SpecificSubscriberChartResultsController {
 		return true;
 
 	}
-
+	
+	/**refresh the chart
+     * @param event
+     */
 	public void refreshBtn(ActionEvent event) {
 		if (VerifyInput()) {
 			try {
@@ -150,6 +164,10 @@ public class SpecificSubscriberChartResultsController {
 		}
 	}
 
+	/**
+	 * calculate the frozen time of subscriber until this curent day for the chart
+	 * @return
+	 */
 	private String calculateFrozenTimeOfSubscriber() {
 		
 	    YearMonth yearMonthSelected = YearMonth.of(Integer.parseInt(getComboBoxYear()),
@@ -194,7 +212,10 @@ public class SpecificSubscriberChartResultsController {
         int activedays = daysInSelectedMonth - (int)notRegister - frozenDays;
         return frozenDays + ", " + activedays + ", " + notRegister + ", " + daysInSelectedMonth;
 	}
-
+////////////////////////////////////////////
+	////// getters for the data from combobox//////
+	///////////////////////////////////////////////
+	
 	private String getComboBoxYear() {
 		return (String) comboBoxYear.getValue();
 	}
@@ -216,14 +237,19 @@ public class SpecificSubscriberChartResultsController {
 		String[] partStrings = getComboBoxSubscriber().split(", ");
 		return partStrings[1];
 	}
-
+/////////////////////////////////////////////////////////////////////
+	/**
+	 * load the report for the chart
+	 */
 	public void loadReport() {
 		if (VerifyInput()) {
 			tablespecificSubscriberReport.setItems(FXCollections.observableArrayList(frozenResult));
 		}
 	}
-
 	@FXML
+	/**
+     * load all the data of the chart 
+     */
 	private void loadBarChartData() {
 		// Clear existing BarChart data
 		specificSubscriberChart.getData().clear();
@@ -244,6 +270,9 @@ public class SpecificSubscriberChartResultsController {
 		}
 	}
 
+	/**
+     * initialize all the variables for the GUI
+     */
 	@FXML
 	public void initialize() {
 		currectCalendar = Calendar.getInstance();
@@ -269,7 +298,12 @@ public class SpecificSubscriberChartResultsController {
 			lblErrMsg.setText(e.getMessage());
 		}
 	}
-
+	
+	/**
+     * change screen to the previous screen
+     * @param event
+     * @throws IOException
+     */
 	@FXML
 	public void Back(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarianGui/SubscriberStatusChartResults.fxml"));
@@ -282,6 +316,12 @@ public class SpecificSubscriberChartResultsController {
 		stage.show();
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
+	
+	/**
+     * exit from the librarian
+     * @param event
+     * @throws Exception
+     */
 
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {

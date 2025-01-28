@@ -72,6 +72,7 @@ public class BookCopy extends Book {
 	 * Author: Einav
 	 * 
 	 * @param barcode
+	 * @param copyNo
 	 * @return String[] - array of BookCopy's string with each field in array's
 	 *         positions.
 	 * @throws NoSuchElementException

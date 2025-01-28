@@ -10,7 +10,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="subscriberControllers.ExtendBorrowRequestController">
+
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="subscriberControllers.ExtendBorrowRequestController">
    <children>
       <Label id="lblTitle" fx:id="lblTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="14.0" prefHeight="32.0" prefWidth="1065.0" text="Extend Borrow Request" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
          <font>
@@ -20,12 +21,13 @@
 
       <TableView id="tableBorrows" fx:id="tableBorrows" layoutX="71.0" layoutY="102.0" prefHeight="393.0" prefWidth="967.0">
          <columns>
-            <TableColumn id="colBorrowNumber" fx:id="colBorrowNumber" prefWidth="148.00003814697266" text="Borrow Number" />
-            <TableColumn id="colBookBarcode" fx:id="colBookBarcode" prefWidth="139.73333740234375" text="Book Barcode" />
-            <TableColumn id="colBookTitle" fx:id="colBookTitle" prefWidth="254.66671752929688" text="Book Title" />
-            <TableColumn id="colBookCopyNo" fx:id="colBookCopyNo" prefWidth="105.333251953125" text="Book Copy No" />
-            <TableColumn id="colBorrowDate" fx:id="colBorrowDate" prefWidth="154.4000244140625" text="Borrow Date" />
-            <TableColumn id="colExpectReturnDate" fx:id="colExpectReturnDate" prefWidth="173.33331298828125" text="Expected Return Date" />
+            <TableColumn id="colBorrowNumber" fx:id="colBorrowNumber" prefWidth="108.0" text="Borrow Number" />
+            <TableColumn id="colBookBarcode" fx:id="colBookBarcode" prefWidth="124.0" text="Book Barcode" />
+            <TableColumn id="colBookTitle" fx:id="colBookTitle" prefWidth="165.0" text="Book Title" />
+            <TableColumn id="colBookCopyNo" fx:id="colBookCopyNo" prefWidth="179.0" text="Book Copy No" />
+            <TableColumn id="colBorrowDate" fx:id="colBorrowDate" prefWidth="137.0" text="Borrow Date" />
+            <TableColumn id="colExpectReturnDate" fx:id="colExpectReturnDate" prefWidth="161.0" text="Expected Return Date" />
+            <TableColumn id="colLost" fx:id="colLost" prefWidth="91.0" text="Lost" />
          </columns>
       </TableView>
       

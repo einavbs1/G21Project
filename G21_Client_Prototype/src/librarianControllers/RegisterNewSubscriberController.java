@@ -116,6 +116,7 @@ public class RegisterNewSubscriberController {
 	 * This method is changing the message on the String to 10 seconds
 	 * 
 	 * @param s - the message we want to see on the GUI
+	 * @param lbl
 	 */
 	private void changeString(String s, Label lbl) {
 		Platform.runLater(() -> {
@@ -128,6 +129,9 @@ public class RegisterNewSubscriberController {
 		pause.play();
 	}
 
+	/** verify the input of the user in the GUI
+	 * @return
+	 */
 	public boolean VerifyInput() {
 		if (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtPhoneNumber.getText().isEmpty()
 				|| txtEmail.getText().isEmpty() || txtPassword.getText().isEmpty()) {

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.UpdateSubscriberDataController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarianControllers.UpdateSubscriberDataController">
    <children>
       <Label fx:id="lblInstruction" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="91.0" prefHeight="27.0" prefWidth="1066.0" text="Please enter the Subscriber ID you want to update" textAlignment="CENTER">
          <font>
@@ -68,7 +68,7 @@
             <Font name="System Bold" size="14.0" />
          </font></Button>
 
-      <Label fx:id="lblMessage" layoutX="22.0" layoutY="543.0" prefHeight="68.0" prefWidth="1062.0" text=" " textAlignment="CENTER" textFill="#086f03" wrapText="true">
+      <Label fx:id="lblMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="543.0" prefHeight="68.0" prefWidth="1062.0" text=" " textAlignment="CENTER" textFill="#086f03" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
