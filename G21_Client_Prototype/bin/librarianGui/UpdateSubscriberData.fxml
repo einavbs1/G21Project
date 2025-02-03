@@ -105,5 +105,10 @@
             <Image url="@../../Icons/BraudeSemel.png" />
          </image>
       </ImageView>
+      <Button id="btnSubscriberActivityLog" fx:id="btnSubscriberActivityLog" disable="true" layoutX="432.0" layoutY="654.0" mnemonicParsing="false" onAction="#OpenSubscriberActivityLog" prefHeight="30.0" prefWidth="246.0" text="View Subscriber Activity Log" textFill="#478150">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

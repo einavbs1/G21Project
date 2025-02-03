@@ -83,6 +83,8 @@ public class UpdateSubscriberDataController {
 	private Button btnBack = null;
 	@FXML
 	private Button btnManageBorrows = null;
+	@FXML
+	private Button btnSubscriberActivityLog = null;
 
 	private boolean needToLoad = true;
 	private boolean updated = false;
@@ -117,6 +119,20 @@ public class UpdateSubscriberDataController {
 		Scene.getStylesheets().add(getClass().getResource("/librarianGui/CurrentBorrowBooks.css").toExternalForm());
 		Stage.setScene(Scene);
 		Stage.setTitle("Current Borrow Books");
+		Stage.show();
+		((Node) event.getSource()).getScene().getWindow().hide();
+	}
+	
+	public void OpenSubscriberActivityLog(ActionEvent event) throws IOException {
+		CurrentBorrowBooksController.mySubscriber = subtoload;
+		ChatClient.setCurrectSubscriber(subtoload);
+		FXMLLoader Loader = new FXMLLoader(getClass().getResource("/subscriberGui/ViewActionsHistory.fxml"));
+		Parent Root = Loader.load();
+		Stage Stage = new Stage();
+		Scene Scene = new Scene(Root);
+		Scene.getStylesheets().add(getClass().getResource("/subscriberGui/ViewActionsHistory.css").toExternalForm());
+		Stage.setScene(Scene);
+		Stage.setTitle("View Actions History");
 		Stage.show();
 		((Node) event.getSource()).getScene().getWindow().hide();
 	}
@@ -313,6 +329,7 @@ public class UpdateSubscriberDataController {
 				needToLoad = false;
 				btnUpdate.setDisable(false);
 				btnManageBorrows.setDisable(false);
+				btnSubscriberActivityLog.setDisable(false);
 			} catch (Exception e) {
 				changeString(e.getMessage(), "#bf3030");
 			}

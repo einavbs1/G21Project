@@ -198,15 +198,15 @@ public class BorrowBookController {
 	
 
 	private int thisSubscriberHasOrder(int SubID, List<String> activeOrdersOnly) {
-		
-		for (String activeOrder : activeOrdersOnly) {
-			String[] parts = activeOrder.split(", ");
-			
-			if (parts[1].equals(String.valueOf(SubID))) {
-				return Integer.parseInt(parts[0]);
+		if(activeOrdersOnly != null) {
+			for (String activeOrder : activeOrdersOnly) {
+				String[] parts = activeOrder.split(", ");
+				
+				if (parts[1].equals(String.valueOf(SubID))) {
+					return Integer.parseInt(parts[0]);
+				}
 			}
 		}
-
 		return -1;
 
 	}
@@ -221,32 +221,36 @@ public class BorrowBookController {
 		if(VerifyInput(myEnum.VerifyBarcode)) {
 			String bookBarcode = txtbookBarcode.getText();
 			try {
-				bookToBorrow = new Book(bookBarcode);
 				List<String> updatedOrdersOfBook = Orders.checkMyActiveOrders(bookBarcode);
-				int avaliableCopy = bookToBorrow.getAvailableCopies();
-				int subOrdeNum = thisSubscriberHasOrder(subscriber.getId(), updatedOrdersOfBook);
+				bookToBorrow = new Book(bookBarcode);
 				
 				
-				if( subOrdeNum > 0 ) {
-					subsOrders = new Orders(subOrdeNum);
-					changeString(bookToBorrow.getTitle() + " is available to borrow","#086f03",lblbookDetailsmsg);
-					txtbookBarcode.setEditable(false);
-					btnLoadBook.setDisable(true);
-					btnBorrow.setDisable(false);
-				}else if (avaliableCopy > updatedOrdersOfBook.size()) {
-					changeString(bookToBorrow.getTitle() + " is available to borrow","#086f03",lblbookDetailsmsg);
-					txtbookBarcode.setEditable(false);
-					btnLoadBook.setDisable(true);
-					btnBorrow.setDisable(false);
-	
-				} else {
-					changeString(bookToBorrow.getTitle() + "is not available to borrow","#bf3030",lblbookDetailsmsg);
-				}
+					int avaliableCopy = bookToBorrow.getAvailableCopies();
+					int subOrdeNum = thisSubscriberHasOrder(subscriber.getId(), updatedOrdersOfBook);
+					
+					
+					if( subOrdeNum > 0 ) {
+						subsOrders = new Orders(subOrdeNum);
+						changeString("The book: \""+bookToBorrow.getTitle() + "\" is available to borrow","#086f03",lblbookDetailsmsg);
+						txtbookBarcode.setEditable(false);
+						btnLoadBook.setDisable(true);
+						btnBorrow.setDisable(false);
+					}
+					
+					else if (avaliableCopy > bookToBorrow.getOrdersNumber()) {
+						changeString("The book: \""+bookToBorrow.getTitle() + "\" is available to borrow","#086f03",lblbookDetailsmsg);
+						txtbookBarcode.setEditable(false);
+						btnLoadBook.setDisable(true);
+						btnBorrow.setDisable(false);
+		
+					} else {
+						changeString("The book: \""+bookToBorrow.getTitle() + "\" is not available to borrow","#bf3030",lblbookDetailsmsg);
+					}
 				
 	
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				changeString(bookBarcode + "is not exist in the library","#bf3030",lblbookDetailsmsg);
+				changeString("The book: \""+bookBarcode + "\" is not exist in the library","#bf3030",lblbookDetailsmsg);
 			}
 		}
 	}

@@ -182,7 +182,6 @@ public class ViewRemindersController {
 	 * application.
 	 * 
 	 * @param event The action event
-	 * @throws Exception If there is an error during disconnect
 	 */
 	@FXML
 	public void getExitBtn(ActionEvent event) {

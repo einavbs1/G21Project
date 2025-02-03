@@ -45,12 +45,6 @@ public class SubscriberLoginScreenController {
 	private Label lblerrmsg;
 
 	
-	//to del:
-	public void initialize() {
-		SubIdtxt.setText("315064881");
-		SubPasswordfield.setText("1");
-
-	}
 	
 	
 	/**

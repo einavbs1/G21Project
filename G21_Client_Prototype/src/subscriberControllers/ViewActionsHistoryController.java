@@ -128,15 +128,29 @@ public class ViewActionsHistoryController {
      */
     @FXML
     public void Back(ActionEvent event) throws IOException {
-    	FXMLLoader Loader = new FXMLLoader(getClass().getResource("/subscriberGui/SubscriberMenu.fxml"));
-		Parent Root = Loader.load();
-		Stage Stage = new Stage();
-		Scene Scene = new Scene(Root);
-		Scene.getStylesheets().add(getClass().getResource("/subscriberGui/SubscriberMenu.css").toExternalForm());
-		Stage.setScene(Scene);
-		Stage.setTitle("Subscriber Menu");
-		Stage.show();
-		((Node) event.getSource()).getScene().getWindow().hide();
+    	if(ChatClient.getCurrectLibrarian() == null) {
+	    	FXMLLoader Loader = new FXMLLoader(getClass().getResource("/subscriberGui/SubscriberMenu.fxml"));
+			Parent Root = Loader.load();
+			Stage Stage = new Stage();
+			Scene Scene = new Scene(Root);
+			Scene.getStylesheets().add(getClass().getResource("/subscriberGui/SubscriberMenu.css").toExternalForm());
+			Stage.setScene(Scene);
+			Stage.setTitle("Subscriber Menu");
+			Stage.show();
+			((Node) event.getSource()).getScene().getWindow().hide();
+    	}else {
+    		ChatClient.setCurrectSubscriber(null);
+    		FXMLLoader Loader = new FXMLLoader(getClass().getResource("/librarianGui/UpdateSubscriberData.fxml"));
+			Parent Root = Loader.load();
+			Stage Stage = new Stage();
+			Scene Scene = new Scene(Root);
+			Scene.getStylesheets().add(getClass().getResource("/librarianGui/UpdateSubscriberData.css").toExternalForm());
+			Stage.setScene(Scene);
+			Stage.setTitle("Update Subscriber Data");
+			Stage.show();
+			((Node) event.getSource()).getScene().getWindow().hide();
+    		
+    	}
     }
 
     

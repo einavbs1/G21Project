@@ -185,11 +185,9 @@ public class ConnectionSetupController {
 	 * showing the local ip in the GUI.
 	 */
 	public void initialize() {
-		porttxt.setText("12345");
 		try {
 			localIp = InetAddress.getLocalHost().getHostAddress();
 			lblLocalip.setText("Your local ip: \t" + localIp);
-			serveriptxt.setText(localIp);
 		} catch (UnknownHostException e) {
 			lblLocalip.setText("Unable to determine the local IP address\n Unknown IP");
 			e.printStackTrace();

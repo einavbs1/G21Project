@@ -281,6 +281,7 @@ public class ReturnBookController {
 				LocalDate currentDate = LocalDate.now();
 
 				mySubBorrowedRecord.setBorrowActualReturnDate(Date.valueOf(currentDate));
+				mySubBorrowedRecord.setBorrowStatus(0);
 				mySubBorrowedRecord.UpdateBorrowDetails();
 				LocalDate expectReturnDate = mySubBorrowedRecord.getBorrowExpectReturnDate().toLocalDate();
 				
@@ -313,8 +314,9 @@ public class ReturnBookController {
 
 				}
 				if (timeDifferenceDays > 0) {
-					activityMsg = "You return the book: " + bookCopyToReturn.getTitle() + "late by "
+					activityMsg = "You return the book: \"" + bookCopyToReturn.getTitle() + "\" late by "
 							+ timeDifferenceDays + " days.";
+					lblreturnmsg.setText(activityMsg);
 				}
 				if (timeDifferenceDays > 6) {
 					activityMsg += " This late return was the cause of freezing your subscriptions.";
